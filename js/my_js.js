@@ -77,11 +77,33 @@ function startSlideshow(nextImageTime) {
     interval = setInterval(switchImage, nextImageTime);
   }
 
-  document.getElementsByClassName('toggleBtn')[0].addEventListener('click', () => {
-    clearInterval(interval)
-    start()
-  })
-  start();
+  function preloadImages(images, callback) {
+    var loaded = 0;
+    var toLoad = images.length;
+    var imgs = [];
+
+    function imageLoaded() {
+      loaded++;
+      if (loaded == toLoad) {
+        callback();
+      }
+    }
+
+    for (var i = 0; i < toLoad; i++) {
+      var img = new Image();
+      img.onload = imageLoaded;
+      img.src = images[i];
+      imgs.push(img);
+    }
+  }
+  preloadImages(images_white.concat(images_dark), function () {
+    document.getElementsByClassName('toggleBtn')[0].addEventListener('click', () => {
+      clearInterval(interval)
+      start()
+    })
+    start();
+  });
+
 }
 
 function Type(str_list) {
