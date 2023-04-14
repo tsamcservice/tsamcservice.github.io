@@ -29,9 +29,9 @@ for (var i = 0; i < 5; i++) {
         scriptEl.id = 'canvas-nest';
         document.body.appendChild(scriptEl);
       }
-      else{
-        main=document.getElementsByClassName("main")[0]
-        main.style.backgroundImage = "url('/image/whte.png')";
+      else {
+        main = document.getElementsByClassName("main")[0]
+        main.style.backgroundImage = "url('/image/white.png')";
         main.style.backgroundSize = "cover";
         main.style.backgroundPosition = "center";
         main.style.transition = "background-image 1s ease-in-out";
@@ -41,38 +41,46 @@ for (var i = 0; i < 5; i++) {
 }
 
 setTimeout(function () {
-  
-  Type(["跌倒，是成長的保障，是學習的寶藏。", "Mistakes are stepping stones to success.","Eat, Sleep, Code, Repeat."])
+
+  Type(["跌倒，是成長的保障，是學習的寶藏。", "Mistakes are stepping stones to success.", "Eat, Sleep, Code, Repeat."])
   // Falling is the guarantee of growth and the treasure of learning
-  startSlideshow(3000);
+  startSlideshow(6000);
 
 }, 600);
 
 
 function startSlideshow(nextImageTime) {
-  var images = ['/image/white.png','/image/white.png','/image/image4.jpg', '/image/image3.jpg', '/image/image4.jpg'];
+  var images_white = ['/image/white.png', '/image/image1.jpg', '/image/image2.jpg', '/image/image3.jpg', '/image/image5.jpg', '/image/image6.jpg'];
+  var images_dark = ['/image/white.png', '/image/image11.jpg', '/image/image13.jpg', '/image/image14.jpg', '/image/image15.jpg', '/image/image16.jpg'];
+  var images = images_dark
   var currentIndex = 0;
-  var main = document.querySelector('.main');
-  var img = new Image();
+  var main = document.getElementsByClassName("main")[0]
   var interval;
-  
-  function preload() {
-    for (var i = 0; i < images.length; i++) {
-      img.src = images[i];
-    }
-  }
-  
+
   function switchImage() {
-    currentIndex = (currentIndex + 1) % images.length;
-    main.style.backgroundImage = 'url(' + images[currentIndex] + ')';
+    pagebody = document.getElementsByTagName('body')[0]
+    if (pagebody.classList.contains('dark-theme')) {
+      images = images_dark
+    } else {
+      images = images_white
+    }
+
+    var nextIndex = (currentIndex + 1) % images.length;
+    var nextImage = 'url(' + images[nextIndex] + ')';
+    main.style.backgroundImage = nextImage;
+    currentIndex = nextIndex;
   }
-  
+
   function start() {
-    preload();
-    switchImage();
+    var initialImage = 'url(' + images[0] + ')';
+    main.style.backgroundImage = initialImage;
     interval = setInterval(switchImage, nextImageTime);
   }
-  
+
+  document.getElementsByClassName('toggleBtn')[0].addEventListener('click', () => {
+    clearInterval(interval)
+    start()
+  })
   start();
 }
 
