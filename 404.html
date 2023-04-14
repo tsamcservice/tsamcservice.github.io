@@ -139,9 +139,8 @@
 let countTime = 6;
 
 function count() {
-  
-  document.getElementById('timeout').textContent = countTime;
   countTime -= 1;
+  document.getElementById('timeout').textContent = countTime;
   if(countTime === 0){
     location.href = 'https://albert20699.github.io/'; // 記得改成自己網址 Url
   }

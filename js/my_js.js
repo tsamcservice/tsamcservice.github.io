@@ -44,7 +44,7 @@ setTimeout(function () {
 
   Type(["跌倒，是成長的保障，是學習的寶藏。", "Mistakes are stepping stones to success.", "Eat, Sleep, Code, Repeat."])
   // Falling is the guarantee of growth and the treasure of learning
-  startSlideshow(6000);
+  if (location.pathname == "/") {startSlideshow(6000);}
 
 }, 600);
 
