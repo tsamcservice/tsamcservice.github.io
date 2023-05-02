@@ -1,342 +1,41 @@
-
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LIFF Share Example</title>
-    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+  <title>Page View Counter</title>
+  <script>
+    function setCookie(name, value, days) {
+      let expires = "";
+      if (days) {
+        let date = new Date();
+        date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+        expires = "; expires=" + date.toUTCString();
+      }
+      document.cookie = name + "=" + value + expires + "; path=/";
+    }
+
+    function getCookie(name) {
+      let nameEQ = name + "=";
+      let ca = document.cookie.split(';');
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+      }
+      return null;
+    }
+
+    function updateVisitCounter() {
+      let visits = parseInt(getCookie("visits")) || 0;
+      visits++;
+      setCookie("visits", visits, 365); // 365 days
+
+      let counterElement = document.getElementById("visit-counter");
+      counterElement.innerHTML = "訪問次數: " + visits;
+    }
+  </script>
 </head>
-
-<body>
-    <h1>LINE Share Example</h1>
-    <button id="shareButton">Share Message</button>
-
-    <script>
-        window.onload = function () {
-            liff.init({ liffId: "1660908511-DERZWN3m" })
-                .then(() => {
-                    if (!liff.isLoggedIn()) {
-                        liff.login();
-                    }
-                });
-
-            document.getElementById("shareButton").addEventListener("click", () => {
-                liff.shareTargetPicker([
-                    {
-                        "type": "flex",
-                        "altText": "Flex Message",
-                        "contents": {
-                            "type": "carousel",
-                            "contents": [{
-                                "type": "bubble",
-                                "hero": {
-                                    "type": "image",
-                                    "url": "https://3428750.so-buy.com/_files/50/3428750/f/20230205.jpg",
-                                    "size": "full",
-                                    "aspectRatio": "20:13",
-                                    "aspectMode": "cover",
-                                    "action": {
-                                        "type": "uri",
-                                        "label": "Line",
-                                        "uri": "https://linecorp.com/"
-                                    }
-                                },
-                                "body": {
-                                    "type": "box",
-                                    "layout": "vertical",
-                                    "position": "relative",
-                                    "height": "450px",
-                                    "backgroundColor": "#BA0101FF",
-                                    "borderColor": "#FFFFFFFF",
-                                    "contents": [
-                                        {
-                                            "type": "image",
-                                            "url": "https://cardoa.saasou.com/_files/0/100/22/09/4c54e723f657e553.png",
-                                            "animated": true,
-                                            "align": "center",
-                                            "gravity": "center",
-                                            "size": "full",
-                                            "aspectRatio": "1:1.1",
-                                            "aspectMode": "cover",
-                                            "backgroundColor": "#FFFFFF00",
-                                            "position": "absolute",
-                                            "offsetTop": "0%",
-                                            "offsetStart": "0%",
-                                            "offsetEnd": "0%"
-                                        },
-                                        {
-                                            "type": "image",
-                                            "url": "https://cardoa.saasou.com/_files/0/100/22/12/3fd613a2ceb4899e.png",
-                                            "animated": true,
-                                            "align": "center",
-                                            "gravity": "center",
-                                            "size": "full",
-                                            "aspectRatio": "1:1.1",
-                                            "aspectMode": "fit",
-                                            "backgroundColor": "#FFFFFF00",
-                                            "position": "absolute",
-                                            "offsetTop": "0%",
-                                            "offsetEnd": "0%",
-                                            "offsetStart": "0%"
-                                        },
-                                        {
-                                            "type": "box",
-                                            "layout": "vertical",
-                                            "height": "310px",
-                                            "contents": [
-                                                {
-                                                    "type": "box",
-                                                    "layout": "vertical",
-                                                    "height": "30px",
-                                                    "contents": [
-                                                        {
-                                                            "type": "spacer",
-                                                            "size": "xxl"
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "type": "text",
-                                                    "text": "元宵燈趣",
-                                                    "weight": "bold",
-                                                    "size": "3xl",
-                                                    "color": "#FFFFFFFF",
-                                                    "align": "center",
-                                                    "gravity": "center",
-                                                    "contents": []
-                                                },
-                                                {
-                                                    "type": "box",
-                                                    "layout": "vertical",
-                                                    "contents": [
-                                                        {
-                                                            "type": "spacer",
-                                                            "size": "md"
-                                                        },
-                                                        {
-                                                            "type": "box",
-                                                            "layout": "vertical",
-                                                            "offsetStart": "12%",
-                                                            "paddingTop": "2%",
-                                                            "width": "190px",
-                                                            "height": "55px",
-                                                            "backgroundColor": "#FFFFFFFF",
-                                                            "cornerRadius": "50px",
-                                                            "contents": [
-                                                                {
-                                                                    "type": "text",
-                                                                    "text": "光源台北",
-                                                                    "weight": "bold",
-                                                                    "size": "3xl",
-                                                                    "color": "#BA0101FF",
-                                                                    "align": "center",
-                                                                    "gravity": "center",
-                                                                    "contents": []
-                                                                }
-                                                            ]
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "type": "box",
-                                                    "layout": "vertical",
-                                                    "height": "25px",
-                                                    "contents": [
-                                                        {
-                                                            "type": "text",
-                                                            "text": "02.05~02.19",
-                                                            "size": "lg",
-                                                            "color": "#FFFFFFFF",
-                                                            "align": "center",
-                                                            "gravity": "center",
-                                                            "contents": []
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "type": "box",
-                                                    "layout": "vertical",
-                                                    "height": "30px",
-                                                    "contents": [
-                                                        {
-                                                            "type": "text",
-                                                            "text": "台灣燈會在台北",
-                                                            "weight": "regular",
-                                                            "size": "xl",
-                                                            "color": "#FFFFFFFF",
-                                                            "align": "center",
-                                                            "gravity": "center",
-                                                            "contents": []
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "type": "box",
-                                                    "layout": "vertical",
-                                                    "height": "20px",
-                                                    "contents": [
-                                                        {
-                                                            "type": "text",
-                                                            "text": "攻略｜四大展區攻略地圖(連結)",
-                                                            "weight": "regular",
-                                                            "size": "sm",
-                                                            "color": "#FFFFFFFF",
-                                                            "align": "center",
-                                                            "gravity": "center",
-                                                            "contents": []
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "type": "box",
-                                                    "layout": "vertical",
-                                                    "height": "20px",
-                                                    "contents": [
-                                                        {
-                                                            "type": "text",
-                                                            "text": "影音｜介紹、線上直播區(連結)",
-                                                            "weight": "regular",
-                                                            "size": "sm",
-                                                            "color": "#FFFFFFFF",
-                                                            "align": "center",
-                                                            "gravity": "center",
-                                                            "contents": []
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "type": "box",
-                                                    "layout": "vertical",
-                                                    "height": "30px",
-                                                    "contents": [
-                                                        {
-                                                            "type": "text",
-                                                            "text": "展演｜天天活動都精彩(連結)",
-                                                            "weight": "regular",
-                                                            "size": "sm",
-                                                            "color": "#FFFFFFFF",
-                                                            "align": "center",
-                                                            "gravity": "center",
-                                                            "contents": []
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "type": "box",
-                                                    "layout": "vertical",
-                                                    "paddingTop": "3%",
-                                                    "paddingBottom": "0%",
-                                                    "height": "35px",
-                                                    "contents": [
-                                                        {
-                                                            "type": "text",
-                                                            "text": "【呈璽 Mtvs】",
-                                                            "weight": "regular",
-                                                            "size": "sm",
-                                                            "color": "#EB9191FF",
-                                                            "align": "center",
-                                                            "gravity": "bottom",
-                                                            "offsetBottom": "0%",
-                                                            "contents": []
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "type": "box",
-                                            "layout": "vertical",
-                                            "height": "1px",
-                                            "backgroundColor": "#FFFFFFFF",
-                                            "contents": [
-                                                {
-                                                    "type": "spacer"
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "type": "box",
-                                            "layout": "horizontal",
-                                            "contents": [
-                                                {
-                                                    "type": "button",
-                                                    "action": {
-                                                        "type": "uri",
-                                                        "label": "分享卡片",
-                                                        "uri": "https://linecorp.com"
-                                                    },
-                                                    "color": "#BA0101FF",
-                                                    "style": "primary"
-                                                },
-                                                {
-                                                    "type": "button",
-                                                    "action": {
-                                                        "type": "uri",
-                                                        "label": "收藏卡片",
-                                                        "uri": "https://linecorp.com"
-                                                    },
-                                                    "color": "#BA0101FF",
-                                                    "style": "primary"
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "type": "box",
-                                            "layout": "vertical",
-                                            "height": "1px",
-                                            "backgroundColor": "#FFFFFFFF",
-                                            "contents": [
-                                                {
-                                                    "type": "spacer"
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "type": "box",
-                                            "layout": "vertical",
-                                            "contents": [
-                                                {
-                                                    "type": "text",
-                                                    "text": "以上資料由【呈壐】整理自台北燈會官網，可點文字連結或下載詳細資料。歡迎加入【呈璽】官LINE@不再錯過精彩訊息喔~~",
-                                                    "size": "xxs",
-                                                    "color": "#EB9191FF",
-                                                    "align": "start",
-                                                    "gravity": "bottom",
-                                                    "wrap": true,
-                                                    "offsetTop": "2%",
-                                                    "contents": []
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                }
-                            }
-                            ]
-                        }
-                    }
-
-
-
-                ])
-                    .then(function (res) {
-                        if (res) {
-                            console.log(`[${res.status}] Message sent!`)
-                        } else {
-                            const [majorVer, minorVer] = (liff.getLineVersion() || "").split('.');
-                            if (parseInt(majorVer) == 10 && parseInt(minorVer) < 11) {
-                                console.log('TargetPicker was opened at least. Whether succeeded to send message is unclear')
-                            } else {
-                                console.log('TargetPicker was closed!')
-                            }
-                        }
-                    }).catch(function (error) {
-                        console.log('something wrong happen')
-                    });
-            });
-        };
-    </script>
+<body onload="updateVisitCounter()">
+  <h1>歡迎光臨！</h1>
+  <p id="visit-counter">訪問次數: 0</p>
 </body>
-
 </html>
