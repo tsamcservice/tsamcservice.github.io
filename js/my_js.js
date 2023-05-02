@@ -1,4 +1,4 @@
-for (var i = 0; i < 5; i++) {
+for (var i = 0; i < 60; i++) {
   setTimeout(function () {
     try {
       document.getElementsByClassName("post-time")[0].innerHTML = document.getElementsByClassName("post-time")[0].innerText.replace("00:00:00", "")
@@ -22,31 +22,36 @@ for (var i = 0; i < 5; i++) {
       }
     } catch (e) { }
     try {
-      var myElement = document.querySelector('#canvas-nest');
-      if (!myElement && location.pathname != "/") {
-        var scriptEl = document.createElement('script');
-        scriptEl.src = '/js/canvas-nest.js';
-        scriptEl.id = 'canvas-nest';
-        document.body.appendChild(scriptEl);
-      }
-      else {
-        main = document.getElementsByClassName("main")[0]
-        main.style.backgroundImage = "url('/image/white.png')";
-        main.style.backgroundSize = "cover";
-        main.style.backgroundPosition = "center";
-        main.style.transition = "background-image 1s ease-in-out";
+      if (document.documentElement.clientWidth > 1000) {
+        // 非主頁的漂浮點點
+        var myElement = document.querySelector('#canvas-nest');
+        if (!myElement && location.pathname != "/") {
+          var scriptEl = document.createElement('script');
+          scriptEl.src = '/js/canvas-nest.js';
+          scriptEl.id = 'canvas-nest';
+          document.body.appendChild(scriptEl);
+        }
+        // 主頁的頁面背景圖
+        else {
+          main = document.getElementsByClassName("main")[0]
+          main.style.backgroundImage = "url('/image/white.png')";
+          main.style.backgroundSize = "cover";
+          main.style.backgroundPosition = "center";
+          main.style.transition = "background-image 1s ease-in-out";
+        }
       }
     } catch (e) { }
   }, i * 10);
 }
 
 setTimeout(function () {
-
+  // 主頁的打字效果
   Type(["跌倒，是成長的保障，是學習的寶藏。", "Mistakes are stepping stones to success.", "Eat, Sleep, Code, Repeat."])
-  // Falling is the guarantee of growth and the treasure of learning
-  if (location.pathname == "/") {startSlideshow(6000);}
-
-}, 600);
+  // 主頁的頁面背景圖
+  if (document.documentElement.clientWidth > 1000) {
+    if (location.pathname == "/") { startSlideshow(6000); }
+  }
+}, 1000);
 
 
 function startSlideshow(nextImageTime) {
