@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LIFF Share Example</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/PamornT/flex2html@main/css/flex2html.css">
+    <script src="https://cdn.jsdelivr.net/gh/PamornT/flex2html@main/js/flex2html.min.js"></script>
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
 
     <style>
@@ -71,7 +72,7 @@
     </div>
 
 
-    <script src="https://cdn.jsdelivr.net/gh/PamornT/flex2html@main/js/flex2html.min.js"></script>
+
     <div class="form-container">
         <div class="form-group">
             <button onclick="show_flex()">查看卡片</button>
@@ -149,6 +150,7 @@
 
 
 <script>
+    var mainTitle_1, mainTitle_2, subTitle_1, subTitle_2, textContent_1, textContent_1_url, textContent_2, textContent_2_url, textContent_3, textContent_3_url, companyUnit, share_card, keep_card, cardDescription, bgColor, textColor
     function setCookie(name, value, days) {
         var expires = "";
         if (days) {
@@ -190,22 +192,22 @@
     }
 
     function readFromCookie() {
-        document.getElementById("mainTitle_1").value = getCookie("mainTitle_1");
-        document.getElementById("mainTitle_2").value = getCookie("mainTitle_2");
-        document.getElementById("subTitle_1").value = getCookie("subTitle_1");
-        document.getElementById("subTitle_2").value = getCookie("subTitle_2");
-        document.getElementById("textContent_1").value = getCookie(" textContent_1");
-        document.getElementById("textContent_1_url").value = getCookie(" textContent_1_url");
-        document.getElementById("textContent_2").value = getCookie("textContent_2");
-        document.getElementById("textContent_2_url").value = getCookie(" textContent_2_url");
-        document.getElementById("textContent_3").value = getCookie("textContent_3");
-        document.getElementById("textContent_3_url").value = getCookie("textContent_3_url");
-        document.getElementById("companyUnit").value = getCookie("companyUnit");
-        document.getElementById("share_card").value = getCookie("share_card");
-        document.getElementById("keep_card").value = getCookie(" keep_card");
-        document.getElementById("cardDescription").value = getCookie(" cardDescription");
-        document.getElementById("bgColor").value = getCookie("bgColor");
-        document.getElementById("textColor").value = getCookie(" textColor");
+        document.getElementById("mainTitle_1").value = getCookie("mainTitle_1") || "";
+        document.getElementById("mainTitle_2").value = getCookie("mainTitle_2") || "";
+        document.getElementById("subTitle_1").value = getCookie("subTitle_1") || "";
+        document.getElementById("subTitle_2").value = getCookie("subTitle_2") || "";
+        document.getElementById("textContent_1").value = getCookie(" textContent_1") || "";
+        document.getElementById("textContent_1_url").value = getCookie(" textContent_1_url") || "";
+        document.getElementById("textContent_2").value = getCookie("textContent_2") || "";
+        document.getElementById("textContent_2_url").value = getCookie(" textContent_2_url") || "";
+        document.getElementById("textContent_3").value = getCookie("textContent_3") || "";
+        document.getElementById("textContent_3_url").value = getCookie("textContent_3_url") || "";
+        document.getElementById("companyUnit").value = getCookie("companyUnit") || "";
+        document.getElementById("share_card").value = getCookie("share_card") || "";
+        document.getElementById("keep_card").value = getCookie(" keep_card") || "";
+        document.getElementById("cardDescription").value = getCookie(" cardDescription") || "";
+        document.getElementById("bgColor").value = getCookie("bgColor") || "";
+        document.getElementById("textColor").value = getCookie(" textColor") || "";
     }
 
     function close_flex() {
@@ -217,52 +219,52 @@
         document.querySelector('.form-container').classList.add('hidden');
 
         var mainTitle_1_Element = document.getElementById("mainTitle_1");
-        var mainTitle_1 = mainTitle_1_Element.value || mainTitle_1_Element.placeholder;
+        mainTitle_1 = mainTitle_1_Element.value || mainTitle_1_Element.placeholder;
 
         var mainTitle_2_Element = document.getElementById("mainTitle_2");
-        var mainTitle_2 = mainTitle_2_Element.value || mainTitle_2_Element.placeholder;
+        mainTitle_2 = mainTitle_2_Element.value || mainTitle_2_Element.placeholder;
 
         var subTitle_1_Element = document.getElementById("subTitle_1");
-        var subTitle_1 = subTitle_1_Element.value || subTitle_1_Element.placeholder;
+        subTitle_1 = subTitle_1_Element.value || subTitle_1_Element.placeholder;
 
         var subTitle_2_Element = document.getElementById("subTitle_2");
-        var subTitle_2 = subTitle_2_Element.value || subTitle_2_Element.placeholder;
+        subTitle_2 = subTitle_2_Element.value || subTitle_2_Element.placeholder;
 
         var textContent_1_Element = document.getElementById("textContent_1");
-        var textContent_1 = textContent_1_Element.value || textContent_1_Element.placeholder;
+        textContent_1 = textContent_1_Element.value || textContent_1_Element.placeholder;
 
         var textContent_1_url_Element = document.getElementById("textContent_1_url");
-        var textContent_1_url = textContent_1_url_Element.value || textContent_1_url_Element.placeholder;
+        textContent_1_url = textContent_1_url_Element.value || textContent_1_url_Element.placeholder;
 
         var textContent_2_Element = document.getElementById("textContent_2");
-        var textContent_2 = textContent_2_Element.value || textContent_2_Element.placeholder;
+        textContent_2 = textContent_2_Element.value || textContent_2_Element.placeholder;
 
         var textContent_2_url_Element = document.getElementById("textContent_2_url");
-        var textContent_2_url = textContent_2_url_Element.value || textContent_2_url_Element.placeholder;
+        textContent_2_url = textContent_2_url_Element.value || textContent_2_url_Element.placeholder;
 
         var textContent_3_Element = document.getElementById("textContent_3");
-        var textContent_3 = textContent_3_Element.value || textContent_3_Element.placeholder;
+        textContent_3 = textContent_3_Element.value || textContent_3_Element.placeholder;
 
         var textContent_3_url_Element = document.getElementById("textContent_3_url");
-        var textContent_3_url = textContent_3_url_Element.value || textContent_3_url_Element.placeholder;
+        textContent_3_url = textContent_3_url_Element.value || textContent_3_url_Element.placeholder;
 
         var companyUnit_Element = document.getElementById("companyUnit");
-        var companyUnit = companyUnit_Element.value || companyUnit_Element.placeholder;
+        companyUnit = companyUnit_Element.value || companyUnit_Element.placeholder;
 
         var share_card_Element = document.getElementById("share_card");
-        var share_card = share_card_Element.value || share_card_Element.placeholder;
+        share_card = share_card_Element.value || share_card_Element.placeholder;
 
         var keep_card_Element = document.getElementById("keep_card");
-        var keep_card = keep_card_Element.value || keep_card_Element.placeholder;
+        keep_card = keep_card_Element.value || keep_card_Element.placeholder;
 
         var cardDescription_Element = document.getElementById("cardDescription");
-        var cardDescription = cardDescription_Element.value || cardDescription_Element.placeholder;
+        cardDescription = cardDescription_Element.value || cardDescription_Element.placeholder;
 
         var bgColor_Element = document.getElementById("bgColor");
-        var bgColor = bgColor_Element.value || bgColor_Element.placeholder;
+        bgColor = bgColor_Element.value || bgColor_Element.placeholder;
 
         var textColor_Element = document.getElementById("textColor");
-        var textColor = textColor_Element.value || textColor_Element.placeholder;
+        textColor = textColor_Element.value || textColor_Element.placeholder;
 
         var flexJson = {
             "type": "flex",
