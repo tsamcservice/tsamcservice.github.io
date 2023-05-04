@@ -3,365 +3,598 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LIFF Share Example</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/PamornT/flex2html@main/css/flex2html.css">
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .form-container {
+            width: 300px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f8f8;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #009688;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #007c69;
+        }
+
+        .chatbox {
+            background-color: transparent;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>LINE Share Example</h1>
-    <button id="shareButton">Share Message</button>
+    <div id="modal" class="hidden">
+        <div class="modal-content">
+            <h1>LINE Share Example</h1>
+            <div style="display: flex; justify-content: space-between;width: 300px;">
+                <button id="shareButton">Share Message</button>
+                <button onclick="close_flex()">返回</button>
+            </div>
+            <div class="chatbox">
+                <div id="flex2html"></div>
+            </div>
 
-    <script>
-        var mainTitle_1="元宵燈趣"
-        var mainTitle_2="光源台北"
-        var subTitle_1="02.05~02.19"
-        var subTitle_2="台灣燈會在台北"
-        var textContent_1="攻略｜四大展區攻略地圖(連結)"
-        var textContent_1_url="tw-light.taipei/transportation/four"
-        var textContent_2="影音｜介紹、線上直播區(連結)"
-        var textContent_2_url="tw-light.taipei/media"
-        var textContent_3="展演｜天天活動都精彩(連結)"
-        var textContent_3_url="tw-light.taipei/show/schedule?id=a5baf8c1-b10a-4973-ad7c-7a9a0ef83c23"
-        var companyUnit="呈璽 Mtvs"
-        var share_card="分享卡片"
-        var keep_card="收藏卡片"
-        var cardDescription="以上資料由【呈壐】整理自台北燈會官網，可點文字連結或下載詳細資料。歡迎加入【呈璽】官LINE@不再錯過精彩訊息喔~~"
-        var bgColor="#BA0101FF"
-        var textColor="#FFFFFFFF"
-        window.onload = function () {
-            liff.init({ liffId: "1660908511-DERZWN3m" })
-                .then(() => {
-                    if (!liff.isLoggedIn()) {
-                        liff.login();
-                    }
-                });
+        </div>
+    </div>
 
-            document.getElementById("shareButton").addEventListener("click", () => {
-                liff.shareTargetPicker([
-                    {
-                        "type": "flex",
-                        "altText": "Flex Message",
-                        "contents": {
-                            "type": "carousel",
-                            "contents": [{
-                                "type": "bubble",
-                                "hero": {
-                                    "type": "image",
-                                    "url": "https://3428750.so-buy.com/_files/50/3428750/f/20230205.jpg",
-                                    "size": "full",
-                                    "aspectRatio": "20:13",
-                                    "aspectMode": "cover",
-                                    "action": {
-                                        "type": "uri",
-                                        "label": "Line",
-                                        "uri": "https://linecorp.com/"
+
+    <script src="https://cdn.jsdelivr.net/gh/PamornT/flex2html@main/js/flex2html.min.js"></script>
+    <div class="form-container">
+        <div class="form-group">
+            <button onclick="show_flex()">查看卡片</button>
+        </div>
+        <div class="form-group">
+            <label>主標1</label>
+            <input id="mainTitle_1" style="width: 100%;" type="text" placeholder="元宵燈趣">
+        </div>
+        <div class="form-group">
+            <label>主標2</label>
+            <input id="mainTitle_2" style="width: 100%;" type="text" placeholder="光源台北">
+        </div>
+        <div class="form-group">
+            <label>副標1</label>
+            <input id="subTitle_1" style="width: 100%;" type="text" placeholder="02.05~02.19">
+        </div>
+        <div class="form-group">
+            <label>副標2</label>
+            <input id="subTitle_2" style="width: 100%;" type="text" placeholder="台灣燈會在台北">
+        </div>
+        <div class="form-group">
+            <label>文字內容1</label>
+            <input id="textContent_1" style="width: 100%;" type="text" placeholder="攻略｜四大展區攻略地圖(連結)">
+        </div>
+        <div class="form-group">
+            <label>文字內容1 URL</label>
+            <input id="textContent_1_url" style="width: 100%;" type="text" placeholder="https://albert20699.github.io/">
+        </div>
+        <div class="form-group">
+            <label>文字內容2</label>
+            <input id="textContent_2" style="width: 100%;" type="text" placeholder="影音｜介紹、線上直播區(連結)">
+        </div>
+        <div class="form-group">
+            <label>文字內容2 URL</label>
+            <input id="textContent_2_url" style="width: 100%;" type="text" placeholder="https://albert20699.github.io/">
+        </div>
+        <div class="form-group">
+            <label>文字內容3</label>
+            <input id="textContent_3" style="width: 100%;" type="text" placeholder="展演｜天天活動都精彩(連結)">
+        </div>
+        <div class="form-group">
+            <label>文字內容3 URL</label>
+            <input id="textContent_3_url" style="width: 100%;" type="text" placeholder="https://albert20699.github.io/">
+        </div>
+        <div class="form-group">
+            <label>公司單位</label>
+            <input id="companyUnit" style="width: 100%;" type=" text" placeholder="呈璽 Mtvs">
+        </div>
+        <div class="form-group">
+            <label>分享卡片</label>
+            <input id="share_card" style="width: 100%;" type="text" placeholder="分享卡片">
+        </div>
+        <div class="form-group">
+            <label>收藏卡片</label>
+            <input id="keep_card" style="width: 100%;" type="text" placeholder="收藏卡片">
+        </div>
+        <div class="form-group">
+            <label>卡片描述</label>
+            <input id="cardDescription" style="width: 100%;" type="text"
+                placeholder="以上資料由【呈壐】整理自台北燈會官網，可點文字連結或下載詳細資料。歡迎加入【呈璽】官LINE@不再錯過精彩訊息喔~~">
+        </div>
+        <div class="form-group">
+            <label>背景顏色</label>
+            <input id="bgColor" style="width: 100%;" type="text" placeholder="#BA0101FF">
+        </div>
+        <div class="form-group">
+            <label>文字顏色</label>
+            <input id="textColor" style="width: 100%;" type="text" placeholder="#FFFFFFFF">
+        </div>
+
+</body>
+
+</html>
+</div>
+
+
+<script>
+    function setCookie(name, value, days) {
+        var expires = "";
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "") + expires + "; path=/";
+    }
+
+    function getCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+    }
+
+    function saveToCookie() {
+        setCookie("mainTitle_1", mainTitle_1, 30);
+        setCookie("mainTitle_2", mainTitle_2, 30);
+        setCookie("subTitle_1", subTitle_1, 30);
+        setCookie("subTitle_2", subTitle_2, 30);
+        setCookie("textContent_1", textContent_1, 30);
+        setCookie("textContent_1_url", textContent_1_url, 30);
+        setCookie("textContent_2", textContent_2, 30);
+        setCookie("textContent_2_url", textContent_2_url, 30);
+        setCookie("textContent_3", textContent_3, 30);
+        setCookie("textContent_3_url", textContent_3_url, 30);
+        setCookie("companyUnit", companyUnit, 30);
+        setCookie("share_card", share_card, 30);
+        setCookie("keep_card", keep_card, 30);
+        setCookie("cardDescription", cardDescription, 30);
+        setCookie("bgColor", bgColor, 30);
+        setCookie("textColor", textColor, 30);
+    }
+
+    function readFromCookie() {
+        document.getElementById("mainTitle_1").value = getCookie("mainTitle_1");
+        document.getElementById("mainTitle_2").value = getCookie("mainTitle_2");
+        document.getElementById("subTitle_1").value = getCookie("subTitle_1");
+        document.getElementById("subTitle_2").value = getCookie("subTitle_2");
+        document.getElementById("textContent_1").value = getCookie(" textContent_1");
+        document.getElementById("textContent_1_url").value = getCookie(" textContent_1_url");
+        document.getElementById("textContent_2").value = getCookie("textContent_2");
+        document.getElementById("textContent_2_url").value = getCookie(" textContent_2_url");
+        document.getElementById("textContent_3").value = getCookie("textContent_3");
+        document.getElementById("textContent_3_url").value = getCookie("textContent_3_url");
+        document.getElementById("companyUnit").value = getCookie("companyUnit");
+        document.getElementById("share_card").value = getCookie("share_card");
+        document.getElementById("keep_card").value = getCookie(" keep_card");
+        document.getElementById("cardDescription").value = getCookie(" cardDescription");
+        document.getElementById("bgColor").value = getCookie("bgColor");
+        document.getElementById("textColor").value = getCookie(" textColor");
+    }
+
+    function close_flex() {
+        document.getElementById('modal').classList.add('hidden');
+        document.querySelector('.form-container').classList.remove('hidden');
+    }
+    function show_flex() {
+        document.getElementById('modal').classList.remove('hidden');
+        document.querySelector('.form-container').classList.add('hidden');
+
+        var mainTitle_1_Element = document.getElementById("mainTitle_1");
+        var mainTitle_1 = mainTitle_1_Element.value || mainTitle_1_Element.placeholder;
+
+        var mainTitle_2_Element = document.getElementById("mainTitle_2");
+        var mainTitle_2 = mainTitle_2_Element.value || mainTitle_2_Element.placeholder;
+
+        var subTitle_1_Element = document.getElementById("subTitle_1");
+        var subTitle_1 = subTitle_1_Element.value || subTitle_1_Element.placeholder;
+
+        var subTitle_2_Element = document.getElementById("subTitle_2");
+        var subTitle_2 = subTitle_2_Element.value || subTitle_2_Element.placeholder;
+
+        var textContent_1_Element = document.getElementById("textContent_1");
+        var textContent_1 = textContent_1_Element.value || textContent_1_Element.placeholder;
+
+        var textContent_1_url_Element = document.getElementById("textContent_1_url");
+        var textContent_1_url = textContent_1_url_Element.value || textContent_1_url_Element.placeholder;
+
+        var textContent_2_Element = document.getElementById("textContent_2");
+        var textContent_2 = textContent_2_Element.value || textContent_2_Element.placeholder;
+
+        var textContent_2_url_Element = document.getElementById("textContent_2_url");
+        var textContent_2_url = textContent_2_url_Element.value || textContent_2_url_Element.placeholder;
+
+        var textContent_3_Element = document.getElementById("textContent_3");
+        var textContent_3 = textContent_3_Element.value || textContent_3_Element.placeholder;
+
+        var textContent_3_url_Element = document.getElementById("textContent_3_url");
+        var textContent_3_url = textContent_3_url_Element.value || textContent_3_url_Element.placeholder;
+
+        var companyUnit_Element = document.getElementById("companyUnit");
+        var companyUnit = companyUnit_Element.value || companyUnit_Element.placeholder;
+
+        var share_card_Element = document.getElementById("share_card");
+        var share_card = share_card_Element.value || share_card_Element.placeholder;
+
+        var keep_card_Element = document.getElementById("keep_card");
+        var keep_card = keep_card_Element.value || keep_card_Element.placeholder;
+
+        var cardDescription_Element = document.getElementById("cardDescription");
+        var cardDescription = cardDescription_Element.value || cardDescription_Element.placeholder;
+
+        var bgColor_Element = document.getElementById("bgColor");
+        var bgColor = bgColor_Element.value || bgColor_Element.placeholder;
+
+        var textColor_Element = document.getElementById("textColor");
+        var textColor = textColor_Element.value || textColor_Element.placeholder;
+
+        var flexJson = {
+            "type": "flex",
+            "altText": "Flex Message",
+            "contents": {
+                "type": "carousel",
+                "contents": [{
+                    "type": "bubble",
+                    "hero": {
+                        "type": "image",
+                        "url": "https://3428750.so-buy.com/_files/50/3428750/f/20230205.jpg",
+                        "size": "full",
+                        "aspectRatio": "20:13",
+                        "aspectMode": "cover",
+                        "action": {
+                            "type": "uri",
+                            "label": "Line",
+                            "uri": "https://linecorp.com/"
+                        }
+                    },
+                    "body": {
+                        "type": "box",
+                        "layout": "vertical",
+                        "position": "relative",
+                        "height": "450px",
+                        "backgroundColor": "#BA0101FF",
+                        "borderColor": textColor,
+                        "contents": [
+                            {
+                                "type": "image",
+                                "url": "https://cardoa.saasou.com/_files/0/100/22/09/4c54e723f657e553.png",
+                                "align": "center",
+                                "gravity": "center",
+                                "size": "full",
+                                "aspectRatio": "1:1.1",
+                                "aspectMode": "cover",
+                                "backgroundColor": "#FFFFFF00",
+                                "position": "absolute",
+                                "offsetTop": "0px",
+                                "offsetStart": "0px",
+                                "offsetEnd": "0px"
+                            },
+                            {
+                                "type": "image",
+                                "url": "https://cardoa.saasou.com/_files/0/100/22/12/3fd613a2ceb4899e.png",
+                                "align": "center",
+                                "gravity": "center",
+                                "size": "full",
+                                "aspectRatio": "1:1.1",
+                                "aspectMode": "fit",
+                                "backgroundColor": "#FFFFFF00",
+                                "position": "absolute",
+                                "offsetTop": "0px",
+                                "offsetStart": "0px"
+                            },
+                            {
+                                "type": "box",
+                                "layout": "vertical",
+                                "height": "310px",
+                                "contents": [
+                                    {
+                                        "type": "box",
+                                        "layout": "vertical",
+                                        "height": "30px",
+                                        "contents": [
+                                            {
+                                                "type": "spacer",
+                                                "size": "xxl"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "text",
+                                        "text": mainTitle_1,
+                                        "weight": "bold",
+                                        "size": "3xl",
+                                        "color": textColor,
+                                        "align": "center",
+                                        "gravity": "center",
+                                        "contents": []
+                                    },
+                                    {
+                                        "type": "box",
+                                        "layout": "vertical",
+                                        "contents": [
+                                            {
+                                                "type": "box",
+                                                "layout": "vertical",
+                                                "offsetStart": "35px",
+                                                "paddingTop": "5px",
+                                                "width": "190px",
+                                                "height": "55px",
+                                                "backgroundColor": textColor,
+                                                "cornerRadius": "50px",
+                                                "contents": [
+                                                    {
+                                                        "type": "text",
+                                                        "text": mainTitle_2,
+                                                        "weight": "bold",
+                                                        "size": "3xl",
+                                                        "color": "#BA0101FF",
+                                                        "align": "center",
+                                                        "gravity": "center",
+                                                        "contents": []
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "box",
+                                        "layout": "vertical",
+                                        "height": "25px",
+                                        "contents": [
+                                            {
+                                                "type": "text",
+                                                "text": subTitle_1,
+                                                "size": "lg",
+                                                "color": textColor,
+                                                "align": "center",
+                                                "gravity": "center",
+                                                "contents": []
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "box",
+                                        "layout": "vertical",
+                                        "height": "30px",
+                                        "contents": [
+                                            {
+                                                "type": "text",
+                                                "text": subTitle_2,
+                                                "weight": "regular",
+                                                "size": "xl",
+                                                "color": textColor,
+                                                "align": "center",
+                                                "gravity": "center",
+                                                "contents": []
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "box",
+                                        "layout": "vertical",
+                                        "height": "20px",
+                                        "contents": [
+                                            {
+                                                "type": "text",
+                                                "text": textContent_1,
+                                                "weight": "regular",
+                                                "size": "sm",
+                                                "color": textColor,
+                                                "align": "center",
+                                                "gravity": "center",
+                                                "action": {
+                                                    "type": "uri",
+                                                    "uri": textContent_1_url
+                                                },
+                                                "contents": []
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "box",
+                                        "layout": "vertical",
+                                        "height": "20px",
+                                        "contents": [
+                                            {
+                                                "type": "text",
+                                                "text": textContent_2,
+                                                "weight": "regular",
+                                                "size": "sm",
+                                                "color": textColor,
+                                                "align": "center",
+                                                "gravity": "center",
+                                                "action": {
+                                                    "type": "uri",
+                                                    "uri": textContent_2_url
+                                                },
+                                                "contents": []
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "box",
+                                        "layout": "vertical",
+                                        "height": "30px",
+                                        "contents": [
+                                            {
+                                                "type": "text",
+                                                "text": textContent_3,
+                                                "weight": "regular",
+                                                "size": "sm",
+                                                "color": textColor,
+                                                "align": "center",
+                                                "gravity": "center",
+                                                "action": {
+                                                    "type": "uri",
+                                                    "uri": textContent_3_url
+                                                },
+                                                "contents": []
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "box",
+                                        "layout": "vertical",
+                                        "paddingTop": "3%",
+                                        "paddingBottom": "0px",
+                                        "height": "35px",
+                                        "contents": [
+                                            {
+                                                "type": "text",
+                                                "text": "【" + companyUnit + "】",
+                                                "weight": "regular",
+                                                "size": "sm",
+                                                "color": "#EB9191FF",
+                                                "align": "center",
+                                                "gravity": "bottom",
+                                                "offsetBottom": "0px",
+                                                "contents": []
+                                            }
+                                        ]
                                     }
-                                },
-                                "body": {
-                                    "type": "box",
-                                    "layout": "vertical",
-                                    "position": "relative",
-                                    "height": "450px",
-                                    "backgroundColor": bgColor,
-                                    "borderColor": "#FFFFFFFF",
-                                    "contents": [
-                                        {
-                                            "type": "image",
-                                            "url": "https://cardoa.saasou.com/_files/0/100/22/09/4c54e723f657e553.png",
-                                            "animated": true,
-                                            "align": "center",
-                                            "gravity": "center",
-                                            "size": "full",
-                                            "aspectRatio": "1:1.1",
-                                            "aspectMode": "cover",
-                                            "backgroundColor": "#FFFFFF00",
-                                            "position": "absolute",
-                                            "offsetTop": "0%",
-                                            "offsetStart": "0%",
-                                            "offsetEnd": "0%"
+                                ]
+                            },
+                            {
+                                "type": "box",
+                                "layout": "vertical",
+                                "height": "1px",
+                                "backgroundColor": "#FFFFFFFF",
+                                "contents": [
+                                    {
+                                        "type": "spacer"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "box",
+                                "layout": "horizontal",
+                                "contents": [
+                                    {
+                                        "type": "button",
+                                        "action": {
+                                            "type": "uri",
+                                            "label": share_card,
+                                            "uri": "https://linecorp.com"
                                         },
-                                        {
-                                            "type": "image",
-                                            "url": "https://cardoa.saasou.com/_files/0/100/22/12/3fd613a2ceb4899e.png",
-                                            "animated": true,
-                                            "align": "center",
-                                            "gravity": "center",
-                                            "size": "full",
-                                            "aspectRatio": "1:1.1",
-                                            "aspectMode": "fit",
-                                            "backgroundColor": "#FFFFFF00",
-                                            "position": "absolute",
-                                            "offsetTop": "0%",
-                                            "offsetEnd": "0%",
-                                            "offsetStart": "0%"
+                                        "color": "#BA0101FF",
+                                        "style": "primary"
+                                    },
+                                    {
+                                        "type": "button",
+                                        "action": {
+                                            "type": "uri",
+                                            "label": keep_card,
+                                            "uri": "https://linecorp.com"
                                         },
-                                        {
-                                            "type": "box",
-                                            "layout": "vertical",
-                                            "height": "310px",
-                                            "contents": [
-                                                {
-                                                    "type": "box",
-                                                    "layout": "vertical",
-                                                    "height": "30px",
-                                                    "contents": [
-                                                        {
-                                                            "type": "spacer",
-                                                            "size": "xxl"
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "type": "text",
-                                                    "text": mainTitle_1,
-                                                    "weight": "bold",
-                                                    "size": "3xl",
-                                                    "color": textColor ,
-                                                    "align": "center",
-                                                    "gravity": "center",
-                                                    "contents": []
-                                                },
-                                                {
-                                                    "type": "box",
-                                                    "layout": "vertical",
-                                                    "contents": [
-                                                        {
-                                                            "type": "spacer",
-                                                            "size": "md"
-                                                        },
-                                                        {
-                                                            "type": "box",
-                                                            "layout": "vertical",
-                                                            "offsetStart": "12%",
-                                                            "paddingTop": "2%",
-                                                            "width": "190px",
-                                                            "height": "55px",
-                                                            "backgroundColor": "#FFFFFFFF",
-                                                            "cornerRadius": "50px",
-                                                            "contents": [
-                                                                {
-                                                                    "type": "text",
-                                                                    "text": mainTitle_2,
-                                                                    "weight": "bold",
-                                                                    "size": "3xl",
-                                                                    "color": bgColor,
-                                                                    "align": "center",
-                                                                    "gravity": "center",
-                                                                    "contents": []
-                                                                }
-                                                            ]
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "type": "box",
-                                                    "layout": "vertical",
-                                                    "height": "25px",
-                                                    "contents": [
-                                                        {
-                                                            "type": "text",
-                                                            "text": subTitle_1,
-                                                            "size": "lg",
-                                                            "color": textColor,
-                                                            "align": "center",
-                                                            "gravity": "center",
-                                                            "contents": []
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "type": "box",
-                                                    "layout": "vertical",
-                                                    "height": "30px",
-                                                    "contents": [
-                                                        {
-                                                            "type": "text",
-                                                            "text": subTitle_2,
-                                                            "weight": "regular",
-                                                            "size": "xl",
-                                                            "color": textColor,
-                                                            "align": "center",
-                                                            "gravity": "center",
-                                                            "contents": []
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "type": "box",
-                                                    "layout": "vertical",
-                                                    "height": "20px",
-                                                    "contents": [
-                                                        {
-                                                            "type": "text",
-                                                            "text": textContent_1,
-                                                            "weight": "regular",
-                                                            "size": "sm",
-                                                            "color": textColor,
-                                                            "align": "center",
-                                                            "gravity": "center",
-                                                            "action": {
-                                                                "type": "uri",
-                                                                "uri": textContent_1_url
-                                                            },
-                                                            "contents": []
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "type": "box",
-                                                    "layout": "vertical",
-                                                    "height": "20px",
-                                                    "contents": [
-                                                        {
-                                                            "type": "text",
-                                                            "text": textContent_2,
-                                                            "weight": "regular",
-                                                            "size": "sm",
-                                                            "color":textColor,
-                                                            "align": "center",
-                                                            "gravity": "center",
-                                                            "action": {
-                                                                "type": "uri",
-                                                                "uri": textContent_2_url
-                                                            },
-                                                            "contents": []
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "type": "box",
-                                                    "layout": "vertical",
-                                                    "height": "30px",
-                                                    "contents": [
-                                                        {
-                                                            "type": "text",
-                                                            "text": textContent_3,
-                                                            "weight": "regular",
-                                                            "size": "sm",
-                                                            "color": textColor,
-                                                            "align": "center",
-                                                            "gravity": "center",
-                                                            "action": {
-                                                                "type": "uri",
-                                                                "uri": textContent_3_url
-                                                            },
-                                                            "contents": []
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "type": "box",
-                                                    "layout": "vertical",
-                                                    "paddingTop": "3%",
-                                                    "paddingBottom": "0%",
-                                                    "height": "35px",
-                                                    "contents": [
-                                                        {
-                                                            "type": "text",
-                                                            "text": "【"+companyUnit+"】",
-                                                            "weight": "regular",
-                                                            "size": "sm",
-                                                            "color": "#EB9191FF",
-                                                            "align": "center",
-                                                            "gravity": "bottom",
-                                                            "offsetBottom": "0%",
-                                                            "contents": []
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "type": "box",
-                                            "layout": "vertical",
-                                            "height": "1px",
-                                            "backgroundColor": "#FFFFFFFF",
-                                            "contents": [
-                                                {
-                                                    "type": "spacer"
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "type": "box",
-                                            "layout": "horizontal",
-                                            "contents": [
-                                                {
-                                                    "type": "button",
-                                                    "action": {
-                                                        "type": "uri",
-                                                        "label": share_card,
-                                                        "uri": "https://linecorp.com"
-                                                    },
-                                                    "color": bgColor,
-                                                    "style": "primary"
-                                                },
-                                                {
-                                                    "type": "button",
-                                                    "action": {
-                                                        "type": "uri",
-                                                        "label": keep_card,
-                                                        "uri": "https://linecorp.com"
-                                                    },
-                                                    "color": bgColor,
-                                                    "style": "primary"
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "type": "box",
-                                            "layout": "vertical",
-                                            "height": "1px",
-                                            "backgroundColor": "#FFFFFFFF",
-                                            "contents": [
-                                                {
-                                                    "type": "spacer"
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "type": "box",
-                                            "layout": "vertical",
-                                            "contents": [
-                                                {
-                                                    "type": "text",
-                                                    "text": cardDescription ,
-                                                    "size": "xxs",
-                                                    "color": "#EB9191FF",
-                                                    "align": "start",
-                                                    "gravity": "bottom",
-                                                    "wrap": true,
-                                                    "offsetTop": "2%",
-                                                    "contents": []
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                }
+                                        "color": "#BA0101FF",
+                                        "style": "primary"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "box",
+                                "layout": "vertical",
+                                "height": "1px",
+                                "backgroundColor": "#FFFFFFFF",
+                                "contents": [
+                                    {
+                                        "type": "spacer"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "box",
+                                "layout": "vertical",
+                                "contents": [
+                                    {
+                                        "type": "text",
+                                        "text": cardDescription,
+                                        "size": "xxs",
+                                        "color": "#EB9191FF",
+                                        "align": "start",
+                                        "gravity": "bottom",
+                                        "wrap": true,
+                                        "offsetTop": "2%",
+                                        "contents": []
+                                    }
+                                ]
                             }
-                            ]
+                        ]
+                    }
+                }]
+            }
+        }
+        document.getElementById("flex2html").innerHTML = "";
+        flex2html('flex2html', flexJson)
+        saveToCookie()
+    }
+
+
+    window.onload = function () {
+        readFromCookie()
+        liff.init({ liffId: "1660908511-DERZWN3m" })
+            .then(() => {
+                if (!liff.isLoggedIn()) {
+                    liff.login();
+                }
+            });
+
+        document.getElementById("shareButton").addEventListener("click", () => {
+            liff.shareTargetPicker([flexJson])
+                .then(function (res) {
+                    if (res) {
+                        console.log(`[${res.status}] Message sent!`)
+                    } else {
+                        const [majorVer, minorVer] = (liff.getLineVersion() || "").split('.');
+                        if (parseInt(majorVer) == 10 && parseInt(minorVer) < 11) {
+                            console.log('TargetPicker was opened at least. Whether succeeded to send message is unclear')
+                        } else {
+                            console.log('TargetPicker was closed!')
                         }
                     }
-                ])
-                    .then(function (res) {
-                        if (res) {
-                            console.log(`[${res.status}] Message sent!`)
-                        } else {
-                            const [majorVer, minorVer] = (liff.getLineVersion() || "").split('.');
-                            if (parseInt(majorVer) == 10 && parseInt(minorVer) < 11) {
-                                console.log('TargetPicker was opened at least. Whether succeeded to send message is unclear')
-                            } else {
-                                console.log('TargetPicker was closed!')
-                            }
-                        }
-                    }).catch(function (error) {
-                        console.log('something wrong happen')
-                    });
-            });
-        };
-    </script>
+                }).catch(function (error) {
+                    console.log('something wrong happen')
+                });
+        });
+    };
+
+</script>
+
 </body>
 
 </html>
