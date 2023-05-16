@@ -137,177 +137,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LIFF Share Example</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/PamornT/flex2html@main/css/flex2html.css">
-    <script src="https://cdn.jsdelivr.net/gh/PamornT/flex2html@main/js/flex2html.min.js"></script>
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-
-        .form-container {
-            width: 300px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f8f8f8;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #009688;
-            color: white;
-            border: none;
-            border-radius: 5px;
-        }
-
-        button:hover {
-            background-color: #007c69;
-        }
-
-        .chatbox {
-            background-color: transparent;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        .loader {
-            position: fixed;
-            z-index: 9999;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .loader>div {
-            border: 16px solid #f3f3f3;
-            border-radius: 50%;
-            border-top: 16px solid #3498db;
-            width: 50px;
-            height: 50px;
-            animation: spin 2s linear infinite;
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-    </style>
 </head>
 
 <body>
-    <div class="loader" id="loader">
-        <div></div>
-    </div>
-    <div id="modal" class="hidden">
-        <div class="modal-content">
-            <h1>LINE Share Example</h1>
-            <div style="display: flex; justify-content: space-between;width: 300px;">
-                <button id="shareButton">Share Message</button>
-                <button onclick="close_flex()">返回</button>
-            </div>
-            <div class="chatbox">
-                <div id="flex2html"></div>
-            </div>
-
-        </div>
-    </div>
-
-    <div class="form-container">
-        <div class="form-group">
-            <button onclick="show_flex()">查看卡片</button>
-        </div>
-        <div class="form-group">
-            <label>大圖 URL</label>
-            <input id="textContent_1_url" style="width: 100%;" type="text"
-                placeholder="https://3428750.so-buy.com/_files/50/3428750/f/20230205.jpg">
-        </div>
-        <div class="form-group">
-            <label>點擊大圖 URL</label>
-            <input id="textContent_2_url" style="width: 100%;" type="text" placeholder="https://linecorp.com/">
-        </div>
-        <div class="form-group">
-            <label>主標1</label>
-            <input id="mainTitle_1" style="width: 100%;" type="text" placeholder="磊山 人文講堂">
-        </div>
-        <div class="form-group">
-            <label>名稱</label>
-            <input id="subTitle_1" style="width: 100%;" type="text" placeholder="余浩瑋">
-        </div>
-        <div class="form-group">
-            <label>別名</label>
-            <input id="subTitle_2" style="width: 100%;" type="text" placeholder="青藝盟盟主">
-        </div>
-        <div class="form-group">
-            <label>主標2</label>
-            <input id="mainTitle_2" style="width: 100%;" type="text" placeholder="《牽風箏的人》">
-        </div>
-        <div class="form-group">
-            <label>時間</label>
-            <input id="textContent_1" style="width: 100%;" type="text" placeholder="05/06(六)09:50~12:00">
-        </div>
-        <div class="form-group">
-            <label>地點</label>
-            <input id="textContent_2" style="width: 100%;" type="text" placeholder="磊山學院">
-        </div>
-        <div class="form-group">
-            <label>地址</label>
-            <input id="textContent_3" style="width: 100%;" type="text" placeholder="台北市南京東路二段178號10樓">
-        </div>
-        <!-- <div class="form-group">
-            <label>文字內容3 URL</label>
-            <input id="textContent_3_url" style="width: 100%;" type="text" placeholder="https://albert20699.github.io/">
-        </div>
-        <div class="form-group">
-            <label>公司單位</label>
-            <input id="companyUnit" style="width: 100%;" type=" text" placeholder="呈璽 Mtvs">
-        </div>
-        <div class="form-group">
-            <label>分享卡片</label>
-            <input id="share_card" style="width: 100%;" type="text" placeholder="分享卡片">
-        </div>
-        <div class="form-group">
-            <label>收藏卡片</label>
-            <input id="keep_card" style="width: 100%;" type="text" placeholder="收藏卡片">
-        </div>
-        <div class="form-group">
-            <label>卡片描述</label>
-            <input id="cardDescription" style="width: 100%;" type="text"
-                placeholder="以上資料由【呈壐】整理自台北燈會官網，可點文字連結或下載詳細資料。歡迎加入【呈璽】官LINE@不再錯過精彩訊息喔~~">
-        </div>
-        <div class="form-group">
-            <label>背景顏色</label>
-            <input id="bgColor" style="width: 100%;" type="text" placeholder="#BA0101FF">
-        </div> -->
-        <div class="form-group">
-            <label>文字顏色</label>
-            <input id="textColor" style="width: 100%;" type="text" placeholder="#081F58FF">
-        </div>
-
 </body>
 
 </html>
@@ -318,101 +151,17 @@
     var mainTitle_1, mainTitle_2, subTitle_1, subTitle_2, textContent_1, textContent_1_url, textContent_2, textContent_2_url, textContent_3, textContent_3_url, companyUnit, share_card, keep_card, cardDescription, bgColor, textColor
     var flexJson, userId
 
-    function readShowCardData() {
-        return JSON.stringify({
-            mainTitle_1: document.getElementById("mainTitle_1").value || "",
-            mainTitle_2: document.getElementById("mainTitle_2").value || "",
-            subTitle_1: document.getElementById("subTitle_1").value || "",
-            subTitle_2: document.getElementById("subTitle_2").value || "",
-            textContent_1: document.getElementById("textContent_1").value || "",
-            textContent_1_url: document.getElementById("textContent_1_url").value || "",
-            textContent_2: document.getElementById("textContent_2").value || "",
-            textContent_2_url: document.getElementById("textContent_2_url").value || "",
-            textContent_3: document.getElementById("textContent_3").value || "",
-            // textContent_3_url: document.getElementById("textContent_3_url").value || "",
-            // companyUnit: document.getElementById("companyUnit").value || "",
-            // share_card: document.getElementById("share_card").value || "",
-            // keep_card: document.getElementById("keep_card").value || "",
-            // cardDescription: document.getElementById("cardDescription").value || "",
-            // bgColor: document.getElementById("bgColor").value || "",
-            textColor: document.getElementById("textColor").value || ""
-        });
-    }
-
-    function writeShowCardData(data_card) {
-        document.getElementById("mainTitle_1").value = data_card.mainTitle_1 || "";
-        document.getElementById("mainTitle_2").value = data_card.mainTitle_2 || "";
-        document.getElementById("subTitle_1").value = data_card.subTitle_1 || "";
-        document.getElementById("subTitle_2").value = data_card.subTitle_2 || "";
-        document.getElementById("textContent_1").value = data_card.textContent_1 || "";
-        document.getElementById("textContent_1_url").value = data_card.textContent_1_url || "";
-        document.getElementById("textContent_2").value = data_card.textContent_2 || "";
-        document.getElementById("textContent_2_url").value = data_card.textContent_2_url || "";
-        document.getElementById("textContent_3").value = data_card.textContent_3 || "";
-        // document.getElementById("textContent_3_url").value = data_card.textContent_3_url || "";
-        // document.getElementById("companyUnit").value = data_card.companyUnit || "";
-        // document.getElementById("share_card").value = data_card.share_card || "";
-        // document.getElementById("keep_card").value = data_card.keep_card || "";
-        // document.getElementById("cardDescription").value = data_card.cardDescription || "";
-        // document.getElementById("bgColor").value = data_card.bgColor || "";
-        document.getElementById("textColor").value = data_card.textColor || "";
-    }
-
-    function close_flex() {
-        document.getElementById('modal').classList.add('hidden');
-        document.querySelector('.form-container').classList.remove('hidden');
-    }
-    function show_flex() {
-        document.getElementById('modal').classList.remove('hidden');
-        document.querySelector('.form-container').classList.add('hidden');
-
-        var mainTitle_1_Element = document.getElementById("mainTitle_1");
-        mainTitle_1 = mainTitle_1_Element.value || mainTitle_1_Element.placeholder;
-
-        var mainTitle_2_Element = document.getElementById("mainTitle_2");
-        mainTitle_2 = mainTitle_2_Element.value || mainTitle_2_Element.placeholder;
-
-        var subTitle_1_Element = document.getElementById("subTitle_1");
-        subTitle_1 = subTitle_1_Element.value || subTitle_1_Element.placeholder;
-
-        var subTitle_2_Element = document.getElementById("subTitle_2");
-        subTitle_2 = subTitle_2_Element.value || subTitle_2_Element.placeholder;
-
-        var textContent_1_Element = document.getElementById("textContent_1");
-        textContent_1 = textContent_1_Element.value || textContent_1_Element.placeholder;
-
-        var textContent_1_url_Element = document.getElementById("textContent_1_url");
-        textContent_1_url = textContent_1_url_Element.value || textContent_1_url_Element.placeholder;
-
-        var textContent_2_Element = document.getElementById("textContent_2");
-        textContent_2 = textContent_2_Element.value || textContent_2_Element.placeholder;
-
-        var textContent_2_url_Element = document.getElementById("textContent_2_url");
-        textContent_2_url = textContent_2_url_Element.value || textContent_2_url_Element.placeholder;
-
-        var textContent_3_Element = document.getElementById("textContent_3");
-        textContent_3 = textContent_3_Element.value || textContent_3_Element.placeholder;
-
-        // var textContent_3_url_Element = document.getElementById("textContent_3_url");
-        // textContent_3_url = textContent_3_url_Element.value || textContent_3_url_Element.placeholder;
-
-        // var companyUnit_Element = document.getElementById("companyUnit");
-        // companyUnit = companyUnit_Element.value || companyUnit_Element.placeholder;
-
-        // var share_card_Element = document.getElementById("share_card");
-        // share_card = share_card_Element.value || share_card_Element.placeholder;
-
-        // var keep_card_Element = document.getElementById("keep_card");
-        // keep_card = keep_card_Element.value || keep_card_Element.placeholder;
-
-        // var cardDescription_Element = document.getElementById("cardDescription");
-        // cardDescription = cardDescription_Element.value || cardDescription_Element.placeholder;
-
-        // var bgColor_Element = document.getElementById("bgColor");
-        // bgColor = bgColor_Element.value || bgColor_Element.placeholder;
-
-        var textColor_Element = document.getElementById("textColor");
-        textColor = textColor_Element.value || textColor_Element.placeholder;
+    function create_flex(data_card) {
+        mainTitle_1 = data_card.mainTitle_1 || "磊山 人文講堂";
+        mainTitle_2 = data_card.mainTitle_2 || "《牽風箏的人》";
+        subTitle_1 = data_card.subTitle_1 || "余浩瑋";
+        subTitle_2 = data_card.subTitle_2 || "青藝盟盟主";
+        textContent_1 = data_card.textContent_1 || "05/06(六)09:50~12:00";
+        textContent_1_url = data_card.textContent_1_url || "https://3428750.so-buy.com/_files/50/3428750/f/20230205.jpg";
+        textContent_2 = data_card.textContent_2 || "磊山學院";
+        textContent_2_url = data_card.textContent_2_url || "https://linecorp.com/";
+        textContent_3 = data_card.textContent_3 || "台北市南京東路二段178號10樓";
+        textColor = data_card.textColor || "#081F58FF";
 
         flexJson = {
             "type": "flex",
@@ -523,6 +272,10 @@
                                     {
                                         "type": "box",
                                         "layout": "vertical",
+                                        "action": {
+                                            "type": "uri",
+                                            "uri": "https://liff.line.me/1660908511-Ol7grGPY"
+                                        },
                                         "paddingTop": "10px",
                                         "width": "135px",
                                         "height": "40px",
@@ -613,23 +366,6 @@
             }
         }
 
-
-        document.getElementById("flex2html").innerHTML = "";
-        flex2html('flex2html', flexJson)
-
-        // 將錯誤的 ExXxs 替換為正確的 ExXXs
-        var wrongExXxsElements = document.querySelectorAll(".ExXxs");
-        wrongExXxsElements.forEach(function (element) {
-            element.classList.remove("ExXxs");
-            element.classList.add("ExXXs");
-        });
-
-        // 將錯誤的 Ex3xl 替換為正確的 Ex3Xl
-        var wrongEx3xlElements = document.querySelectorAll(".Ex3xl");
-        wrongEx3xlElements.forEach(function (element) {
-            element.classList.remove("Ex3xl");
-            element.classList.add("Ex3Xl");
-        });
     }
 
     async function sendRequest(status, userId, data_card = "") {
@@ -656,7 +392,7 @@
 
 
     window.onload = function () {
-        liff.init({ liffId: "1660908511-DERZWN3m" })
+        liff.init({ liffId: "1660908511-Ol7grGPY" })
             .then(() => {
                 if (!liff.isLoggedIn()) {
                     liff.login();
@@ -668,7 +404,7 @@
                             var responseData = await sendRequest("get", userId)
                             if (responseData.status === 'ok') {
                                 const data_card = JSON.parse(responseData.card);
-                                writeShowCardData(data_card)
+                                create_flex(data_card)
                                 console.log(data_card);
                             }
                             document.getElementById('loader').style.display = 'none';
@@ -679,66 +415,29 @@
                 }
             });
 
-        document.getElementById("shareButton").addEventListener("click", () => {
-            liff.shareTargetPicker([flexJson])
-                .then(function (res) {
-                    if (res) {
-                        console.log(`[${res.status}] Message sent!`)
+        liff.shareTargetPicker([flexJson])
+            .then(function (res) {
+                if (res) {
+                    console.log(`[${res.status}] Message sent!`)
+                } else {
+                    const [majorVer, minorVer] = (liff.getLineVersion() || "").split('.');
+                    if (parseInt(majorVer) == 10 && parseInt(minorVer) < 11) {
+                        console.log('TargetPicker was opened at least. Whether succeeded to send message is unclear')
                     } else {
-                        const [majorVer, minorVer] = (liff.getLineVersion() || "").split('.');
-                        if (parseInt(majorVer) == 10 && parseInt(minorVer) < 11) {
-                            console.log('TargetPicker was opened at least. Whether succeeded to send message is unclear')
-                        } else {
-                            console.log('TargetPicker was closed!')
-                        }
+                        console.log('TargetPicker was closed!')
                     }
-                }).catch(function (error) {
-                    console.log('something wrong happen')
-                });
-        });
+                }
+            }).catch(function (error) {
+                console.log('something wrong happen')
+            });
     };
 
-    document.addEventListener('blur', function(event) {
-    // 檢查事件源是否為輸入框
-    if (event.target.tagName.toLowerCase() === 'input') {
-        if (document.getElementById('loader').style.display == 'none') {
-            sendRequest("save", userId, readShowCardData())
-        }
-    }
-}, true); // 注意，這裡的 true 參數是為了在捕獲階段觸發事件，這對於 'blur' 和 'focus' 事件是必要的。
-
-    // function setCookie(name, value, days) {
-    //     var expires = "";
-    //     if (days) {
-    //         var date = new Date();
-    //         date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-    //         expires = "; expires=" + date.toUTCString();
-    //     }
-    //     document.cookie = name + "=" + (value || "") + expires + "; path=/";
-    // }
-    // function getCookie(name) {
-    //     var nameEQ = name + "=";
-    //     var ca = document.cookie.split(';');
-    //     for (var i = 0; i < ca.length; i++) {
-    //         var c = ca[i];
-    //         while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-    //         if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-    //     }
-    //     return null;
-    // }
-    // function displayUserProfile(profile) {
-    //     console.log("User ID:", profile.userId);
-    //     console.log("Display name:", profile.displayName);
-    //     console.log("Profile picture URL:", profile.pictureUrl);
-    //     console.log("Status message:", profile.statusMessage);
-    // }
 
 </script>
 
 </body>
 
 </html>
-
         </section>
     </article>
 </div>
