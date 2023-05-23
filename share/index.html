@@ -279,19 +279,25 @@
                     });
                     userId = parameters["userId"]
                     var responseData = sendRequest("get", userId)
+                        alert("1")
                     if (responseData.status === 'ok') {
+                        alert("2")
                         const data_card = JSON.parse(responseData.card);
                         create_flex(data_card)
+                        alert("3")
                     }
                 }
             });
 
+            alert("4")
 
         liff.shareTargetPicker([flexJson])
             .then(function (res) {
                 if (res) {
+            alert("yaya")
                     console.log(`[${res.status}] Message sent!`)
                 } else {
+            alert("error")
                     const [majorVer, minorVer] = (liff.getLineVersion() || "").split('.');
                     if (parseInt(majorVer) == 10 && parseInt(minorVer) < 11) {
                         console.log('TargetPicker was opened at least. Whether succeeded to send message is unclear')
