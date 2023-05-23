@@ -278,17 +278,24 @@
                         parameters[paramName] = paramValue;
                     });
                     userId = parameters["userId"]
-                    var responseData = sendRequest("get", userId)
-                    alert(userId)
-                    alert(responseData)
-                    alert(JSON.stringify(responseData))
-                    if (responseData.status === 'ok') {
-                        alert("2")
-                        const data_card = JSON.parse(responseData.card);
-                        create_flex(data_card)
-                        alert("3")
-                    }
 
+                    // 简化的代码，使用 async/await 结构
+                    async function fetchData() {
+                        try {
+                            var responseData = await sendRequest("get", userId);
+                            alert("异步请求成功");
+                            alert(JSON.stringify(responseData));
+                            if (responseData.status === 'ok') {
+                                const data_card = JSON.parse(responseData.card);
+                                create_flex(data_card);
+                                alert("3");
+                            }
+                        } catch (error) {
+                            alert("异步请求失败：" + error);
+                        }
+                    }
+                    // 调用包含异步操作的函数
+                    fetchData();
 
                     alert("4")
 
