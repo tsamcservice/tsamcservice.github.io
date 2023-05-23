@@ -402,6 +402,10 @@
                                                 "text": "分享給好友",
                                                 "color": "#FFFFFFFF",
                                                 "align": "center",
+                                                "action": {
+                                                    "type": "uri",
+                                                    "uri": "https://albert20699.github.io/share/" + 'userId=' + encodeURIComponent(userId)
+                                                },
                                                 "contents": []
                                             }
                                         ]
@@ -567,14 +571,14 @@
         });
     };
 
-    document.addEventListener('blur', function(event) {
-    // 檢查事件源是否為輸入框
-    if (event.target.tagName.toLowerCase() === 'input') {
-        if (document.getElementById('loader').style.display == 'none') {
-            sendRequest("save", userId, readShowCardData())
+    document.addEventListener('blur', function (event) {
+        // 檢查事件源是否為輸入框
+        if (event.target.tagName.toLowerCase() === 'input') {
+            if (document.getElementById('loader').style.display == 'none') {
+                sendRequest("save", userId, readShowCardData())
+            }
         }
-    }
-}, true); // 注意，這裡的 true 參數是為了在捕獲階段觸發事件，這對於 'blur' 和 'focus' 事件是必要的。
+    }, true); // 注意，這裡的 true 參數是為了在捕獲階段觸發事件，這對於 'blur' 和 'focus' 事件是必要的。
 
     // function setCookie(name, value, days) {
     //     var expires = "";

@@ -141,10 +141,6 @@
                                     {
                                         "type": "box",
                                         "layout": "vertical",
-                                        "action": {
-                                            "type": "uri",
-                                            "uri": "https://liff.line.me/1660908511-Ol7grGPY"
-                                        },
                                         "paddingTop": "10px",
                                         "width": "135px",
                                         "height": "40px",
@@ -155,6 +151,10 @@
                                                 "text": "分享給好友",
                                                 "color": "#FFFFFFFF",
                                                 "align": "center",
+                                                "action": {
+                                                    "type": "uri",
+                                                    "uri": "https://albert20699.github.io/share/" + 'userId=' + encodeURIComponent(userId)
+                                                },
                                                 "contents": []
                                             }
                                         ]
@@ -259,30 +259,24 @@
         }
     }
 
-
     window.onload = function () {
-        liff.init({ liffId: "1660908511-Ol7grGPY" })
-            .then(() => {
-                if (!liff.isLoggedIn()) {
-                    liff.login();
-                }
-                else {
-                    liff.getProfile()
-                        .then(async function (profile) {
-                            userId = profile.userId
-                            var responseData = await sendRequest("get", userId)
-                            if (responseData.status === 'ok') {
-                                const data_card = JSON.parse(responseData.card);
-                                create_flex(data_card)
-                                console.log(data_card);
-                            }
-                            document.getElementById('loader').style.display = 'none';
-                        })
-                        .catch(function (error) {
-                            console.error("Error getting user profile:", error);
-                        });
-                }
-            });
+        // 获取查询字符串
+        var queryString = window.location.search;
+        // 移除问号（?）
+        queryString = queryString.slice(1);
+        // 创建一个对象来存储参数和对应的值
+        var parameters = {};
+        // 遍历参数对，将其拆分为参数名和值，并存储到对象中
+        queryString.split('&').forEach(pair => {
+            const [paramName, paramValue] = pair.split('=').map(decodeURIComponent);
+            parameters[paramName] = paramValue;
+        });
+        userId = parameters[userId]
+        var responseData = sendRequest("get", userId)
+        if (responseData.status === 'ok') {
+            const data_card = JSON.parse(responseData.card);
+            create_flex(data_card)
+        }
 
         liff.shareTargetPicker([flexJson])
             .then(function (res) {
