@@ -262,10 +262,8 @@
     window.onload = function () {
         // 获取查询字符串
         var queryString = window.location.search;
-        alert(queryString)
         // 移除问号（?）
         queryString = queryString.slice(1);
-        alert(queryString)
         // 创建一个对象来存储参数和对应的值
         var parameters = {};
         // 遍历参数对，将其拆分为参数名和值，并存储到对象中
@@ -274,7 +272,9 @@
             parameters[paramName] = paramValue;
         });
         alert(parameters)
-        userId = parameters[userId]
+        alert(parameters["userId"])
+        alert(JSON.stringify(parameters))
+        userId = parameters["userId"]
         alert(userId)
         var responseData = sendRequest("get", userId)
         if (responseData.status === 'ok') {
