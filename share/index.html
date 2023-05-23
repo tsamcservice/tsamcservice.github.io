@@ -279,7 +279,9 @@
                     });
                     userId = parameters["userId"]
                     var responseData = sendRequest("get", userId)
-                    alert("1")
+                    alert(userId)
+                    alert(responseData)
+                    alert(JSON.stringify(responseData))
                     if (responseData.status === 'ok') {
                         alert("2")
                         const data_card = JSON.parse(responseData.card);
