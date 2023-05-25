@@ -111,9 +111,12 @@
         <div class="form-group">
             <button onclick="show_flex()">查看卡片</button>
         </div>
-        <form>
-            <input type="file" id="upload" accept="image/*">
-        </form>
+        <div class="form-group">
+            <label>大圖 URL</label>
+            <form>
+                <input type="file" id="upload" accept="image/*">
+            </form>
+        </div>
         <div class="form-group">
             <label>點擊大圖 URL</label>
             <input id="textContent_2_url" style="width: 100%;" type="text" placeholder="https://linecorp.com/">
@@ -193,7 +196,7 @@
             subTitle_1: document.getElementById("subTitle_1").value || "",
             subTitle_2: document.getElementById("subTitle_2").value || "",
             textContent_1: document.getElementById("textContent_1").value || "",
-            textContent_1_url: document.getElementById("textContent_1_url").value || "",
+            // textContent_1_url: document.getElementById("textContent_1_url").value || "",
             textContent_2: document.getElementById("textContent_2").value || "",
             textContent_2_url: document.getElementById("textContent_2_url").value || "",
             textContent_3: document.getElementById("textContent_3").value || "",
@@ -213,7 +216,7 @@
         document.getElementById("subTitle_1").value = data_card.subTitle_1 || "";
         document.getElementById("subTitle_2").value = data_card.subTitle_2 || "";
         document.getElementById("textContent_1").value = data_card.textContent_1 || "";
-        document.getElementById("textContent_1_url").value = data_card.textContent_1_url || "";
+        // document.getElementById("textContent_1_url").value = data_card.textContent_1_url || "";
         document.getElementById("textContent_2").value = data_card.textContent_2 || "";
         document.getElementById("textContent_2_url").value = data_card.textContent_2_url || "";
         document.getElementById("textContent_3").value = data_card.textContent_3 || "";
@@ -249,8 +252,8 @@
         var textContent_1_Element = document.getElementById("textContent_1");
         textContent_1 = textContent_1_Element.value || textContent_1_Element.placeholder;
 
-        var textContent_1_url_Element = document.getElementById("textContent_1_url");
-        textContent_1_url = textContent_1_url_Element.value || textContent_1_url_Element.placeholder;
+        // var textContent_1_url_Element = document.getElementById("textContent_1_url");
+        // textContent_1_url = textContent_1_url_Element.value || textContent_1_url_Element.placeholder;
 
         var textContent_2_Element = document.getElementById("textContent_2");
         textContent_2 = textContent_2_Element.value || textContent_2_Element.placeholder;
