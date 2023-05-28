@@ -290,8 +290,10 @@
                             liff.shareTargetPicker([flexJson])
                                 .then(function (res) {
                                     if (res) {
-                                        // 關閉 liff 視窗頁面
+                                        // 關閉 liff 視窗頁面 (手機)
                                         liff.closeWindow();
+                                        // 關閉 網頁 視窗頁面 (電腦)
+                                        window.close();
                                         console.log(`[${res.status}] Message sent!`)
                                     } else {
                                         const [majorVer, minorVer] = (liff.getLineVersion() || "").split('.');
