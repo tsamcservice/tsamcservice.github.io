@@ -112,18 +112,13 @@
 
     <div class="hidden_forward">
         <div class="form-container">
-            <div class="form-group">
-                <div class="modal-content">
-                    <h1>LINE Share Card</h1>
-                    <div style="display: flex; justify-content: space-between;width: 300px;">
-                        <button id="shareButton">分享卡片</button>
-                        <button onclick="close_flex()">返回</button>
-                    </div>
-                    <div class="chatbox">
-                        <div id="flex2html"></div>
-                    </div>
-
-                </div>
+            <h1>LINE Share Card</h1>
+            <div style="display: flex; justify-content: space-between;width: 300px;">
+                <button id="shareButton">分享卡片</button>
+                <button onclick="close_flex()">返回</button>
+            </div>
+            <div class="chatbox">
+                <div id="flex2html"></div>
             </div>
         </div>
     </div>
@@ -255,12 +250,12 @@
         }
 
         function close_flex() {
-            document.getElementById('modal').classList.add('hidden');
-            document.querySelector('.form-container').classList.remove('hidden');
+            document.querySelector('.hidden_forward').classList.add('hidden');
+            document.querySelector('.hidden_backward').classList.remove('hidden');
         }
         function show_flex() {
-            document.getElementById('modal').classList.remove('hidden');
-            document.querySelector('.form-container').classList.add('hidden');
+            document.querySelector('.hidden_forward').classList.remove('hidden');
+            document.querySelector('.hidden_backward').classList.add('hidden');
 
             var mainTitle_1_Element = document.getElementById("mainTitle_1");
             mainTitle_1 = mainTitle_1_Element.value || mainTitle_1_Element.placeholder;
