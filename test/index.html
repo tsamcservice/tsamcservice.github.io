@@ -52,9 +52,11 @@
             background-color: #007c69;
         }
 
-        /* .chatbox {
+        .chatbox {
             background-color: transparent;
-        } */
+            width: 360px;
+            overflow: hidden;
+        }
 
         .hidden {
             display: none;
@@ -117,9 +119,9 @@
                 <button id="shareButton">分享卡片</button>
                 <button onclick="close_flex()">返回</button>
             </div>
-            <!-- <div class="chatbox">
+            <div class="chatbox">
                 <div id="flex2html"></div>
-            </div> -->
+            </div>
         </div>
     </div>
 
@@ -509,8 +511,8 @@
             }
 
 
-            // document.getElementById("flex2html").innerHTML = "";
-            // flex2html('flex2html', flexJson)
+            document.getElementById("flex2html").innerHTML = "";
+            flex2html('flex2html', flexJson)
 
             // 將錯誤的 ExXxs 替換為正確的 ExXXs
             var wrongExXxsElements = document.querySelectorAll(".ExXxs");
