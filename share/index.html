@@ -6,7 +6,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LIFF Share Example</title>
+    <!-- liff -->
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    <!-- 提示框 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.5/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.5/dist/sweetalert2.min.js"></script>
 </head>
 
 <body>
@@ -26,7 +30,7 @@
         subTitle_1 = data_card.subTitle_1 || "余浩瑋";
         subTitle_2 = data_card.subTitle_2 || "青藝盟盟主";
         textContent_1 = data_card.textContent_1 || "05/06(六)09:50~12:00";
-        textContent_1_url = data_card.textContent_1_url || "https://3428750.so-buy.com/_files/50/3428750/f/20230205.jpg";
+        textContent_1_url = data_card.textContent_1_url || "https://cardoa.saasou.com/_files/0/100/f/01_1_cafe.png";
         textContent_2 = data_card.textContent_2 || "磊山學院";
         textContent_2_url = data_card.textContent_2_url || "https://linecorp.com/";
         textContent_3 = data_card.textContent_3 || "台北市南京東路二段178號10樓";
@@ -153,7 +157,7 @@
                                                 "align": "center",
                                                 "action": {
                                                     "type": "uri",
-                                                    "uri": "https://albert20699.github.io/share/?userId=" + encodeURIComponent(userId)
+                                                    "uri": "https://liff.line.me/1660908511-Ol7grGPY/?userId=" + encodeURIComponent(userId)
                                                 },
                                                 "contents": []
                                             }
@@ -261,23 +265,23 @@
     window.onload = function () {
         liff.init({ liffId: "1660908511-Ol7grGPY" })
             .then(() => {
+                // 获取查询字符串
+                var queryString = window.location.search;
+                // 移除问号（?）
+                queryString = queryString.slice(1);
+                // 创建一个对象来存储参数和对应的值
+                var parameters = {};
+                // 遍历参数对，将其拆分为参数名和值，并存储到对象中
+                queryString.split('&').forEach(pair => {
+                    const [paramName, paramValue] = pair.split('=').map(decodeURIComponent);
+                    parameters[paramName] = paramValue;
+                });
                 if (!liff.isLoggedIn()) {
+                    document.cookie = "userId=" + parameters["userId"];
                     liff.login();
                 }
                 else {
-                    // 获取查询字符串
-                    var queryString = window.location.search;
-                    // 移除问号（?）
-                    queryString = queryString.slice(1);
-                    // 创建一个对象来存储参数和对应的值
-                    var parameters = {};
-                    // 遍历参数对，将其拆分为参数名和值，并存储到对象中
-                    queryString.split('&').forEach(pair => {
-                        const [paramName, paramValue] = pair.split('=').map(decodeURIComponent);
-                        parameters[paramName] = paramValue;
-                    });
-                    userId = parameters["userId"]
-
+                    userId = parameters["userId"] || document.cookie.split('; ').find(row => row.startsWith('userId=')).split('=')[1];
                     async function send() {
                         var responseData = await sendRequest("get", userId);
                         if (responseData.status === 'ok') {
@@ -286,6 +290,8 @@
                             liff.shareTargetPicker([flexJson])
                                 .then(function (res) {
                                     if (res) {
+                                        // 關閉 liff 視窗頁面
+                                        liff.closeWindow();
                                         console.log(`[${res.status}] Message sent!`)
                                     } else {
                                         const [majorVer, minorVer] = (liff.getLineVersion() || "").split('.');
