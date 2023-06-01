@@ -1,0 +1,426 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIFF Card Share</title>
+    <!-- flex2html -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/PamornT/flex2html@main/css/flex2html.css">
+    <script src="https://cdn.jsdelivr.net/gh/PamornT/flex2html@main/js/flex2html.min.js"></script>
+    <!-- liff -->
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    <!-- 提示框 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.5/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.5/dist/sweetalert2.min.js"></script>
+    <!-- dom-to-image -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .form-container {
+            width: 310px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f8f8;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            position: relative;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #009688;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #007c69;
+        }
+
+        .chatbox {
+            background-color: transparent;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .loader {
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loader>div {
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #3498db;
+            width: 50px;
+            height: 50px;
+            animation: spin 2s linear infinite;
+        }
+
+        #upload {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+        }
+
+        #upload_btn {
+            margin-right: 5px;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="loader" id="loader">
+        <div></div>
+    </div>
+
+    <div class="form-container">
+        <h1>LIFF Card Share</h1>
+        <div class="chatbox">
+            <div id="flex2html"></div>
+        </div>
+    </div>
+
+    <script>
+        var mainTitle_1, mainTitle_2, subTitle_1, subTitle_2, textContent_1, textContent_1_url, textContent_2, textContent_2_url, textContent_3, textContent_3_url, companyUnit, share_card, keep_card, cardDescription, bgColor, textColor
+        var flexJson, userId
+
+        function create_flex(data_card) {
+            mainTitle_1 = data_card.mainTitle_1 || "磊山 人文講堂";
+            mainTitle_2 = data_card.mainTitle_2 || "《牽風箏的人》";
+            subTitle_1 = data_card.subTitle_1 || "余浩瑋";
+            subTitle_2 = data_card.subTitle_2 || "青藝盟盟主";
+            textContent_1 = data_card.textContent_1 || "05/06(六)09:50~12:00";
+            textContent_1_url = data_card.textContent_1_url || "https://cardoa.saasou.com/_files/0/100/f/01_1_cafe.png";
+            textContent_2 = data_card.textContent_2 || "磊山學院";
+            textContent_2_url = data_card.textContent_2_url || "https://linecorp.com/";
+            textContent_3 = data_card.textContent_3 || "台北市南京東路二段178號10樓";
+            textColor = data_card.textColor || "#081F58FF";
+
+            flexJson = {
+                "type": "flex",
+                "altText": "Flex Message",
+                "contents": {
+                    "type": "carousel",
+                    "contents": [{
+                        "type": "bubble",
+                        "hero": {
+                            "type": "image",
+                            "url": textContent_1_url,
+                            "size": "full",
+                            "aspectRatio": "1:1",
+                            "aspectMode": "cover",
+                            "action": {
+                                "type": "uri",
+                                "uri": textContent_2_url
+                            }
+                        },
+                        "body": {
+                            "type": "box",
+                            "layout": "vertical",
+                            "position": "relative",
+                            "height": "355px",
+                            "contents": [
+                                {
+                                    "type": "box",
+                                    "layout": "vertical",
+                                    "backgroundColor": textColor,
+                                    "cornerRadius": "5px",
+                                    "contents": [
+                                        {
+                                            "type": "text",
+                                            "text": "【" + mainTitle_1 + "】",
+                                            "weight": "bold",
+                                            "size": "xl",
+                                            "color": "#FFFFFFFF",
+                                            "align": "center",
+                                            "gravity": "center",
+                                            "contents": []
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "box",
+                                    "layout": "horizontal",
+                                    "offsetTop": "5px",
+                                    "height": "45px",
+                                    "contents": [
+                                        {
+                                            "type": "text",
+                                            "text": subTitle_1,
+                                            "weight": "bold",
+                                            "size": "xl",
+                                            "color": textColor,
+                                            "flex": 4,
+                                            "gravity": "center",
+                                            "contents": []
+                                        },
+                                        {
+                                            "type": "text",
+                                            "text": subTitle_2,
+                                            "weight": "bold",
+                                            "color": textColor,
+                                            "flex": 8,
+                                            "gravity": "center",
+                                            "contents": []
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "text",
+                                    "text": mainTitle_2,
+                                    "weight": "regular",
+                                    "color": textColor,
+                                    "contents": []
+                                },
+                                {
+                                    "type": "text",
+                                    "text": "時間:" + textContent_1,
+                                    "weight": "regular",
+                                    "color": textColor,
+                                    "contents": []
+                                },
+                                {
+                                    "type": "text",
+                                    "text": "地點:" + textContent_2,
+                                    "weight": "regular",
+                                    "color": textColor,
+                                    "contents": []
+                                },
+                                {
+                                    "type": "text",
+                                    "text": "(" + textContent_3 + ")",
+                                    "weight": "regular",
+                                    "size": "sm",
+                                    "color": textColor,
+                                    "contents": []
+                                },
+                                {
+                                    "type": "box",
+                                    "layout": "horizontal",
+                                    "position": "absolute",
+                                    "offsetTop": "200px",
+                                    "offsetStart": "10px",
+                                    "width": "10000px",
+                                    "contents": [
+                                        {
+                                            "type": "box",
+                                            "layout": "vertical",
+                                            "paddingTop": "10px",
+                                            "width": "135px",
+                                            "height": "40px",
+                                            "backgroundColor": "#B5B8BDFF",
+                                            "contents": [
+                                                {
+                                                    "type": "text",
+                                                    "text": "分享給好友",
+                                                    "color": "#FFFFFFFF",
+                                                    "align": "center",
+                                                    "action": {
+                                                        "type": "uri",
+                                                        "uri": "https://liff.line.me/1660908511-Ol7grGPY/?userId=" + encodeURIComponent(userId)
+                                                    },
+                                                    "contents": []
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "box",
+                                            "layout": "vertical",
+                                            "offsetStart": "10px",
+                                            "paddingTop": "10px",
+                                            "width": "135px",
+                                            "height": "40px",
+                                            "backgroundColor": "#B5B8BDFF",
+                                            "contents": [
+                                                {
+                                                    "type": "text",
+                                                    "text": "收藏資訊",
+                                                    "color": "#FFFFFFFF",
+                                                    "align": "center",
+                                                    "contents": []
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "box",
+                                    "layout": "vertical",
+                                    "action": {
+                                        "type": "uri",
+                                        // "uri": "https://3428750.so-buy.com/"
+                                        "uri": "https://calendar.google.com/calendar/u/0/r/eventedit?pli=1&uid=62890calndrlink&sf=1&output=xml&dates=20230603T095000/20230603T120000&ctz=Asia/Taipei&text=【磊山+人文講堂】&details=【公益可以不一樣+成為改變的起點】"
+                                    },
+                                    "position": "absolute",
+                                    "offsetTop": "250px",
+                                    "offsetStart": "10px",
+                                    "paddingTop": "10px",
+                                    "width": "280px",
+                                    "height": "40px",
+                                    "backgroundColor": "#91AFC2FF",
+                                    "contents": [
+                                        {
+                                            "type": "text",
+                                            "text": "設定提醒(google行事曆)",
+                                            "color": "#FFFFFFFF",
+                                            "align": "center",
+                                            "contents": []
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "box",
+                                    "layout": "vertical",
+                                    "action": {
+                                        "type": "uri",
+                                        "uri": "https://3428750.so-buy.com/"
+                                    },
+                                    "position": "absolute",
+                                    "offsetTop": "300px",
+                                    "offsetStart": "10px",
+                                    "paddingTop": "10px",
+                                    "width": "280px",
+                                    "height": "40px",
+                                    "backgroundColor": "#91AFC2FF",
+                                    "contents": [
+                                        {
+                                            "type": "text",
+                                            "text": "製作美美的卡片✨",
+                                            "color": "#FFFFFFFF",
+                                            "align": "center",
+                                            "contents": []
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                    ]
+                }
+            }
+            // 將flexJson繪出到HTML上
+            my_flexToHtml()
+        }
+
+        function my_flexToHtml() {
+            document.getElementById("flex2html").innerHTML = "";
+            flex2html('flex2html', flexJson)
+
+            // 將錯誤的 ExXxs 替換為正確的 ExXXs
+            var wrongExXxsElements = document.querySelectorAll(".ExXxs");
+            wrongExXxsElements.forEach(function (element) {
+                element.classList.remove("ExXxs");
+                element.classList.add("ExXXs");
+            });
+
+            // 將錯誤的 Ex3xl 替換為正確的 Ex3Xl
+            var wrongEx3xlElements = document.querySelectorAll(".Ex3xl");
+            wrongEx3xlElements.forEach(function (element) {
+                element.classList.remove("Ex3xl");
+                element.classList.add("Ex3Xl");
+            });
+
+            // 將 LySlider 關閉下方捲動軸
+            var wrongLySliderElements = document.querySelector(".LySlider");
+            wrongLySliderElements.style.webkitOverflowScrolling = "auto";
+            wrongLySliderElements.style.overflowX = "visible";
+
+            // 將 chatbox 上方空白縮短
+            var wrongchatboxElements = document.querySelector(".chatbox");
+            wrongchatboxElements.style.paddingTop = "20px";
+        }
+
+        async function sendRequest(status, userId, data_card = "") {
+            if (!status || !userId) { return; }
+
+            const url = "https://script.google.com/macros/s/AKfycbzmKJEzFnkDj6APsRhPwV1c9qj51sQvgylxLAij0n4kDwyHxcHRUWwgFu8iq-ah8sGL2w/exec";
+
+            try {
+                const data = { "status": status, "userId": userId, "card": data_card };
+
+                // 將資料轉換成查詢字串
+                const queryString = new URLSearchParams(data).toString();
+
+                const response = await fetch(`${url}?${queryString}`);
+                const responseData = await response.json();
+
+                console.log("Data sent:", data);
+                console.log("Response:", responseData);
+                return responseData;
+            } catch (error) {
+                console.error("Error sending data:", error);
+            }
+        }
+
+
+        window.onload = function () {
+            // 获取查询字符串
+            var queryString = window.location.search;
+            // 移除问号（?）
+            queryString = queryString.slice(1);
+            // 创建一个对象来存储参数和对应的值
+            var parameters = {};
+            // 遍历参数对，将其拆分为参数名和值，并存储到对象中
+            queryString.split('&').forEach(pair => {
+                const [paramName, paramValue] = pair.split('=').map(decodeURIComponent);
+                parameters[paramName] = paramValue;
+            });
+
+            userId = parameters["userId"];
+            async function send() {
+                var responseData = await sendRequest("get", userId);
+                if (responseData.status === 'ok') {
+                    const data_card = JSON.parse(responseData.card);
+                    create_flex(data_card);
+                    document.getElementById('loader').style.display = 'none';
+                }
+            }
+            send()
+        }
+
+
+    </script>
+
+</body>
+
+</html>

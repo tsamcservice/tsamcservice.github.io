@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LIFF Share Example</title>
+    <title>LIFF Card Share</title>
     <!-- flex2html -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/PamornT/flex2html@main/css/flex2html.css">
     <script src="https://cdn.jsdelivr.net/gh/PamornT/flex2html@main/js/flex2html.min.js"></script>
@@ -14,6 +13,8 @@
     <!-- 提示框 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.5/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.5/dist/sweetalert2.min.js"></script>
+    <!-- dom-to-image -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
 
     <style>
         body {
@@ -55,8 +56,6 @@
 
         .chatbox {
             background-color: transparent;
-            /* width: 340px; */
-            /* overflow: hidden; */
         }
 
         .hidden {
@@ -115,13 +114,18 @@
 
     <div class="hidden_forward">
         <div class="form-container">
-            <h1>LINE Share Card</h1>
+            <h1>LIFF Card Share</h1>
             <div style="display: flex; justify-content: space-between;width: 310px;">
                 <button id="shareButton">分享卡片</button>
+                <button id="downloadButton">下載卡片</button>
                 <button onclick="close_flex()">返回</button>
             </div>
-            <div class="chatbox">
-                <div id="flex2html"></div>
+            <div class="downloadFlex">
+                <div class="downloadFlex-container" style="width: 310px; overflow: hidden;">
+                    <div class="chatbox">
+                        <div id="flex2html"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -276,7 +280,7 @@
             textContent_1 = textContent_1_Element.value || textContent_1_Element.placeholder;
 
             var textContent_1_url_Element = document.getElementById("upload_text");
-            textContent_1_url = textContent_1_url_Element.textContent || "https://cardoa.saasou.com/_files/0/100/f/01_1_cafe.png";
+            textContent_1_url = textContent_1_url_Element.textContent || "https://i.ibb.co/B6KNp92/01-1-cafe.png";
 
             var textContent_2_Element = document.getElementById("textContent_2");
             textContent_2 = textContent_2_Element.value || textContent_2_Element.placeholder;
@@ -506,12 +510,15 @@
                                 }
                             ]
                         }
-                    }
-                    ]
+                    }]
                 }
             }
 
+            // 將flexJson繪出到HTML上
+            my_flexToHtml()
+        }
 
+        function my_flexToHtml() {
             document.getElementById("flex2html").innerHTML = "";
             flex2html('flex2html', flexJson)
 
@@ -528,6 +535,15 @@
                 element.classList.remove("Ex3xl");
                 element.classList.add("Ex3Xl");
             });
+
+            // 將 LySlider 關閉下方捲動軸
+            var wrongLySliderElements = document.querySelector(".LySlider");
+            wrongLySliderElements.style.webkitOverflowScrolling = "auto";
+            wrongLySliderElements.style.overflowX = "visible";
+
+            // 將 chatbox 上方空白縮短
+            var wrongchatboxElements = document.querySelector(".chatbox");
+            wrongchatboxElements.style.paddingTop = "20px";
         }
 
         async function sendRequest(status, userId, data_card = "") {
@@ -605,6 +621,33 @@
                     }
                 }).catch(function (error) {
                     console.log('something wrong happen')
+                });
+        });
+
+                // 監聽截圖按钮的點擊事件
+        document.getElementById('downloadButton').addEventListener('click', function () {
+            var card = document.querySelector('.downloadFlex');
+
+            // 使用dom-to-image庫進行截圖
+            domtoimage.toBlob(card)
+                .then(function (blob) {
+                    alert(blob)
+                    // 創建下載連結
+                    var link = document.createElement('a');
+                    link.href = URL.createObjectURL(blob);
+                    link.download = 'screenshot.png';
+                    alert(link.href)
+                    alert(link)
+                    alert(URL)
+
+                    // 觸發下載
+                    link.click();
+
+                    // 清理URL對象，釋放資源
+                    URL.revokeObjectURL(link.href);
+                })
+                .catch(function (error) {
+                    console.error('Error:', error);
                 });
         });
 
