@@ -336,9 +336,9 @@
 				<form>
 					<label for="upload">
 						<input type="button" id="upload_btn" value="點我上傳" />
-						<span id="upload_text"></span>
 						<input type="file" id="upload" accept="image/*" />
 					</label>
+					<span id="upload_text"></span>
 				</form>
 			</div>
 			<div class="form-group">
@@ -429,7 +429,7 @@
 				// keep_card: document.getElementById("keep_card").value || "",
 				// cardDescription: document.getElementById("cardDescription").value || "",
 				// bgColor: document.getElementById("bgColor").value || "",
-				textColor: document.getElementById("textColor").value || "",
+				textColor: document.getElementById("textColor").textContent || "",
 			});
 		}
 
@@ -449,7 +449,7 @@
 			// document.getElementById("keep_card").value = data_card.keep_card || "";
 			// document.getElementById("cardDescription").value = data_card.cardDescription || "";
 			// document.getElementById("bgColor").value = data_card.bgColor || "";
-			document.getElementById("textColor").value = data_card.textColor || "";
+			document.getElementById("textColor").textContent = data_card.textColor || "";
 		}
 
 		function close_flex() {
