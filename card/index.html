@@ -268,7 +268,7 @@
 </head>
 
 <body>
-	<!-- <div class="loader" id="loader">
+	<div class="loader" id="loader">
 		<div class="sk-chase">
 			<div class="sk-chase-dot"></div>
 			<div class="sk-chase-dot"></div>
@@ -277,7 +277,7 @@
 			<div class="sk-chase-dot"></div>
 			<div class="sk-chase-dot"></div>
 		</div>
-	</div> -->
+	</div>
 
 	<div class="hidden_forward">
 		<div class="form-container">
@@ -346,14 +346,6 @@
 				<input id="textContent_2_url" style="width: 100%" type="text" placeholder="https://linecorp.com/" />
 			</div>
 			<div class="form-group">
-				<label>文字顏色</label>
-				<!-- <input type="text" id="colorInput" readonly>
-				<div id="colorPicker"></div>
-				<input id="textColor" style="width: 100%" type="color" value="#081F58FF" /> -->
-				<span id="textColor"></span>
-				<div id="colorPicker"></div>
-			</div>
-			<div class="form-group">
 				<label>主標1</label>
 				<input id="mainTitle_1" style="width: 100%" type="text" placeholder="磊山 人文講堂" />
 			</div>
@@ -380,6 +372,13 @@
 			<div class="form-group">
 				<label>地址</label>
 				<input id="textContent_3" style="width: 100%" type="text" placeholder="台北市南京東路二段178號10樓" />
+			</div>
+			<div class="form-group">
+				<label>文字顏色</label>
+				<div style="display: flex;  align-items: center; width: 310px; gap: 10px;">
+					<div id="colorPicker"></div>
+					<span id="textColor">#081F58FF</span>
+				</div>
 			</div>
 			<!-- <div class="form-group">
             <label>文字內容3 URL</label>
@@ -488,6 +487,9 @@
 			var textContent_3_Element = document.getElementById("textContent_3");
 			textContent_3 = textContent_3_Element.value || textContent_3_Element.placeholder;
 
+			var textColor_Element = document.getElementById("textColor");
+			textColor = textColor_Element.textContent;
+
 			// var textContent_3_url_Element = document.getElementById("textContent_3_url");
 			// textContent_3_url = textContent_3_url_Element.value || textContent_3_url_Element.placeholder;
 
@@ -505,9 +507,6 @@
 
 			// var bgColor_Element = document.getElementById("bgColor");
 			// bgColor = bgColor_Element.value || bgColor_Element.placeholder;
-
-			var textColor_Element = document.getElementById("textColor");
-			textColor = textColor_Element.textContent || "#081F58FF";
 
 			flexJson = {
 				type: "flex",
@@ -772,28 +771,28 @@
 		window.onload = function () {
 			document.querySelector(".hidden_forward").classList.add("hidden");
 			document.getElementById('loader').style.display = 'flex';
-			// liff.init({ liffId: "1660908511-DERZWN3m" })
-			// 	.then(() => {
-			// 		if (!liff.isLoggedIn()) {
-			// 			liff.login();
-			// 		}
-			// 		else {
-			// 			liff.getProfile()
-			// 				.then(async function (profile) {
-			// 					userId = profile.userId
-			// 					var responseData = await sendRequest("get", userId)
-			// 					if (responseData.status === 'ok') {
-			// 						const data_card = JSON.parse(responseData.card);
-			// 						writeShowCardData(data_card)
-			// 						console.log(data_card);
-			// 					}
-			// 					document.getElementById('loader').style.display = 'none';
-			// 				})
-			// 				.catch(function (error) {
-			// 					alert("取得使用者資料錯誤\n", error);
-			// 				});
-			// 		}
-			// 	});
+			liff.init({ liffId: "1660908511-DERZWN3m" })
+				.then(() => {
+					if (!liff.isLoggedIn()) {
+						liff.login();
+					}
+					else {
+						liff.getProfile()
+							.then(async function (profile) {
+								userId = profile.userId
+								var responseData = await sendRequest("get", userId)
+								if (responseData.status === 'ok') {
+									const data_card = JSON.parse(responseData.card);
+									writeShowCardData(data_card)
+									console.log(data_card);
+								}
+								document.getElementById('loader').style.display = 'none';
+							})
+							.catch(function (error) {
+								alert("取得使用者資料錯誤\n", error);
+							});
+					}
+				});
 		};
 
 		// 分享line按钮的點擊事件
@@ -963,7 +962,7 @@
 			return new Blob([u8arr], { type: mime }); // 創建Blob物件
 		}
 
-		// textColor創建調色盤元素
+		// colorPicker創建調色盤元素(文字放textColor)
 		const colorPicker = Pickr.create({
 			el: '#colorPicker',
 			theme: 'nano', // 使用 NANO 主題
@@ -974,14 +973,17 @@
 				hue: true,
 				interaction: {
 					input: true,
-					save: true
 				}
 			}
 		});
-
-		// textColor顏色更改事件
+		// colorPicker顏色更改事件
 		colorPicker.on('change', (color) => {
-			textColor_Element.textContent = color.toRGBA().toString();
+			var textColor_Element = document.getElementById("textColor");
+			textColor_Element.textContent = color.toHEXA().toString();
+		});
+		// colorPicker失去焦點事件
+		colorPicker.on('hide', () => {
+			colorPicker.applyColor(); // 應用顏色到目標元素
 		});
 
 		// 元素失去焦點事件
