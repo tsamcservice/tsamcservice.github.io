@@ -984,6 +984,8 @@
 		// colorPicker失去焦點事件
 		colorPicker.on('hide', () => {
 			colorPicker.applyColor(); // 應用顏色到目標元素
+			// 卡片資料存到google sheet
+			sendRequest("save", userId, readShowCardData());
 		});
 
 		// 元素失去焦點事件
