@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>LIFF Card Share</title>
+	<title>LIFF Share Example</title>
 	<!-- flex2html -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/PamornT/flex2html@main/css/flex2html.css" />
 	<script src="https://cdn.jsdelivr.net/gh/PamornT/flex2html@main/js/flex2html.min.js"></script>
@@ -19,10 +18,6 @@
 	<!-- fontawesome -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 	<script src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
-	<!-- pickr 調色盤 -->
-	<link rel="stylesheet" type="text/css"
-		href="https://cdn.jsdelivr.net/npm/@simonwep/pickr@latest/dist/themes/nano.min.css">
-	<script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr@latest/dist/pickr.min.js"></script>
 
 	<style>
 		body {
@@ -268,7 +263,7 @@
 </head>
 
 <body>
-	<!-- <div class="loader" id="loader">
+	<div class="loader" id="loader">
 		<div class="sk-chase">
 			<div class="sk-chase-dot"></div>
 			<div class="sk-chase-dot"></div>
@@ -277,237 +272,36 @@
 			<div class="sk-chase-dot"></div>
 			<div class="sk-chase-dot"></div>
 		</div>
-	</div> -->
+	</div>
 
-	<div class="hidden_forward">
-		<div class="form-container">
-			<div style="display: flex; justify-content: space-between; align-items: center; width: 310px">
-				<h1 style="font-size:1.8em;">LIFF Card Share</h1>
-				<button onclick="close_flex()" style="height: 40px">返回</button>
-			</div>
-			<div style="display: flex; justify-content: space-between; width: 310px">
-				<div class="links">
-					<a title="Share by Line" onclick="shareButton_line()">
-						<i class="iconfont fab fa-line"></i>
-					</a>
-					<a title="Share by LinkedIn" id="shareButton_linkedin" onclick="shareButton_linkedin()" style="display: none">
-						<i class="iconfont icon-linkedin"></i>
-					</a>
-					<a title="Share by FaceBook" target="_blank" rel="noopener" id="shareButton_facebook"
-						onclick="shareButton_facebook()">
-						<i class="iconfont icon-facebook"></i>
-					</a>
-					<a title="Share by Twitter" target="_blank" rel="noopener" id="shareButton_twitter"
-						onclick="shareButton_twitter()">
-						<i class="iconfont icon-twitter"></i>
-					</a>
-					<a title="Instagram" target="_blank" rel="noopener" href="https://www.instagram.com/wangzhengyan1219/"
-						style="display: none">
-						<i class="iconfont icon-instagram"></i>
-					</a>
-					<a title="Share by Mail" id="shareButton_mail" onclick="shareButton_mail()">
-						<i class="iconfont far fa-envelope"></i>
-					</a>
-					<a title="Copy Link URL" onclick="shareButton_copyURL()">
-						<i class="iconfont fas fa-share"></i>
-					</a>
-					<a title="Download Card" onclick="downloadButton()">
-						<i class="iconfont fas fa-save"></i>
-					</a>
-				</div>
-			</div>
-			<div class="downloadFlex">
-				<div style="width: 310px; height: auto; overflow: hidden;">
-					<div class="chatbox">
-						<div id="flex2html"></div>
-					</div>
+	<div class="form-container">
+		<h1>LIFF Card Share</h1>
+		<div class="downloadFlex">
+			<div style="width: 310px; height: auto; overflow: hidden;">
+				<div class="chatbox">
+					<div id="flex2html"></div>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<div class="hidden_backward">
-		<div class="form-container">
-			<div class="form-group">
-				<button onclick="show_flex()">查看卡片</button>
-			</div>
-			<div class="form-group">
-				<label>大圖 URL</label>
-				<form>
-					<label for="upload">
-						<input type="button" id="upload_btn" value="點我上傳" />
-						<span id="upload_text"></span>
-						<input type="file" id="upload" accept="image/*" />
-					</label>
-				</form>
-			</div>
-			<div class="form-group">
-				<label>點擊大圖 URL</label>
-				<input id="textContent_2_url" style="width: 100%" type="text" placeholder="https://linecorp.com/" />
-			</div>
-			<div class="form-group">
-				<label>文字顏色</label>
-				<!-- <input type="text" id="colorInput" readonly>
-				<div id="colorPicker"></div>
-				<input id="textColor" style="width: 100%" type="color" value="#081F58FF" /> -->
-				<span id="textColor"></span>
-				<div id="colorPicker"></div>
-			</div>
-			<div class="form-group">
-				<label>主標1</label>
-				<input id="mainTitle_1" style="width: 100%" type="text" placeholder="磊山 人文講堂" />
-			</div>
-			<div class="form-group">
-				<label>名稱</label>
-				<input id="subTitle_1" style="width: 100%" type="text" placeholder="余浩瑋" />
-			</div>
-			<div class="form-group">
-				<label>別名</label>
-				<input id="subTitle_2" style="width: 100%" type="text" placeholder="青藝盟盟主" />
-			</div>
-			<div class="form-group">
-				<label>主標2</label>
-				<input id="mainTitle_2" style="width: 100%" type="text" placeholder="《牽風箏的人》" />
-			</div>
-			<div class="form-group">
-				<label>時間</label>
-				<input id="textContent_1" style="width: 100%" type="text" placeholder="05/06(六)09:50~12:00" />
-			</div>
-			<div class="form-group">
-				<label>地點</label>
-				<input id="textContent_2" style="width: 100%" type="text" placeholder="磊山學院" />
-			</div>
-			<div class="form-group">
-				<label>地址</label>
-				<input id="textContent_3" style="width: 100%" type="text" placeholder="台北市南京東路二段178號10樓" />
-			</div>
-			<!-- <div class="form-group">
-            <label>文字內容3 URL</label>
-            <input id="textContent_3_url" style="width: 100%;" type="text" placeholder="https://albert20699.github.io/">
-        </div>
-        <div class="form-group">
-            <label>公司單位</label>
-            <input id="companyUnit" style="width: 100%;" type=" text" placeholder="呈璽 Mtvs">
-        </div>
-        <div class="form-group">
-            <label>分享卡片</label>
-            <input id="share_card" style="width: 100%;" type="text" placeholder="分享卡片">
-        </div>
-        <div class="form-group">
-            <label>收藏卡片</label>
-            <input id="keep_card" style="width: 100%;" type="text" placeholder="收藏卡片">
-        </div>
-        <div class="form-group">
-            <label>卡片描述</label>
-            <input id="cardDescription" style="width: 100%;" type="text"
-                placeholder="以上資料由【呈壐】整理自台北燈會官網，可點文字連結或下載詳細資料。歡迎加入【呈璽】官LINE@不再錯過精彩訊息喔~~">
-        </div>
-        <div class="form-group">
-            <label>背景顏色</label>
-            <input id="bgColor" style="width: 100%;" type="text" placeholder="#BA0101FF">
-        </div> -->
-		</div>
-	</div>
+
 
 	<script>
 		var mainTitle_1, mainTitle_2, subTitle_1, subTitle_2, textContent_1, textContent_1_url, textContent_2, textContent_2_url, textContent_3, textContent_3_url, companyUnit, share_card, keep_card, cardDescription, bgColor, textColor;
 		var flexJson, userId;
 
-		function readShowCardData() {
-			return JSON.stringify({
-				mainTitle_1: document.getElementById("mainTitle_1").value || "",
-				mainTitle_2: document.getElementById("mainTitle_2").value || "",
-				subTitle_1: document.getElementById("subTitle_1").value || "",
-				subTitle_2: document.getElementById("subTitle_2").value || "",
-				textContent_1: document.getElementById("textContent_1").value || "",
-				textContent_1_url: document.getElementById("upload_text").textContent || "",
-				textContent_2: document.getElementById("textContent_2").value || "",
-				textContent_2_url: document.getElementById("textContent_2_url").value || "",
-				textContent_3: document.getElementById("textContent_3").value || "",
-				// textContent_3_url: document.getElementById("textContent_3_url").value || "",
-				// companyUnit: document.getElementById("companyUnit").value || "",
-				// share_card: document.getElementById("share_card").value || "",
-				// keep_card: document.getElementById("keep_card").value || "",
-				// cardDescription: document.getElementById("cardDescription").value || "",
-				// bgColor: document.getElementById("bgColor").value || "",
-				textColor: document.getElementById("textColor").value || "",
-			});
-		}
-
-		function writeShowCardData(data_card) {
-			document.getElementById("mainTitle_1").value = data_card.mainTitle_1 || "";
-			document.getElementById("mainTitle_2").value = data_card.mainTitle_2 || "";
-			document.getElementById("subTitle_1").value = data_card.subTitle_1 || "";
-			document.getElementById("subTitle_2").value = data_card.subTitle_2 || "";
-			document.getElementById("textContent_1").value = data_card.textContent_1 || "";
-			document.getElementById("upload_text").textContent = data_card.textContent_1_url || "";
-			document.getElementById("textContent_2").value = data_card.textContent_2 || "";
-			document.getElementById("textContent_2_url").value = data_card.textContent_2_url || "";
-			document.getElementById("textContent_3").value = data_card.textContent_3 || "";
-			// document.getElementById("textContent_3_url").value = data_card.textContent_3_url || "";
-			// document.getElementById("companyUnit").value = data_card.companyUnit || "";
-			// document.getElementById("share_card").value = data_card.share_card || "";
-			// document.getElementById("keep_card").value = data_card.keep_card || "";
-			// document.getElementById("cardDescription").value = data_card.cardDescription || "";
-			// document.getElementById("bgColor").value = data_card.bgColor || "";
-			document.getElementById("textColor").value = data_card.textColor || "";
-		}
-
-		function close_flex() {
-			document.querySelector(".hidden_forward").classList.add("hidden");
-			document.querySelector(".hidden_backward").classList.remove("hidden");
-		}
-		function show_flex() {
-			document.querySelector(".hidden_forward").classList.remove("hidden");
-			document.querySelector(".hidden_backward").classList.add("hidden");
-
-			var mainTitle_1_Element = document.getElementById("mainTitle_1");
-			mainTitle_1 = mainTitle_1_Element.value || mainTitle_1_Element.placeholder;
-
-			var mainTitle_2_Element = document.getElementById("mainTitle_2");
-			mainTitle_2 = mainTitle_2_Element.value || mainTitle_2_Element.placeholder;
-
-			var subTitle_1_Element = document.getElementById("subTitle_1");
-			subTitle_1 = subTitle_1_Element.value || subTitle_1_Element.placeholder;
-
-			var subTitle_2_Element = document.getElementById("subTitle_2");
-			subTitle_2 = subTitle_2_Element.value || subTitle_2_Element.placeholder;
-
-			var textContent_1_Element = document.getElementById("textContent_1");
-			textContent_1 = textContent_1_Element.value || textContent_1_Element.placeholder;
-
-			var textContent_1_url_Element = document.getElementById("upload_text");
-			textContent_1_url = textContent_1_url_Element.textContent || "https://i.ibb.co/B6KNp92/01-1-cafe.png";
-
-			var textContent_2_Element = document.getElementById("textContent_2");
-			textContent_2 = textContent_2_Element.value || textContent_2_Element.placeholder;
-
-			var textContent_2_url_Element = document.getElementById("textContent_2_url");
-			textContent_2_url = textContent_2_url_Element.value || textContent_2_url_Element.placeholder;
-
-			var textContent_3_Element = document.getElementById("textContent_3");
-			textContent_3 = textContent_3_Element.value || textContent_3_Element.placeholder;
-
-			// var textContent_3_url_Element = document.getElementById("textContent_3_url");
-			// textContent_3_url = textContent_3_url_Element.value || textContent_3_url_Element.placeholder;
-
-			// var companyUnit_Element = document.getElementById("companyUnit");
-			// companyUnit = companyUnit_Element.value || companyUnit_Element.placeholder;
-
-			// var share_card_Element = document.getElementById("share_card");
-			// share_card = share_card_Element.value || share_card_Element.placeholder;
-
-			// var keep_card_Element = document.getElementById("keep_card");
-			// keep_card = keep_card_Element.value || keep_card_Element.placeholder;
-
-			// var cardDescription_Element = document.getElementById("cardDescription");
-			// cardDescription = cardDescription_Element.value || cardDescription_Element.placeholder;
-
-			// var bgColor_Element = document.getElementById("bgColor");
-			// bgColor = bgColor_Element.value || bgColor_Element.placeholder;
-
-			var textColor_Element = document.getElementById("textColor");
-			textColor = textColor_Element.textContent || "#081F58FF";
+		function create_flex(data_card) {
+			mainTitle_1 = data_card.mainTitle_1 || "磊山 人文講堂";
+			mainTitle_2 = data_card.mainTitle_2 || "《牽風箏的人》";
+			subTitle_1 = data_card.subTitle_1 || "余浩瑋";
+			subTitle_2 = data_card.subTitle_2 || "青藝盟盟主";
+			textContent_1 = data_card.textContent_1 || "05/06(六)09:50~12:00";
+			textContent_1_url = data_card.textContent_1_url || "https://cardoa.saasou.com/_files/0/100/f/01_1_cafe.png";
+			textContent_2 = data_card.textContent_2 || "磊山學院";
+			textContent_2_url = data_card.textContent_2_url || "https://linecorp.com/";
+			textContent_3 = data_card.textContent_3 || "台北市南京東路二段178號10樓";
+			textColor = data_card.textColor || "#081F58FF";
 
 			flexJson = {
 				type: "flex",
@@ -614,7 +408,7 @@
 										position: "absolute",
 										offsetTop: "200px",
 										offsetStart: "10px",
-										width: "320px",
+										width: "10000px",
 										contents: [
 											{
 												type: "box",
@@ -712,14 +506,13 @@
 					],
 				},
 			};
-
 			// 將flexJson繪出到HTML上
-			my_flexToHtml();
+			my_flexToHtml()
 		}
 
 		function my_flexToHtml() {
 			document.getElementById("flex2html").innerHTML = "";
-			flex2html("flex2html", flexJson);
+			flex2html('flex2html', flexJson)
 
 			// 將錯誤的 ExXxs 替換為正確的 ExXXs
 			var wrongExXxsElements = document.querySelectorAll(".ExXxs");
@@ -770,238 +563,60 @@
 		}
 
 		window.onload = function () {
-			document.querySelector(".hidden_forward").classList.add("hidden");
 			document.getElementById('loader').style.display = 'flex';
-			// liff.init({ liffId: "1660908511-DERZWN3m" })
-			// 	.then(() => {
-			// 		if (!liff.isLoggedIn()) {
-			// 			liff.login();
-			// 		}
-			// 		else {
-			// 			liff.getProfile()
-			// 				.then(async function (profile) {
-			// 					userId = profile.userId
-			// 					var responseData = await sendRequest("get", userId)
-			// 					if (responseData.status === 'ok') {
-			// 						const data_card = JSON.parse(responseData.card);
-			// 						writeShowCardData(data_card)
-			// 						console.log(data_card);
-			// 					}
-			// 					document.getElementById('loader').style.display = 'none';
-			// 				})
-			// 				.catch(function (error) {
-			// 					alert("取得使用者資料錯誤\n", error);
-			// 				});
-			// 		}
-			// 	});
-		};
-
-		// 分享line按钮的點擊事件
-		function shareButton_line() {
-			liff
-				.shareTargetPicker([flexJson])
-				.then(function (res) {
-					if (res) {
-						// 送出提醒框
-						Swal.fire({
-							text: "卡片已送出",
-							timer: 800,
-							showConfirmButton: false,
-							customClass: {
-								container: "swal-container",
-								popup: "swal-popup",
-								content: "swal-content",
-							},
-						});
-					} else {
-						const [majorVer, minorVer] = (liff.getLineVersion() || "").split(".");
-						if (parseInt(majorVer) < 10 || (parseInt(majorVer) == 10 && parseInt(minorVer) < 11)) {
-							alert("沒有 TargetPicker 功能\n請嘗試更新 LINE");
-						} else {
-							alert("有 TargetPicker 功能，但發送訊息未成功");
-						}
-					}
-				})
-				.catch(function (err) {
-					alert("分享傳送訊息失敗\n請檢查URL及內容\n", err);
-				});
-		}
-
-		// 分享mail按钮的點擊事件
-		function shareButton_mail() {
-			// document.getElementById("shareButton_mail").href = "mailto:?subject=【卡片分享】-&body=使用瀏覽器預覽照片連結：https://albert20699.github.io/preview/?userId=" + encodeURIComponent(userId);
-			document.getElementById("shareButton_mail").href = "mailto:?subject=【卡片分享】-&body=請參考圖片附件:[圖片](https://i.ibb.co/8YTW70m/blob.jpg)&attachment=https://i.ibb.co/8YTW70m/blob.jpg";
-		}
-		// 分享twitter按钮的點擊事件
-		function shareButton_twitter() {
-			document.getElementById("shareButton_twitter").href = "https://twitter.com/intent/tweet?url=https://albert20699.github.io/preview/?userId=" + encodeURIComponent(userId);
-		}
-		// 分享facebook按钮的點擊事件
-		function shareButton_facebook() {
-			document.getElementById("shareButton_facebook").href = "https://www.facebook.com/sharer/sharer.php?u=https://albert20699.github.io/preview/?userId=" + encodeURIComponent(userId);
-		}
-
-		// 分享Copy Link URL按钮的點擊事件
-		async function shareButton_copyURL() {
-			// 取得要複製的文字
-			var textToCopy = "https://albert20699.github.io/preview/?userId=" + encodeURIComponent(userId)
-
-			try {
-				await navigator.clipboard.writeText(textToCopy);
-			} catch (err) {
-				try {
-					// 建立一個臨時的 textarea 元素
-					var tempTextarea = document.createElement("textarea");
-					tempTextarea.value = textToCopy;
-
-					// 將 textarea 加入到文件中
-					document.body.appendChild(tempTextarea);
-
-					// 選取並複製文字
-					tempTextarea.select();
-					document.execCommand("copy");
-
-					// 移除臨時的 textarea 元素
-					tempTextarea.remove();
-				} catch (err) {
-					alert("無法複製文字")
-					return;
-				}
-			}
-
-			// 送出提醒框
-			Swal.fire({
-				text: "文字已複製到剪貼簿",
-				timer: 800,
-				showConfirmButton: false
+			// 获取查询字符串
+			var queryString = window.location.search;
+			// 移除问号（?）
+			queryString = queryString.slice(1);
+			// 创建一个对象来存储参数和对应的值
+			var parameters = {};
+			// 遍历参数对，将其拆分为参数名和值，并存储到对象中
+			queryString.split("&").forEach((pair) => {
+				const [paramName, paramValue] = pair.split("=").map(decodeURIComponent);
+				parameters[paramName] = paramValue;
 			});
-		}
+			// 從URL參數對象中獲取userId
+			userId = parameters["userId"]
 
-		// 截圖按钮的點擊事件
-		function downloadButton() {
-			// 獲取瀏覽器的使用者代理
-			var userAgent = navigator.userAgent;
-			// 檢查是否執行於line
-			var isOnLine = /line/i.test(userAgent)
+			async function send() {
+				var responseData = await sendRequest("get", userId);
+				if (responseData.status === "ok") {
+					const data_card = JSON.parse(responseData.card);
+					create_flex(data_card);
+					// 取得下載框的元素
+					var card = document.querySelector(".downloadFlex");
 
-			if (isOnLine) {
-				// 由於line本身無法下載檔案，一律跳轉用外部瀏覽器下載
-				alert("將自動開啟預設瀏覽器\n並下載檔案")
-				liff.openWindow({
-					url: 'https://albert20699.github.io/download_card/?userId=' + encodeURIComponent(userId),
-					external: true  // 開啟外部瀏覽器
-				});
-			}
-			else {
-				// 取得下載框的元素
-				var card = document.querySelector(".downloadFlex");
+					// 使用dom-to-image庫進行截圖
+					domtoimage.toBlob(card).then(function (blob) {
+						// 創建下載連結
+						var link = document.createElement("a");
+						link.href = URL.createObjectURL(blob);
+						// 獲取當前時間戳
+						var timestamp = Date.now();
+						link.download = mainTitle_1 + "_" + timestamp + ".png";
 
-				// 使用dom-to-image庫進行截圖
-				domtoimage.toBlob(card).then(function (blob) {
-					// 創建下載連結
-					var link = document.createElement("a");
-					link.href = URL.createObjectURL(blob);
-					// 獲取當前時間戳
-					var timestamp = Date.now();
-					link.download = mainTitle_1 + "_" + timestamp + ".png";
+						// 觸發下載
+						link.click();
 
-					// 觸發下載
-					link.click();
-
-					// 清理URL對象，釋放資源
-					URL.revokeObjectURL(link.href);
-				})
-					.catch(function (error) {
-						alert("下載錯誤\n", error);
-					});
-			}
-		}
-
-		document.getElementById("upload").addEventListener("change", function (event) {
-			document.getElementById("loader").style.display = "flex";
-			var file = event.target.files[0]; // 取得選擇的檔案
-			var reader = new FileReader();
-			reader.onload = function () {
-				// 使用fileBlob進行後續處理
-				var fileBlob = dataURLtoBlob(reader.result);
-
-				// 上傳照片至imgbb.com
-				var formData = new FormData();
-				formData.append("image", fileBlob);
-
-				fetch("https://api.imgbb.com/1/upload?key=9370c80a93b313d5f526531503162623&expiration=15552000", {
-					method: "POST",
-					body: formData,
-				})
-					.then(function (response) {
-						return response.json();
+						// 清理URL對象，釋放資源
+						URL.revokeObjectURL(link.href);
+					}).then(function () {
+						alert("下載完成")
+						// window.location.href = "https://albert20699.github.io/card/";
+						// 關閉 liff 視窗頁面 (手機)
+						liff.closeWindow();
+						// 關閉 網頁 視窗頁面 (電腦)
+						window.close();
 					})
-					.then(function (data) {
-						// 回傳的圖片資訊
-						console.log(data.data.display_url);
-						textContent_1_url = data.data.display_url;
-						document.getElementById("upload_text").textContent = textContent_1_url;
-						sendRequest("save", userId, readShowCardData());
-						document.getElementById("loader").style.display = "none";
-					})
-					.catch(function (error) {
-						console.error("Error:", error);
-					});
-			};
-			reader.readAsDataURL(file);
-		});
+						.catch(function (error) {
+							alert("下載錯誤\n", error);
+						});
 
-		function dataURLtoBlob(dataURL) {
-			var arr = dataURL.split(","); // 將資料URL分割成類型和資料部分
-			var mime = arr[0].match(/:(.*?);/)[1]; // 提取資料URL中的MIME類型
-			var bstr = atob(arr[1]); // 解碼Base64編碼的資料部分
-			var n = bstr.length;
-			var u8arr = new Uint8Array(n);
-			while (n--) {
-				u8arr[n] = bstr.charCodeAt(n); // 轉換為Uint8Array
-			}
-			return new Blob([u8arr], { type: mime }); // 創建Blob物件
-		}
 
-		// textColor創建調色盤元素
-		const colorPicker = Pickr.create({
-			el: '#colorPicker',
-			theme: 'nano', // 使用 NANO 主題
-			default: '#081F58FF', // 預設顏色
-			components: {
-				preview: true,
-				opacity: true,
-				hue: true,
-				interaction: {
-					input: true,
-					save: true
 				}
 			}
-		});
-
-		// textColor顏色更改事件
-		colorPicker.on('change', (color) => {
-			textColor_Element.textContent = color.toRGBA().toString();
-		});
-
-		// 元素失去焦點事件
-		document.addEventListener("blur", function (event) {
-			// 檢查事件源是否為輸入框且已經loading完成
-			if (event.target.tagName.toLowerCase() === "input" && document.getElementById("loader").style.display == "none") {
-				// 檢查textContent_2_url的input格是否合法的url
-				if (event.target.id === "textContent_2_url" && event.target.value != "") {
-					try {
-						new URL(event.target.value);
-					} catch (error) {
-						alert("URL格式錯誤")
-						event.target.value = ""
-						return;
-					}
-				}
-				// 卡片資料存到google sheet
-				sendRequest("save", userId, readShowCardData());
-			}
-		}, true); // 注意，這裡的 true 參數是為了在捕獲階段觸發事件，這對於 'blur' 和 'focus' 事件是必要的。
+			send();
+		}
 	</script>
 </body>
 
