@@ -443,13 +443,14 @@
 			document.getElementById("textContent_2").value = data_card.textContent_2 || "";
 			document.getElementById("textContent_2_url").value = data_card.textContent_2_url || "";
 			document.getElementById("textContent_3").value = data_card.textContent_3 || "";
+			document.getElementById("textColor").textContent = data_card.textColor || "";
+
 			// document.getElementById("textContent_3_url").value = data_card.textContent_3_url || "";
 			// document.getElementById("companyUnit").value = data_card.companyUnit || "";
 			// document.getElementById("share_card").value = data_card.share_card || "";
 			// document.getElementById("keep_card").value = data_card.keep_card || "";
 			// document.getElementById("cardDescription").value = data_card.cardDescription || "";
 			// document.getElementById("bgColor").value = data_card.bgColor || "";
-			document.getElementById("textColor").textContent = data_card.textColor || "";
 		}
 
 		function close_flex() {
@@ -963,10 +964,11 @@
 		}
 
 		// colorPicker創建調色盤元素(文字放textColor)
+		var textColor_Element = document.getElementById("textColor");
 		const colorPicker = Pickr.create({
 			el: '#colorPicker',
 			theme: 'nano', // 使用 NANO 主題
-			default: '#081F58FF', // 預設顏色
+			default: textColor_Element.textContent, // 預設顏色
 			components: {
 				preview: true,
 				opacity: true,
@@ -978,7 +980,6 @@
 		});
 		// colorPicker顏色更改事件
 		colorPicker.on('change', (color) => {
-			var textColor_Element = document.getElementById("textColor");
 			textColor_Element.textContent = color.toHEXA().toString();
 		});
 		// colorPicker失去焦點事件
