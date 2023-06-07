@@ -868,6 +868,7 @@
 			var card = document.querySelector(".downloadFlex");
 			domtoimage.toBlob(card).then(function (blob) {
 				card_img_url = uploadImg(blob)
+				uploadOG_html()
 				alert(card_img_url);
 			})
 			sendRequest("save", userId, readShowCardData());
@@ -879,6 +880,7 @@
 			var card = document.querySelector(".downloadFlex");
 			domtoimage.toBlob(card).then(function (blob) {
 				card_img_url = uploadImg(blob)
+				uploadOG_html()
 				alert(card_img_url);
 			})
 			sendRequest("save", userId, readShowCardData());
@@ -961,26 +963,27 @@
 			}
 		}
 
-		function test() {
+		function uploadOG_html() {
 			const accessToken = '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';
 			const owner = 'albert20699';
 			const repo = 'albert20699.github.io';
-			const filePath = 'og_html/13.html';
+			const filePath = 'og_html/' + userId + '.html';
 			const fileContent =
 				`<!DOCTYPE html>
 					<html lang="en">
 					<head>
 						<meta charset="UTF-8">
 						<meta name="viewport" ontent="width=device-width, initial-scale=1.0">
-						<meta property="og:image" content="https://i.ibb.co/tP1v2SV/blob.jpg">
-						<meta property="og:title" content="">
-						<meta property="og:description" content="">
-						<meta property="og:url" content="">
-						<meta property="og:site_name" content="My Website">
+						<meta property="og:image" content="`+ card_img_url + `">
+						<meta property="og:title" content="`+ mainTitle_1 + `">
+						<meta property="og:description" content="`+ mainTitle_2 + `">
 					</head>
 					<body>
-					</body>
-					</html>`;
+						<script>
+							window.location.href = "https://albert20699.github.io/preview/?userId=` + encodeURIComponent(userId) + `";	
+						<\/script>
+					<\/body>
+					<\/html>`;
 
 
 			function uploadFileToGitHub() {
@@ -1029,30 +1032,34 @@
 		});
 
 		// 上傳檔案並回傳URL
-		function uploadImg(file) {
-			return new Promise((resolve, reject) => {
-				var reader = new FileReader();
-				reader.onload = function () {
-					var fileBlob = dataURLtoBlob(reader.result);
-					var formData = new FormData();
-					formData.append("image", fileBlob);
+		async function uploadImg(file) {
+			return new Promise(async (resolve, reject) => {
+				try {
+					var reader = new FileReader();
+					reader.onload = function () {
+						var fileBlob = dataURLtoBlob(reader.result);
+						var formData = new FormData();
+						formData.append("image", fileBlob);
 
-					fetch("https://api.imgbb.com/1/upload?key=9370c80a93b313d5f526531503162623&expiration=15552000", {
-						method: "POST",
-						body: formData,
-					})
-						.then(function (response) {
-							return response.json();
+						fetch("https://api.imgbb.com/1/upload?key=9370c80a93b313d5f526531503162623&expiration=15552000", {
+							method: "POST",
+							body: formData,
 						})
-						.then(function (data) {
-							resolve(data.data.display_url);
-						})
-						.catch(function (error) {
-							alert("上傳照片錯誤\n", error);
-							reject(error);
-						});
-				};
-				reader.readAsDataURL(file);
+							.then(function (response) {
+								return response.json();
+							})
+							.then(function (data) {
+								resolve(data.data.display_url);
+							})
+							.catch(function (error) {
+								alert("上傳照片錯誤\n", error);
+								reject(error);
+							});
+					};
+					reader.readAsDataURL(file);
+				} catch (error) {
+					reject(error);
+				}
 			});
 		}
 		function dataURLtoBlob(dataURL) {
