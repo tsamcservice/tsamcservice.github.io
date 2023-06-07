@@ -409,7 +409,7 @@
 	</div>
 
 	<script>
-		var mainTitle_1, mainTitle_2, subTitle_1, subTitle_2, textContent_1, textContent_1_url, textContent_2, textContent_2_url, textContent_3, textContent_3_url, companyUnit, share_card, keep_card, cardDescription, bgColor, textColor;
+		var mainTitle_1, mainTitle_2, subTitle_1, subTitle_2, textContent_1, textContent_1_url, textContent_2, textContent_2_url, textContent_3, textContent_3_url, companyUnit, share_card, keep_card, cardDescription, bgColor, textColor, card_img_url;
 		var flexJson, userId;
 
 		function readShowCardData() {
@@ -423,13 +423,14 @@
 				textContent_2: document.getElementById("textContent_2").value || "",
 				textContent_2_url: document.getElementById("textContent_2_url").value || "",
 				textContent_3: document.getElementById("textContent_3").value || "",
+				textColor: document.getElementById("textColor").textContent || "",
+				card_img_url: card_img_url,
 				// textContent_3_url: document.getElementById("textContent_3_url").value || "",
 				// companyUnit: document.getElementById("companyUnit").value || "",
 				// share_card: document.getElementById("share_card").value || "",
 				// keep_card: document.getElementById("keep_card").value || "",
 				// cardDescription: document.getElementById("cardDescription").value || "",
 				// bgColor: document.getElementById("bgColor").value || "",
-				textColor: document.getElementById("textColor").textContent || "",
 			});
 		}
 
@@ -443,7 +444,10 @@
 			document.getElementById("textContent_2").value = data_card.textContent_2 || "";
 			document.getElementById("textContent_2_url").value = data_card.textContent_2_url || "";
 			document.getElementById("textContent_3").value = data_card.textContent_3 || "";
-			document.getElementById("textColor").textContent = data_card.textColor || "";
+			// 設定textColor文字顏色
+			document.getElementById("textColor").textContent = data_card.textColor || "#081F58";
+			// 設定colorPicker調色盤顏色
+			colorPicker.setColor(data_card.textColor || "#081F58")
 
 			// document.getElementById("textContent_3_url").value = data_card.textContent_3_url || "";
 			// document.getElementById("companyUnit").value = data_card.companyUnit || "";
@@ -769,6 +773,32 @@
 			}
 		}
 
+		// colorPicker創建調色盤元素(文字放textColor)
+		var textColor_Element = document.getElementById("textColor");
+		const colorPicker = Pickr.create({
+			el: '#colorPicker',
+			theme: 'nano', // 使用 NANO 主題
+			default: "#081F58", // 預設顏色
+			components: {
+				preview: true,
+				opacity: true,
+				hue: true,
+				interaction: {
+					input: true,
+				}
+			}
+		});
+		// colorPicker顏色更改事件
+		colorPicker.on('change', (color) => {
+			textColor_Element.textContent = color.toHEXA().toString();
+		});
+		// colorPicker失去焦點事件
+		colorPicker.on('hide', () => {
+			colorPicker.applyColor(); // 應用顏色到目標元素
+			// 卡片資料存到google sheet
+			sendRequest("save", userId, readShowCardData());
+		});
+
 		window.onload = function () {
 			document.querySelector(".hidden_forward").classList.add("hidden");
 			document.getElementById('loader').style.display = 'flex';
@@ -829,15 +859,29 @@
 
 		// 分享mail按钮的點擊事件
 		function shareButton_mail() {
-			// document.getElementById("shareButton_mail").href = "mailto:?subject=【卡片分享】-&body=使用瀏覽器預覽照片連結：https://albert20699.github.io/preview/?userId=" + encodeURIComponent(userId);
-			document.getElementById("shareButton_mail").href = "mailto:?subject=【卡片分享】-&body=請參考圖片附件:[圖片](https://i.ibb.co/8YTW70m/blob.jpg)&attachment=https://i.ibb.co/8YTW70m/blob.jpg";
+			document.getElementById("shareButton_mail").href = "mailto:?subject=【卡片分享】&body=使用瀏覽器預覽照片連結：https://albert20699.github.io/preview/?userId=" + encodeURIComponent(userId);
+			// document.getElementById("shareButton_mail").href = "mailto:?subject=【卡片分享】-&body=請參考圖片附件:[圖片](https://i.ibb.co/8YTW70m/blob.jpg)&attachment=https://i.ibb.co/8YTW70m/blob.jpg";
 		}
 		// 分享twitter按钮的點擊事件
 		function shareButton_twitter() {
+			// 截圖卡片後資料存入google sheet
+			var card = document.querySelector(".downloadFlex");
+			domtoimage.toBlob(card).then(function (blob) {
+				card_img_url = uploadImg(blob)
+				alert(card_img_url);
+			})
+			sendRequest("save", userId, readShowCardData());
 			document.getElementById("shareButton_twitter").href = "https://twitter.com/intent/tweet?url=https://albert20699.github.io/preview/?userId=" + encodeURIComponent(userId);
 		}
 		// 分享facebook按钮的點擊事件
 		function shareButton_facebook() {
+			// 截圖卡片後資料存入google sheet
+			var card = document.querySelector(".downloadFlex");
+			domtoimage.toBlob(card).then(function (blob) {
+				card_img_url = uploadImg(blob)
+				alert(card_img_url);
+			})
+			sendRequest("save", userId, readShowCardData());
 			document.getElementById("shareButton_facebook").href = "https://www.facebook.com/sharer/sharer.php?u=https://albert20699.github.io/preview/?userId=" + encodeURIComponent(userId);
 		}
 
@@ -917,40 +961,100 @@
 			}
 		}
 
-		document.getElementById("upload").addEventListener("change", function (event) {
+		function test() {
+			const accessToken = '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';
+			const owner = 'albert20699';
+			const repo = 'albert20699.github.io';
+			const filePath = 'og_html/13.html';
+			const fileContent =
+				`<!DOCTYPE html>
+					<html lang="en">
+					<head>
+						<meta charset="UTF-8">
+						<meta name="viewport" ontent="width=device-width, initial-scale=1.0">
+						<meta property="og:image" content="https://i.ibb.co/tP1v2SV/blob.jpg">
+						<meta property="og:title" content="">
+						<meta property="og:description" content="">
+						<meta property="og:url" content="">
+						<meta property="og:site_name" content="My Website">
+					</head>
+					<body>
+					</body>
+					</html>`;
+
+
+			function uploadFileToGitHub() {
+				try {
+					const url = `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`;
+					const headers = {
+						Authorization: `Bearer ${accessToken}`,
+						'Content-Type': 'application/json',
+					};
+					const payload = {
+						message: 'html for OG',
+						content: btoa(fileContent),
+					};
+
+					const options = {
+						method: 'PUT',
+						headers: headers,
+						body: JSON.stringify(payload),
+					};
+
+					fetch(url, options)
+						.then(response => response.json())
+						.then(responseData => {
+							console.log(responseData); // 请求成功后的响应数据
+						})
+						.catch(error => {
+							console.log(error); // 请求发生错误时的处理
+						});
+				} catch (error) {
+					console.log(error);
+				}
+			}
+
+			uploadFileToGitHub();
+		}
+
+
+		// 檢查是否有新圖片更新到網頁並上傳
+		document.getElementById("upload").addEventListener("change", async function (event) {
 			document.getElementById("loader").style.display = "flex";
 			var file = event.target.files[0]; // 取得選擇的檔案
-			var reader = new FileReader();
-			reader.onload = function () {
-				// 使用fileBlob進行後續處理
-				var fileBlob = dataURLtoBlob(reader.result);
-
-				// 上傳照片至imgbb.com
-				var formData = new FormData();
-				formData.append("image", fileBlob);
-
-				fetch("https://api.imgbb.com/1/upload?key=9370c80a93b313d5f526531503162623&expiration=15552000", {
-					method: "POST",
-					body: formData,
-				})
-					.then(function (response) {
-						return response.json();
-					})
-					.then(function (data) {
-						// 回傳的圖片資訊
-						console.log(data.data.display_url);
-						textContent_1_url = data.data.display_url;
-						document.getElementById("upload_text").textContent = textContent_1_url;
-						sendRequest("save", userId, readShowCardData());
-						document.getElementById("loader").style.display = "none";
-					})
-					.catch(function (error) {
-						console.error("Error:", error);
-					});
-			};
-			reader.readAsDataURL(file);
+			textContent_1_url = await uploadImg(file); // 上傳檔案並回傳URL
+			document.getElementById("upload_text").textContent = textContent_1_url;
+			sendRequest("save", userId, readShowCardData());
+			document.getElementById("loader").style.display = "none";
 		});
 
+		// 上傳檔案並回傳URL
+		function uploadImg(file) {
+			return new Promise((resolve, reject) => {
+				var reader = new FileReader();
+				reader.onload = function () {
+					var fileBlob = dataURLtoBlob(reader.result);
+					var formData = new FormData();
+					formData.append("image", fileBlob);
+
+					fetch("https://api.imgbb.com/1/upload?key=9370c80a93b313d5f526531503162623&expiration=15552000", {
+						method: "POST",
+						body: formData,
+					})
+						.then(function (response) {
+							return response.json();
+						})
+						.then(function (data) {
+							resolve(data.data.display_url);
+						})
+						.catch(function (error) {
+							alert("上傳照片錯誤\n", error);
+							reject(error);
+						});
+				};
+				reader.readAsDataURL(file);
+			});
+		}
 		function dataURLtoBlob(dataURL) {
 			var arr = dataURL.split(","); // 將資料URL分割成類型和資料部分
 			var mime = arr[0].match(/:(.*?);/)[1]; // 提取資料URL中的MIME類型
@@ -962,32 +1066,6 @@
 			}
 			return new Blob([u8arr], { type: mime }); // 創建Blob物件
 		}
-
-		// colorPicker創建調色盤元素(文字放textColor)
-		var textColor_Element = document.getElementById("textColor");
-		const colorPicker = Pickr.create({
-			el: '#colorPicker',
-			theme: 'nano', // 使用 NANO 主題
-			default: textColor_Element.textContent, // 預設顏色
-			components: {
-				preview: true,
-				opacity: true,
-				hue: true,
-				interaction: {
-					input: true,
-				}
-			}
-		});
-		// colorPicker顏色更改事件
-		colorPicker.on('change', (color) => {
-			textColor_Element.textContent = color.toHEXA().toString();
-		});
-		// colorPicker失去焦點事件
-		colorPicker.on('hide', () => {
-			colorPicker.applyColor(); // 應用顏色到目標元素
-			// 卡片資料存到google sheet
-			sendRequest("save", userId, readShowCardData());
-		});
 
 		// 元素失去焦點事件
 		document.addEventListener("blur", function (event) {
