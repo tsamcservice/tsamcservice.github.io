@@ -750,24 +750,24 @@
 			wrongchatboxElements.style.paddingTop = "20px";
 		}
 
-		async function sendRequest(status, userId, data_card = "") {
+		async function sendRequest(status, userId, data_card = "", data = "") {
 			if (!status || !userId) {
 				alert("向google apps script寄送請求時\n有效參數不足");
 				return;
 			}
 
-			const url = "https://script.google.com/macros/s/AKfycbwsb4w5iNP0wO1FznOGoh2rOga3rCIlbVOSTrx4uF_B9FS3dmtN2NTS9NGzk9uO0UmvSg/exec";
+			const url = "https://script.google.com/macros/s/AKfycbwzMXURyjtgjyO1TTpwuHect3nbCjjWECCc0NHijPVPLEjONQIvp2GBSxzGQwQVrSVqXQ/exec";
 
 			try {
-				const data = { status: status, userId: userId, card: data_card };
+				const sendData = { status: status, userId: userId, card: data_card, data: data };
 
 				// 將資料轉換成查詢字串
-				const queryString = new URLSearchParams(data).toString();
+				const queryString = new URLSearchParams(sendData).toString();
 
 				const response = await fetch(`${url}?${queryString}`);
 				const responseData = await response.json();
 
-				console.log("Data sent:", data);
+				console.log("Data sent:", sendData);
 				console.log("Response:", responseData);
 				if (responseData.status === 'first') { return "first"; }
 				else if (responseData.status === 'ok') { return responseData; }
@@ -833,8 +833,10 @@
 		function shareButton_line() {
 			liff
 				.shareTargetPicker([flexJson])
-				.then(function (res) {
+				.then(async function (res) {
 					if (res) {
+						// 向google sheet發送的增加閱讀數
+						await sendRequest("addReadCount", userId, data = res.length);
 						// 送出提醒框
 						Swal.fire({
 							text: "卡片已送出",
