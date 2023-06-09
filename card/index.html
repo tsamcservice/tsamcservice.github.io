@@ -759,7 +759,6 @@
 			const url = "https://script.google.com/macros/s/AKfycbyr0G-TZAyz07ar-D83ogRTVMSjyyzz5aEMWZSVQ_dAnvNv2t-chlhOz0GcJDB_91K3/exec";
 
 			try {
-				alert(data)
 				const sendData = { status: status, userId: userId, card: data_card };
 
 				// 將資料轉換成查詢字串
@@ -836,9 +835,6 @@
 				.shareTargetPicker([flexJson])
 				.then(async function (res) {
 					if (res) {
-						alert(JSON.stringify(res))
-						alert(res)
-						alert(res.toString())
 						// 向google sheet發送的增加閱讀數
 						await sendRequest("addReadCount", userId);
 						// 送出提醒框
