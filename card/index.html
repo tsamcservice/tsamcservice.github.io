@@ -72,7 +72,7 @@
 
 		.loader {
 			position: fixed;
-			z-index: 9999;
+			z-index: 999;
 			top: 0;
 			left: 0;
 			height: 100%;
@@ -330,9 +330,6 @@
 		<div class="form-container">
 			<div class="form-group">
 				<button onclick="show_flex()">查看卡片</button>
-			</div>
-			<div class="form-group">
-				<button onclick="logout()">登出line</button>
 			</div>
 			<div class="form-group">
 				<label>大圖 URL</label>
@@ -831,11 +828,6 @@
 					}
 				});
 		};
-
-		function logout(){
-			liff.logout();
-			alert("成功登出")
-		}
 
 		// 分享line按钮的點擊事件
 		function shareButton_line() {
