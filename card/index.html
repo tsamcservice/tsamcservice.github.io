@@ -332,6 +332,9 @@
 				<button onclick="show_flex()">查看卡片</button>
 			</div>
 			<div class="form-group">
+				<button onclick="logout()">登出line</button>
+			</div>
+			<div class="form-group">
 				<label>大圖 URL</label>
 				<form>
 					<label for="upload">
@@ -410,6 +413,7 @@
 
 	<script>
 		var mainTitle_1, mainTitle_2, subTitle_1, subTitle_2, textContent_1, textContent_1_url, textContent_2, textContent_2_url, textContent_3, textContent_3_url, companyUnit, share_card, keep_card, cardDescription, bgColor, textColor, card_img_url;
+		var buttonClickFlag = false;
 		var flexJson, userId;
 
 		function readShowCardData() {
@@ -751,10 +755,11 @@
 
 		async function sendRequest(status, userId, data_card = "") {
 			if (!status || !userId) {
+				alert("向google apps script寄送請求時\n有效參數不足");
 				return;
 			}
 
-			const url = "https://script.google.com/macros/s/AKfycbzmKJEzFnkDj6APsRhPwV1c9qj51sQvgylxLAij0n4kDwyHxcHRUWwgFu8iq-ah8sGL2w/exec";
+			const url = "https://script.google.com/macros/s/AKfycbwsb4w5iNP0wO1FznOGoh2rOga3rCIlbVOSTrx4uF_B9FS3dmtN2NTS9NGzk9uO0UmvSg/exec";
 
 			try {
 				const data = { status: status, userId: userId, card: data_card };
@@ -767,9 +772,11 @@
 
 				console.log("Data sent:", data);
 				console.log("Response:", responseData);
-				return responseData;
+				if (responseData.status === 'first') { return "first"; }
+				else if (responseData.status === 'ok') { return responseData; }
+				else { alert("向google apps script寄送請求時\n回傳值非ok"); }
 			} catch (error) {
-				console.error("Error sending data:", error);
+				alert("向google apps script寄送請求時\n發生錯誤\n" + error);
 			}
 		}
 
@@ -812,19 +819,23 @@
 							.then(async function (profile) {
 								userId = profile.userId
 								var responseData = await sendRequest("get", userId)
-								if (responseData.status === 'ok') {
+								if (responseData != "first") {
 									const data_card = JSON.parse(responseData.card);
 									writeShowCardData(data_card)
-									console.log(data_card);
 								}
 								document.getElementById('loader').style.display = 'none';
 							})
 							.catch(function (error) {
-								alert("取得使用者資料錯誤\n", error);
+								alert("取得使用者資料錯誤\n" + error);
 							});
 					}
 				});
 		};
+
+		function logout(){
+			liff.logout();
+			alert("成功登出")
+		}
 
 		// 分享line按钮的點擊事件
 		function shareButton_line() {
@@ -853,7 +864,7 @@
 					}
 				})
 				.catch(function (err) {
-					alert("分享傳送訊息失敗\n請檢查URL及內容\n", err);
+					alert("分享傳送訊息失敗\n請檢查URL及內容\n" + err);
 				});
 		}
 
@@ -864,27 +875,53 @@
 		}
 		// 分享twitter按钮的點擊事件
 		function shareButton_twitter() {
-			// 截圖卡片後資料存入google sheet
-			var card = document.querySelector(".downloadFlex");
-			domtoimage.toBlob(card).then(async function (blob) {
-				card_img_url = await uploadImg(blob)
-				uploadOG_html()
-				alert(card_img_url);
-			})
-			sendRequest("save", userId, readShowCardData());
-			document.getElementById("shareButton_twitter").href = "https://twitter.com/intent/tweet?url=https://albert20699.github.io/preview/?userId=" + encodeURIComponent(userId);
+			// 檢查是否有重複按(由於必須click()觸發，將會導致重複)
+			if (!buttonClickFlag) {
+				buttonClickFlag = true;
+				// 截圖卡片後資料存入google sheet
+				document.getElementById("loader").style.display = "flex";
+				var card = document.querySelector(".downloadFlex");
+				domtoimage.toBlob(card).then(async function (blob) {
+					card_img_url = await uploadImg(blob)
+					await sendRequest("save", userId, readShowCardData());
+					var responseData = await sendRequest("uploadGithub", userId, readShowCardData());
+					var shareOG_url = "https://twitter.com/intent/tweet?url=" + responseData.uploadOG_url;
+					document.getElementById("shareButton_twitter").href = shareOG_url;
+					document.getElementById("shareButton_twitter").click();
+				})
+					.catch(function (err) {
+						alert("分享傳送訊息失敗\n" + err);
+					});
+			}
+			else {
+				buttonClickFlag = false;
+				document.getElementById("loader").style.display = "none";
+			}
 		}
 		// 分享facebook按钮的點擊事件
 		function shareButton_facebook() {
-			// 截圖卡片後資料存入google sheet
-			var card = document.querySelector(".downloadFlex");
-			domtoimage.toBlob(card).then(async function (blob) {
-				card_img_url = await uploadImg(blob)
-				uploadOG_html()
-				alert(card_img_url);
-			})
-			sendRequest("save", userId, readShowCardData());
-			document.getElementById("shareButton_facebook").href = "https://www.facebook.com/sharer/sharer.php?u=https://albert20699.github.io/preview/?userId=" + encodeURIComponent(userId);
+			// 檢查是否有重複按(由於必須click()觸發，將會導致重複)
+			if (!buttonClickFlag) {
+				buttonClickFlag = true;
+				// 截圖卡片後資料存入google sheet
+				document.getElementById("loader").style.display = "flex";
+				var card = document.querySelector(".downloadFlex");
+				domtoimage.toBlob(card).then(async function (blob) {
+					card_img_url = await uploadImg(blob)
+					await sendRequest("save", userId, readShowCardData());
+					var responseData = await sendRequest("uploadGithub", userId, readShowCardData());
+					var shareOG_url = "https://www.facebook.com/sharer.php?u=" + responseData.uploadOG_url;
+					document.getElementById("shareButton_facebook").href = shareOG_url;
+					document.getElementById("shareButton_facebook").click();
+				})
+					.catch(function (err) {
+						alert("分享傳送訊息失敗\n" + err);
+					});
+			}
+			else {
+				buttonClickFlag = false;
+				document.getElementById("loader").style.display = "none";
+			}
 		}
 
 		// 分享Copy Link URL按钮的點擊事件
@@ -958,67 +995,11 @@
 					URL.revokeObjectURL(link.href);
 				})
 					.catch(function (error) {
-						alert("下載錯誤\n", error);
+						alert("下載錯誤\n" + error);
 					});
 			}
 		}
 
-		function uploadOG_html() {
-			const accessToken = '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';
-			const owner = 'albert20699';
-			const repo = 'albert20699.github.io';
-			const filePath = 'og_html/' + userId + '.html';
-			const fileContent =
-				`<!DOCTYPE html>
-					<html lang="en">
-					<head>
-						<meta charset="UTF-8">
-						<meta name="viewport" ontent="width=device-width, initial-scale=1.0">
-						<meta property="og:image" content="`+ card_img_url + `">
-						<meta property="og:title" content="`+ mainTitle_1 + `">
-						<meta property="og:description" content="`+ mainTitle_2 + `">
-					</head>
-					<body>
-						<script>
-							window.location.href = "https://albert20699.github.io/preview/?userId=` + encodeURIComponent(userId) + `";	
-						<\/script>
-					<\/body>
-					<\/html>`;
-
-
-			function uploadFileToGitHub() {
-				try {
-					const url = `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`;
-					const headers = {
-						Authorization: `Bearer ${accessToken}`,
-						'Content-Type': 'application/json',
-					};
-					const payload = {
-						message: 'html for OG',
-						content: btoa(fileContent),
-					};
-
-					const options = {
-						method: 'PUT',
-						headers: headers,
-						body: JSON.stringify(payload),
-					};
-
-					fetch(url, options)
-						.then(response => response.json())
-						.then(responseData => {
-							console.log(responseData); // 请求成功后的响应数据
-						})
-						.catch(error => {
-							console.log(error); // 请求发生错误时的处理
-						});
-				} catch (error) {
-					console.log(error);
-				}
-			}
-
-			uploadFileToGitHub();
-		}
 
 
 		// 檢查是否有新圖片更新到網頁並上傳
@@ -1051,7 +1032,7 @@
 							resolve(data.data.display_url);
 						})
 						.catch(function (error) {
-							alert("上傳照片錯誤\n", error);
+							alert("上傳照片錯誤\n" + error);
 							reject(error);
 						});
 				};
