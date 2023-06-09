@@ -532,25 +532,30 @@
 			wrongchatboxElements.style.paddingTop = "20px";
 		}
 
-		async function sendRequest(status, userId, data_card = "") {
-			if (!status || !userId) { return; }
+		async function sendRequest(status, userId, data_card = "", data = "") {
+			if (!status || !userId) {
+				alert("向google apps script寄送請求時\n有效參數不足");
+				return;
+			}
 
-			const url = "https://script.google.com/macros/s/AKfycbzmKJEzFnkDj6APsRhPwV1c9qj51sQvgylxLAij0n4kDwyHxcHRUWwgFu8iq-ah8sGL2w/exec";
+			const url = "https://script.google.com/macros/s/AKfycbyRk8m0bjMc3KVjET5lvZnE_YqzFxfjLrnU1lhfETHJohBrB2BCfCFtFslAtT48SGH3xg/exec";
 
 			try {
-				const data = { "status": status, "userId": userId, "card": data_card };
+				const sendData = { status: status, userId: userId, card: data_card, data: data };
 
 				// 將資料轉換成查詢字串
-				const queryString = new URLSearchParams(data).toString();
+				const queryString = new URLSearchParams(sendData).toString();
 
 				const response = await fetch(`${url}?${queryString}`);
 				const responseData = await response.json();
 
-				console.log("Data sent:", data);
+				console.log("Data sent:", sendData);
 				console.log("Response:", responseData);
-				return responseData;
+				if (responseData.status === 'first') { return "first"; }
+				else if (responseData.status === 'ok') { return responseData; }
+				else { alert("向google apps script寄送請求時\n回傳值非ok"); }
 			} catch (error) {
-				console.error("Error sending data:", error);
+				alert("向google apps script寄送請求時\n發生錯誤\n" + error);
 			}
 		}
 
@@ -576,6 +581,7 @@
 					const data_card = JSON.parse(responseData.card);
 					create_flex(data_card);
 					document.getElementById('loader').style.display = 'none';
+					
 				}
 			}
 			send()
