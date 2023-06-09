@@ -538,10 +538,11 @@
 				return;
 			}
 
-			const url = "https://script.google.com/macros/s/AKfycbyRk8m0bjMc3KVjET5lvZnE_YqzFxfjLrnU1lhfETHJohBrB2BCfCFtFslAtT48SGH3xg/exec";
+			const url = "https://script.google.com/macros/s/AKfycbyr0G-TZAyz07ar-D83ogRTVMSjyyzz5aEMWZSVQ_dAnvNv2t-chlhOz0GcJDB_91K3/exec";
 
 			try {
-				const sendData = { status: status, userId: userId, card: data_card, data: data };
+				alert(data)
+				const sendData = { status: status, userId: userId, card: data_card };
 
 				// 將資料轉換成查詢字串
 				const queryString = new URLSearchParams(sendData).toString();
@@ -558,7 +559,6 @@
 				alert("向google apps script寄送請求時\n發生錯誤\n" + error);
 			}
 		}
-
 
 		window.onload = function () {
 			document.getElementById('loader').style.display = 'flex';
@@ -581,7 +581,8 @@
 					const data_card = JSON.parse(responseData.card);
 					create_flex(data_card);
 					document.getElementById('loader').style.display = 'none';
-					
+					// 向google sheet發送的增加閱讀數
+					await sendRequest("addReadCount", userId);
 				}
 			}
 			send()

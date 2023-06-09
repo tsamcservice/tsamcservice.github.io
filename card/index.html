@@ -756,11 +756,11 @@
 				return;
 			}
 
-			const url = "https://script.google.com/macros/s/AKfycbyRk8m0bjMc3KVjET5lvZnE_YqzFxfjLrnU1lhfETHJohBrB2BCfCFtFslAtT48SGH3xg/exec";
+			const url = "https://script.google.com/macros/s/AKfycbyr0G-TZAyz07ar-D83ogRTVMSjyyzz5aEMWZSVQ_dAnvNv2t-chlhOz0GcJDB_91K3/exec";
 
 			try {
 				alert(data)
-				const sendData = { status: status, userId: userId, card: data_card, data: data };
+				const sendData = { status: status, userId: userId, card: data_card };
 
 				// 將資料轉換成查詢字串
 				const queryString = new URLSearchParams(sendData).toString();
@@ -840,7 +840,7 @@
 						alert(res)
 						alert(res.toString())
 						// 向google sheet發送的增加閱讀數
-						await sendRequest("addReadCount", userId, data = res.length);
+						await sendRequest("addReadCount", userId);
 						// 送出提醒框
 						Swal.fire({
 							text: "卡片已送出",
