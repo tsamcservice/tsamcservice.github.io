@@ -1,6 +1,3 @@
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -278,7 +275,7 @@
 
 	<script>
 		var mainTitle_1, mainTitle_2, subTitle_1, subTitle_2, textContent_1, textContent_1_url, textContent_2, textContent_2_url, textContent_3, textContent_3_url, companyUnit, share_card, keep_card, cardDescription, bgColor, textColor;
-		var flexJson, userId;
+		var flexJson, userId, readCount;
 
 		function create_flex(data_card) {
 			mainTitle_1 = data_card.mainTitle_1 || "磊山 人文講堂";
@@ -503,7 +500,7 @@
 				return;
 			}
 
-			const url = "https://script.google.com/macros/s/AKfycbyr0G-TZAyz07ar-D83ogRTVMSjyyzz5aEMWZSVQ_dAnvNv2t-chlhOz0GcJDB_91K3/exec";
+			const url = "https://script.google.com/macros/s/AKfycbxKiM76YZI-m_mQUDrmIG7vq9PXI2UP5AQpTPljq61KWh-URhW_bIcKFWKZoeFMRx9Dog/exec";
 
 			try {
 				const sendData = { status: status, userId: userId, card: data_card };
@@ -555,9 +552,9 @@
 										// 向google sheet發送的增加閱讀數
 										await sendRequest("addReadCount", userId);
 										// 關閉 liff 視窗頁面 (手機)
-										liff.closeWindow();
+										try { liff.closeWindow(); } catch (e) { }
 										// 關閉 網頁 視窗頁面 (電腦)
-										window.close();
+										try { window.close(); } catch (e) { }
 									} else {
 										const [majorVer, minorVer] = (liff.getLineVersion() || "").split(".");
 										if (parseInt(majorVer) < 10 || (parseInt(majorVer) == 10 && parseInt(minorVer) < 11)) {

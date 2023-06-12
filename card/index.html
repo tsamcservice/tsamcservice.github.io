@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -70,6 +69,19 @@
 			display: none;
 		}
 
+		.promotionalCard {
+			background-color: #fff;
+			padding: 20px;
+			border-radius: 5px;
+		}
+
+		.slider {
+			overflow-x: auto;
+			white-space: nowrap;
+			width: 100%;
+		}
+
+		.loadPromotionalCard,
 		.loader {
 			position: fixed;
 			z-index: 999;
@@ -81,6 +93,21 @@
 			display: none;
 			justify-content: center;
 			align-items: center;
+			animation: bounceIn 0.5s;
+		}
+
+		@keyframes bounceIn {
+			0% {
+				transform: scale(0);
+			}
+
+			70% {
+				transform: scale(1.2);
+			}
+
+			100% {
+				transform: scale(1);
+			}
 		}
 
 		.sk-chase {
@@ -279,6 +306,27 @@
 		</div>
 	</div>
 
+	<div class="loadPromotionalCard" id="loadPromotionalCard">
+		<div class="form-container" style="max-width: 80%; max-height: 90%;">
+			<div style="display: flex; gap: 15px; align-items: center; ">
+				<h2>選擇資料</h2>
+				<button onclick="promotional_card()">確定</button>
+			</div>
+			<div class="slider" id="slider" style="transform: scale(0.7); transform-origin: top left; margin-top: -30px;">
+				<div style="width: 310px; height: auto; overflow: hidden;display: inline-block; pointer-events: none;">
+					<div class="chatbox">
+						<div id="flex2html_promotional_1"></div>
+					</div>
+				</div>
+				<div style="width: 310px; height: auto; overflow: hidden;display: inline-block; pointer-events: none;">
+					<div class="chatbox">
+						<div id="flex2html_promotional_2"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<div class="hidden_forward">
 		<div class="form-container">
 			<div style="display: flex; justify-content: space-between; align-items: center; width: 310px">
@@ -319,7 +367,7 @@
 			<div class="downloadFlex">
 				<div style="width: 310px; height: auto; overflow: hidden;">
 					<div class="chatbox">
-						<div id="flex2html"></div>
+						<div id="flex2html_main"></div>
 					</div>
 				</div>
 			</div>
@@ -329,58 +377,60 @@
 	<div class="hidden_backward">
 		<div class="form-container">
 			<div class="form-group">
-				<button onclick="show_flex()">查看卡片</button>
-			</div>
-			<div class="form-group">
-				<label>大圖 URL</label>
-				<form>
-					<label for="upload">
-						<input type="button" id="upload_btn" value="點我上傳" />
-						<input type="file" id="upload" accept="image/*" />
-					</label>
-					<span id="upload_text"></span>
-				</form>
-			</div>
-			<div class="form-group">
-				<label>點擊大圖 URL</label>
-				<input id="textContent_2_url" style="width: 100%" type="text" placeholder="https://linecorp.com/" />
-			</div>
-			<div class="form-group">
-				<label>主標1</label>
-				<input id="mainTitle_1" style="width: 100%" type="text" placeholder="磊山 人文講堂" />
-			</div>
-			<div class="form-group">
-				<label>名稱</label>
-				<input id="subTitle_1" style="width: 100%" type="text" placeholder="余浩瑋" />
-			</div>
-			<div class="form-group">
-				<label>別名</label>
-				<input id="subTitle_2" style="width: 100%" type="text" placeholder="青藝盟盟主" />
-			</div>
-			<div class="form-group">
-				<label>主標2</label>
-				<input id="mainTitle_2" style="width: 100%" type="text" placeholder="《牽風箏的人》" />
-			</div>
-			<div class="form-group">
-				<label>時間</label>
-				<input id="textContent_1" style="width: 100%" type="text" placeholder="05/06(六)09:50~12:00" />
-			</div>
-			<div class="form-group">
-				<label>地點</label>
-				<input id="textContent_2" style="width: 100%" type="text" placeholder="磊山學院" />
-			</div>
-			<div class="form-group">
-				<label>地址</label>
-				<input id="textContent_3" style="width: 100%" type="text" placeholder="台北市南京東路二段178號10樓" />
-			</div>
-			<div class="form-group">
-				<label>文字顏色</label>
-				<div style="display: flex;  align-items: center; width: 310px; gap: 10px;">
-					<div id="colorPicker"></div>
-					<span id="textColor">#081F58FF</span>
+				<div style="display: flex;justify-content: space-between; width: 310px ;">
+					<button onclick="show_flex()">查看卡片</button>
+					<button onclick="add_promotional_card()">附加宣傳卡片</button>
 				</div>
-			</div>
-			<!-- <div class="form-group">
+				<div class="form-group">
+					<label>大圖 URL</label>
+					<form>
+						<label for="upload">
+							<input type="button" id="upload_btn" value="點我上傳" />
+							<input type="file" id="upload" accept="image/*" />
+						</label>
+						<span id="upload_text"></span>
+					</form>
+				</div>
+				<div class="form-group">
+					<label>點擊大圖 URL</label>
+					<input id="textContent_2_url" style="width: 100%" type="text" placeholder="https://linecorp.com/" />
+				</div>
+				<div class="form-group">
+					<label>主標1</label>
+					<input id="mainTitle_1" style="width: 100%" type="text" placeholder="磊山 人文講堂" />
+				</div>
+				<div class="form-group">
+					<label>名稱</label>
+					<input id="subTitle_1" style="width: 100%" type="text" placeholder="余浩瑋" />
+				</div>
+				<div class="form-group">
+					<label>別名</label>
+					<input id="subTitle_2" style="width: 100%" type="text" placeholder="青藝盟盟主" />
+				</div>
+				<div class="form-group">
+					<label>主標2</label>
+					<input id="mainTitle_2" style="width: 100%" type="text" placeholder="《牽風箏的人》" />
+				</div>
+				<div class="form-group">
+					<label>時間</label>
+					<input id="textContent_1" style="width: 100%" type="text" placeholder="05/06(六)09:50~12:00" />
+				</div>
+				<div class="form-group">
+					<label>地點</label>
+					<input id="textContent_2" style="width: 100%" type="text" placeholder="磊山學院" />
+				</div>
+				<div class="form-group">
+					<label>地址</label>
+					<input id="textContent_3" style="width: 100%" type="text" placeholder="台北市南京東路二段178號10樓" />
+				</div>
+				<div class="form-group">
+					<label>文字顏色</label>
+					<div style="display: flex;  align-items: center; width: 310px; gap: 10px;">
+						<div id="colorPicker"></div>
+						<span id="textColor">#081F58FF</span>
+					</div>
+				</div>
+				<!-- <div class="form-group">
             <label>文字內容3 URL</label>
             <input id="textContent_3_url" style="width: 100%;" type="text" placeholder="https://albert20699.github.io/">
         </div>
@@ -405,665 +455,706 @@
             <label>背景顏色</label>
             <input id="bgColor" style="width: 100%;" type="text" placeholder="#BA0101FF">
         </div> -->
+			</div>
 		</div>
-	</div>
 
-	<script>
-		var mainTitle_1, mainTitle_2, subTitle_1, subTitle_2, textContent_1, textContent_1_url, textContent_2, textContent_2_url, textContent_3, textContent_3_url, companyUnit, share_card, keep_card, cardDescription, bgColor, textColor, card_img_url;
-		var buttonClickFlag = false;
-		var flexJson, userId;
+		<script>
+			var mainTitle_1, mainTitle_2, subTitle_1, subTitle_2, textContent_1, textContent_1_url, textContent_2, textContent_2_url, textContent_3, textContent_3_url, companyUnit, share_card, keep_card, cardDescription, bgColor, textColor, card_img_url;
+			var buttonClickFlag = false;
+			var flexJson, userId, readCount
 
-		function readShowCardData() {
-			return JSON.stringify({
-				mainTitle_1: document.getElementById("mainTitle_1").value || "",
-				mainTitle_2: document.getElementById("mainTitle_2").value || "",
-				subTitle_1: document.getElementById("subTitle_1").value || "",
-				subTitle_2: document.getElementById("subTitle_2").value || "",
-				textContent_1: document.getElementById("textContent_1").value || "",
-				textContent_1_url: document.getElementById("upload_text").textContent || "",
-				textContent_2: document.getElementById("textContent_2").value || "",
-				textContent_2_url: document.getElementById("textContent_2_url").value || "",
-				textContent_3: document.getElementById("textContent_3").value || "",
-				textColor: document.getElementById("textColor").textContent || "",
-				card_img_url: card_img_url,
-				// textContent_3_url: document.getElementById("textContent_3_url").value || "",
-				// companyUnit: document.getElementById("companyUnit").value || "",
-				// share_card: document.getElementById("share_card").value || "",
-				// keep_card: document.getElementById("keep_card").value || "",
-				// cardDescription: document.getElementById("cardDescription").value || "",
-				// bgColor: document.getElementById("bgColor").value || "",
-			});
-		}
+			function readShowCardData() {
+				return JSON.stringify({
+					mainTitle_1: document.getElementById("mainTitle_1").value || "",
+					mainTitle_2: document.getElementById("mainTitle_2").value || "",
+					subTitle_1: document.getElementById("subTitle_1").value || "",
+					subTitle_2: document.getElementById("subTitle_2").value || "",
+					textContent_1: document.getElementById("textContent_1").value || "",
+					textContent_1_url: document.getElementById("upload_text").textContent || "",
+					textContent_2: document.getElementById("textContent_2").value || "",
+					textContent_2_url: document.getElementById("textContent_2_url").value || "",
+					textContent_3: document.getElementById("textContent_3").value || "",
+					textColor: document.getElementById("textColor").textContent || "",
+					card_img_url: card_img_url,
+					// textContent_3_url: document.getElementById("textContent_3_url").value || "",
+					// companyUnit: document.getElementById("companyUnit").value || "",
+					// share_card: document.getElementById("share_card").value || "",
+					// keep_card: document.getElementById("keep_card").value || "",
+					// cardDescription: document.getElementById("cardDescription").value || "",
+					// bgColor: document.getElementById("bgColor").value || "",
+				});
+			}
 
-		function writeShowCardData(data_card) {
-			document.getElementById("mainTitle_1").value = data_card.mainTitle_1 || "";
-			document.getElementById("mainTitle_2").value = data_card.mainTitle_2 || "";
-			document.getElementById("subTitle_1").value = data_card.subTitle_1 || "";
-			document.getElementById("subTitle_2").value = data_card.subTitle_2 || "";
-			document.getElementById("textContent_1").value = data_card.textContent_1 || "";
-			document.getElementById("upload_text").textContent = data_card.textContent_1_url || "";
-			document.getElementById("textContent_2").value = data_card.textContent_2 || "";
-			document.getElementById("textContent_2_url").value = data_card.textContent_2_url || "";
-			document.getElementById("textContent_3").value = data_card.textContent_3 || "";
-			// 設定textColor文字顏色
-			document.getElementById("textColor").textContent = data_card.textColor || "#081F58";
-			// 設定colorPicker調色盤顏色
-			colorPicker.setColor(data_card.textColor || "#081F58")
+			function writeShowCardData(data_card) {
+				document.getElementById("mainTitle_1").value = data_card.mainTitle_1 || "";
+				document.getElementById("mainTitle_2").value = data_card.mainTitle_2 || "";
+				document.getElementById("subTitle_1").value = data_card.subTitle_1 || "";
+				document.getElementById("subTitle_2").value = data_card.subTitle_2 || "";
+				document.getElementById("textContent_1").value = data_card.textContent_1 || "";
+				document.getElementById("upload_text").textContent = data_card.textContent_1_url || "";
+				document.getElementById("textContent_2").value = data_card.textContent_2 || "";
+				document.getElementById("textContent_2_url").value = data_card.textContent_2_url || "";
+				document.getElementById("textContent_3").value = data_card.textContent_3 || "";
+				// 設定textColor文字顏色
+				document.getElementById("textColor").textContent = data_card.textColor || "#081F58";
+				// 設定colorPicker調色盤顏色
+				colorPicker.setColor(data_card.textColor || "#081F58")
 
-			// document.getElementById("textContent_3_url").value = data_card.textContent_3_url || "";
-			// document.getElementById("companyUnit").value = data_card.companyUnit || "";
-			// document.getElementById("share_card").value = data_card.share_card || "";
-			// document.getElementById("keep_card").value = data_card.keep_card || "";
-			// document.getElementById("cardDescription").value = data_card.cardDescription || "";
-			// document.getElementById("bgColor").value = data_card.bgColor || "";
-		}
+				// document.getElementById("textContent_3_url").value = data_card.textContent_3_url || "";
+				// document.getElementById("companyUnit").value = data_card.companyUnit || "";
+				// document.getElementById("share_card").value = data_card.share_card || "";
+				// document.getElementById("keep_card").value = data_card.keep_card || "";
+				// document.getElementById("cardDescription").value = data_card.cardDescription || "";
+				// document.getElementById("bgColor").value = data_card.bgColor || "";
+			}
 
-		function close_flex() {
-			document.querySelector(".hidden_forward").classList.add("hidden");
-			document.querySelector(".hidden_backward").classList.remove("hidden");
-		}
-		function show_flex() {
-			document.querySelector(".hidden_forward").classList.remove("hidden");
-			document.querySelector(".hidden_backward").classList.add("hidden");
+			function close_flex() {
+				document.querySelector(".hidden_forward").classList.add("hidden");
+				document.querySelector(".hidden_backward").classList.remove("hidden");
+			}
+			function show_flex() {
+				document.querySelector(".hidden_forward").classList.remove("hidden");
+				document.querySelector(".hidden_backward").classList.add("hidden");
 
-			var mainTitle_1_Element = document.getElementById("mainTitle_1");
-			mainTitle_1 = mainTitle_1_Element.value || mainTitle_1_Element.placeholder;
+				var mainTitle_1_Element = document.getElementById("mainTitle_1");
+				mainTitle_1 = mainTitle_1_Element.value || mainTitle_1_Element.placeholder;
 
-			var mainTitle_2_Element = document.getElementById("mainTitle_2");
-			mainTitle_2 = mainTitle_2_Element.value || mainTitle_2_Element.placeholder;
+				var mainTitle_2_Element = document.getElementById("mainTitle_2");
+				mainTitle_2 = mainTitle_2_Element.value || mainTitle_2_Element.placeholder;
 
-			var subTitle_1_Element = document.getElementById("subTitle_1");
-			subTitle_1 = subTitle_1_Element.value || subTitle_1_Element.placeholder;
+				var subTitle_1_Element = document.getElementById("subTitle_1");
+				subTitle_1 = subTitle_1_Element.value || subTitle_1_Element.placeholder;
 
-			var subTitle_2_Element = document.getElementById("subTitle_2");
-			subTitle_2 = subTitle_2_Element.value || subTitle_2_Element.placeholder;
+				var subTitle_2_Element = document.getElementById("subTitle_2");
+				subTitle_2 = subTitle_2_Element.value || subTitle_2_Element.placeholder;
 
-			var textContent_1_Element = document.getElementById("textContent_1");
-			textContent_1 = textContent_1_Element.value || textContent_1_Element.placeholder;
+				var textContent_1_Element = document.getElementById("textContent_1");
+				textContent_1 = textContent_1_Element.value || textContent_1_Element.placeholder;
 
-			var textContent_1_url_Element = document.getElementById("upload_text");
-			textContent_1_url = textContent_1_url_Element.textContent || "https://i.ibb.co/B6KNp92/01-1-cafe.png";
+				var textContent_1_url_Element = document.getElementById("upload_text");
+				textContent_1_url = textContent_1_url_Element.textContent || "https://i.ibb.co/B6KNp92/01-1-cafe.png";
 
-			var textContent_2_Element = document.getElementById("textContent_2");
-			textContent_2 = textContent_2_Element.value || textContent_2_Element.placeholder;
+				var textContent_2_Element = document.getElementById("textContent_2");
+				textContent_2 = textContent_2_Element.value || textContent_2_Element.placeholder;
 
-			var textContent_2_url_Element = document.getElementById("textContent_2_url");
-			textContent_2_url = textContent_2_url_Element.value || textContent_2_url_Element.placeholder;
+				var textContent_2_url_Element = document.getElementById("textContent_2_url");
+				textContent_2_url = textContent_2_url_Element.value || textContent_2_url_Element.placeholder;
 
-			var textContent_3_Element = document.getElementById("textContent_3");
-			textContent_3 = textContent_3_Element.value || textContent_3_Element.placeholder;
+				var textContent_3_Element = document.getElementById("textContent_3");
+				textContent_3 = textContent_3_Element.value || textContent_3_Element.placeholder;
 
-			var textColor_Element = document.getElementById("textColor");
-			textColor = textColor_Element.textContent;
+				var textColor_Element = document.getElementById("textColor");
+				textColor = textColor_Element.textContent;
 
-			// var textContent_3_url_Element = document.getElementById("textContent_3_url");
-			// textContent_3_url = textContent_3_url_Element.value || textContent_3_url_Element.placeholder;
+				// var textContent_3_url_Element = document.getElementById("textContent_3_url");
+				// textContent_3_url = textContent_3_url_Element.value || textContent_3_url_Element.placeholder;
 
-			// var companyUnit_Element = document.getElementById("companyUnit");
-			// companyUnit = companyUnit_Element.value || companyUnit_Element.placeholder;
+				// var companyUnit_Element = document.getElementById("companyUnit");
+				// companyUnit = companyUnit_Element.value || companyUnit_Element.placeholder;
 
-			// var share_card_Element = document.getElementById("share_card");
-			// share_card = share_card_Element.value || share_card_Element.placeholder;
+				// var share_card_Element = document.getElementById("share_card");
+				// share_card = share_card_Element.value || share_card_Element.placeholder;
 
-			// var keep_card_Element = document.getElementById("keep_card");
-			// keep_card = keep_card_Element.value || keep_card_Element.placeholder;
+				// var keep_card_Element = document.getElementById("keep_card");
+				// keep_card = keep_card_Element.value || keep_card_Element.placeholder;
 
-			// var cardDescription_Element = document.getElementById("cardDescription");
-			// cardDescription = cardDescription_Element.value || cardDescription_Element.placeholder;
+				// var cardDescription_Element = document.getElementById("cardDescription");
+				// cardDescription = cardDescription_Element.value || cardDescription_Element.placeholder;
 
-			// var bgColor_Element = document.getElementById("bgColor");
-			// bgColor = bgColor_Element.value || bgColor_Element.placeholder;
+				// var bgColor_Element = document.getElementById("bgColor");
+				// bgColor = bgColor_Element.value || bgColor_Element.placeholder;
 
-			flexJson = {
-				type: "flex",
-				altText: "Flex Message",
-				contents: {
-					type: "carousel",
-					contents: [
-						{
-							type: "bubble",
-							hero: {
-								type: "image",
-								url: textContent_1_url,
-								size: "full",
-								aspectRatio: "1:1",
-								aspectMode: "cover",
-								action: {
-									type: "uri",
-									uri: textContent_2_url,
+				flexJson = {
+					type: "flex",
+					altText: "Flex Message",
+					contents: {
+						type: "carousel",
+						contents: [
+							{
+								type: "bubble",
+								hero: {
+									type: "image",
+									url: textContent_1_url,
+									size: "full",
+									aspectRatio: "1:1",
+									aspectMode: "cover",
+									action: {
+										type: "uri",
+										uri: textContent_2_url,
+									},
+								},
+								body: {
+									type: "box",
+									layout: "vertical",
+									position: "relative",
+									height: "355px",
+									contents: [
+										{
+											type: "box",
+											layout: "vertical",
+											backgroundColor: textColor,
+											cornerRadius: "5px",
+											contents: [
+												{
+													type: "text",
+													text: "【" + mainTitle_1 + "】",
+													weight: "bold",
+													size: "xl",
+													color: "#FFFFFFFF",
+													align: "center",
+													gravity: "center",
+													contents: [],
+												},
+											],
+										},
+										{
+											type: "box",
+											layout: "horizontal",
+											offsetTop: "5px",
+											height: "45px",
+											contents: [
+												{
+													type: "text",
+													text: subTitle_1,
+													weight: "bold",
+													size: "xl",
+													color: textColor,
+													flex: 4,
+													gravity: "center",
+													contents: [],
+												},
+												{
+													type: "text",
+													text: subTitle_2,
+													weight: "bold",
+													color: textColor,
+													flex: 8,
+													gravity: "center",
+													contents: [],
+												},
+											],
+										},
+										{
+											type: "text",
+											text: mainTitle_2,
+											weight: "regular",
+											color: textColor,
+											contents: [],
+										},
+										{
+											type: "text",
+											text: "時間:" + textContent_1,
+											weight: "regular",
+											color: textColor,
+											contents: [],
+										},
+										{
+											type: "text",
+											text: "地點:" + textContent_2,
+											weight: "regular",
+											color: textColor,
+											contents: [],
+										},
+										{
+											type: "text",
+											text: "(" + textContent_3 + ")",
+											weight: "regular",
+											size: "sm",
+											color: textColor,
+											contents: [],
+										},
+										{
+											type: "box",
+											layout: "horizontal",
+											position: "absolute",
+											offsetTop: "200px",
+											offsetStart: "10px",
+											width: "320px",
+											contents: [
+												{
+													type: "box",
+													layout: "vertical",
+													paddingTop: "10px",
+													width: "135px",
+													height: "40px",
+													backgroundColor: "#B5B8BDFF",
+													contents: [
+														{
+															type: "text",
+															text: "分享給好友",
+															color: "#FFFFFFFF",
+															align: "center",
+															action: {
+																type: "uri",
+																uri: "https://liff.line.me/1660908511-Ol7grGPY/?userId=" + encodeURIComponent(userId),
+															},
+															contents: [],
+														},
+													],
+												},
+												{
+													type: "box",
+													layout: "vertical",
+													offsetStart: "10px",
+													paddingTop: "10px",
+													width: "135px",
+													height: "40px",
+													backgroundColor: "#B5B8BDFF",
+													contents: [
+														{
+															type: "text",
+															text: "收藏資訊",
+															color: "#FFFFFFFF",
+															align: "center",
+															contents: [],
+														},
+													],
+												},
+											],
+										},
+										{
+											type: "box",
+											layout: "vertical",
+											action: {
+												type: "uri",
+												// "uri": "https://3428750.so-buy.com/"
+												uri: "https://calendar.google.com/calendar/u/0/r/eventedit?pli=1&uid=62890calndrlink&sf=1&output=xml&dates=20230603T095000/20230603T120000&ctz=Asia/Taipei&text=【磊山+人文講堂】&details=【公益可以不一樣+成為改變的起點】",
+											},
+											position: "absolute",
+											offsetTop: "250px",
+											offsetStart: "10px",
+											paddingTop: "10px",
+											width: "280px",
+											height: "40px",
+											backgroundColor: "#91AFC2FF",
+											contents: [
+												{
+													type: "text",
+													text: "設定提醒(google行事曆)",
+													color: "#FFFFFFFF",
+													align: "center",
+													contents: [],
+												},
+											],
+										},
+										{
+											type: "box",
+											layout: "vertical",
+											action: {
+												type: "uri",
+												uri: "https://3428750.so-buy.com/",
+											},
+											position: "absolute",
+											offsetTop: "300px",
+											offsetStart: "10px",
+											paddingTop: "10px",
+											width: "280px",
+											height: "40px",
+											backgroundColor: "#91AFC2FF",
+											contents: [
+												{
+													type: "text",
+													text: "製作美美的卡片✨",
+													color: "#FFFFFFFF",
+													align: "center",
+													contents: [],
+												},
+											],
+										},
+									],
 								},
 							},
-							body: {
-								type: "box",
-								layout: "vertical",
-								position: "relative",
-								height: "355px",
-								contents: [
-									{
-										type: "box",
-										layout: "vertical",
-										backgroundColor: textColor,
-										cornerRadius: "5px",
-										contents: [
-											{
-												type: "text",
-												text: "【" + mainTitle_1 + "】",
-												weight: "bold",
-												size: "xl",
-												color: "#FFFFFFFF",
-												align: "center",
-												gravity: "center",
-												contents: [],
-											},
-										],
-									},
-									{
-										type: "box",
-										layout: "horizontal",
-										offsetTop: "5px",
-										height: "45px",
-										contents: [
-											{
-												type: "text",
-												text: subTitle_1,
-												weight: "bold",
-												size: "xl",
-												color: textColor,
-												flex: 4,
-												gravity: "center",
-												contents: [],
-											},
-											{
-												type: "text",
-												text: subTitle_2,
-												weight: "bold",
-												color: textColor,
-												flex: 8,
-												gravity: "center",
-												contents: [],
-											},
-										],
-									},
-									{
-										type: "text",
-										text: mainTitle_2,
-										weight: "regular",
-										color: textColor,
-										contents: [],
-									},
-									{
-										type: "text",
-										text: "時間:" + textContent_1,
-										weight: "regular",
-										color: textColor,
-										contents: [],
-									},
-									{
-										type: "text",
-										text: "地點:" + textContent_2,
-										weight: "regular",
-										color: textColor,
-										contents: [],
-									},
-									{
-										type: "text",
-										text: "(" + textContent_3 + ")",
-										weight: "regular",
-										size: "sm",
-										color: textColor,
-										contents: [],
-									},
-									{
-										type: "box",
-										layout: "horizontal",
-										position: "absolute",
-										offsetTop: "200px",
-										offsetStart: "10px",
-										width: "320px",
-										contents: [
-											{
-												type: "box",
-												layout: "vertical",
-												paddingTop: "10px",
-												width: "135px",
-												height: "40px",
-												backgroundColor: "#B5B8BDFF",
-												contents: [
-													{
-														type: "text",
-														text: "分享給好友",
-														color: "#FFFFFFFF",
-														align: "center",
-														action: {
-															type: "uri",
-															uri: "https://liff.line.me/1660908511-Ol7grGPY/?userId=" + encodeURIComponent(userId),
-														},
-														contents: [],
-													},
-												],
-											},
-											{
-												type: "box",
-												layout: "vertical",
-												offsetStart: "10px",
-												paddingTop: "10px",
-												width: "135px",
-												height: "40px",
-												backgroundColor: "#B5B8BDFF",
-												contents: [
-													{
-														type: "text",
-														text: "收藏資訊",
-														color: "#FFFFFFFF",
-														align: "center",
-														contents: [],
-													},
-												],
-											},
-										],
-									},
-									{
-										type: "box",
-										layout: "vertical",
-										action: {
-											type: "uri",
-											// "uri": "https://3428750.so-buy.com/"
-											uri: "https://calendar.google.com/calendar/u/0/r/eventedit?pli=1&uid=62890calndrlink&sf=1&output=xml&dates=20230603T095000/20230603T120000&ctz=Asia/Taipei&text=【磊山+人文講堂】&details=【公益可以不一樣+成為改變的起點】",
-										},
-										position: "absolute",
-										offsetTop: "250px",
-										offsetStart: "10px",
-										paddingTop: "10px",
-										width: "280px",
-										height: "40px",
-										backgroundColor: "#91AFC2FF",
-										contents: [
-											{
-												type: "text",
-												text: "設定提醒(google行事曆)",
-												color: "#FFFFFFFF",
-												align: "center",
-												contents: [],
-											},
-										],
-									},
-									{
-										type: "box",
-										layout: "vertical",
-										action: {
-											type: "uri",
-											uri: "https://3428750.so-buy.com/",
-										},
-										position: "absolute",
-										offsetTop: "300px",
-										offsetStart: "10px",
-										paddingTop: "10px",
-										width: "280px",
-										height: "40px",
-										backgroundColor: "#91AFC2FF",
-										contents: [
-											{
-												type: "text",
-												text: "製作美美的卡片✨",
-												color: "#FFFFFFFF",
-												align: "center",
-												contents: [],
-											},
-										],
-									},
-								],
-							},
-						},
-					],
-				},
-			};
+						],
+					},
+				};
 
-			// 將flexJson繪出到HTML上
-			my_flexToHtml();
-		}
-
-		function my_flexToHtml() {
-			document.getElementById("flex2html").innerHTML = "";
-			flex2html("flex2html", flexJson);
-
-			// 將錯誤的 ExXxs 替換為正確的 ExXXs
-			var wrongExXxsElements = document.querySelectorAll(".ExXxs");
-			wrongExXxsElements.forEach(function (element) {
-				element.classList.remove("ExXxs");
-				element.classList.add("ExXXs");
-			});
-
-			// 將錯誤的 Ex3xl 替換為正確的 Ex3Xl
-			var wrongEx3xlElements = document.querySelectorAll(".Ex3xl");
-			wrongEx3xlElements.forEach(function (element) {
-				element.classList.remove("Ex3xl");
-				element.classList.add("Ex3Xl");
-			});
-
-			// 將 LySlider 關閉下方捲動軸
-			var wrongLySliderElements = document.querySelector(".LySlider");
-			wrongLySliderElements.style.webkitOverflowScrolling = "auto";
-			wrongLySliderElements.style.overflowX = "visible";
-
-			// 將 chatbox 上方空白縮短
-			var wrongchatboxElements = document.querySelector(".chatbox");
-			wrongchatboxElements.style.paddingTop = "20px";
-		}
-
-		async function sendRequest(status, userId, data_card = "", data = "") {
-			if (!status || !userId) {
-				alert("向google apps script寄送請求時\n有效參數不足");
-				return;
+				// 將flexJson繪出到HTML上
+				my_flexToHtml("flex2html_main");
 			}
 
-			const url = "https://script.google.com/macros/s/AKfycbyr0G-TZAyz07ar-D83ogRTVMSjyyzz5aEMWZSVQ_dAnvNv2t-chlhOz0GcJDB_91K3/exec";
+			function my_flexToHtml(flex2html_Element_Name) {
+				document.getElementById(flex2html_Element_Name).innerHTML = "";
+				flex2html(flex2html_Element_Name, flexJson);
 
-			try {
-				const sendData = { status: status, userId: userId, card: data_card };
-
-				// 將資料轉換成查詢字串
-				const queryString = new URLSearchParams(sendData).toString();
-
-				const response = await fetch(`${url}?${queryString}`);
-				const responseData = await response.json();
-
-				console.log("Data sent:", sendData);
-				console.log("Response:", responseData);
-				if (responseData.status === 'first') { return "first"; }
-				else if (responseData.status === 'ok') { return responseData; }
-				else { alert("向google apps script寄送請求時\n回傳值非ok"); }
-			} catch (error) {
-				alert("向google apps script寄送請求時\n發生錯誤\n" + error);
-			}
-		}
-
-		// colorPicker創建調色盤元素(文字放textColor)
-		var textColor_Element = document.getElementById("textColor");
-		const colorPicker = Pickr.create({
-			el: '#colorPicker',
-			theme: 'nano', // 使用 NANO 主題
-			default: "#081F58", // 預設顏色
-			components: {
-				preview: true,
-				opacity: true,
-				hue: true,
-				interaction: {
-					input: true,
-				}
-			}
-		});
-		// colorPicker顏色更改事件
-		colorPicker.on('change', (color) => {
-			textColor_Element.textContent = color.toHEXA().toString();
-		});
-		// colorPicker失去焦點事件
-		colorPicker.on('hide', () => {
-			colorPicker.applyColor(); // 應用顏色到目標元素
-			// 卡片資料存到google sheet
-			sendRequest("save", userId, readShowCardData());
-		});
-
-		window.onload = function () {
-			document.querySelector(".hidden_forward").classList.add("hidden");
-			document.getElementById('loader').style.display = 'flex';
-			liff.init({ liffId: "1660908511-DERZWN3m" })
-				.then(() => {
-					if (!liff.isLoggedIn()) {
-						liff.login();
-					}
-					else {
-						liff.getProfile()
-							.then(async function (profile) {
-								userId = profile.userId
-								var responseData = await sendRequest("get", userId)
-								if (responseData != "first") {
-									const data_card = JSON.parse(responseData.card);
-									writeShowCardData(data_card)
-								}
-								document.getElementById('loader').style.display = 'none';
-							})
-							.catch(function (error) {
-								alert("取得使用者資料錯誤\n" + error);
-							});
-					}
+				// 將錯誤的 ExXxs 替換為正確的 ExXXs
+				var wrongExXxsElements = document.querySelectorAll(".ExXxs");
+				wrongExXxsElements.forEach(function (element) {
+					element.classList.remove("ExXxs");
+					element.classList.add("ExXXs");
 				});
-		};
 
-		// 分享line按钮的點擊事件
-		function shareButton_line() {
-			liff
-				.shareTargetPicker([flexJson])
-				.then(async function (res) {
-					if (res) {
-						// 向google sheet發送的增加閱讀數
-						await sendRequest("addReadCount", userId);
-						// 送出提醒框
-						Swal.fire({
-							text: "卡片已送出",
-							timer: 800,
-							showConfirmButton: false,
-							customClass: {
-								container: "swal-container",
-								popup: "swal-popup",
-								content: "swal-content",
-							},
-						});
-					} else {
-						const [majorVer, minorVer] = (liff.getLineVersion() || "").split(".");
-						if (parseInt(majorVer) < 10 || (parseInt(majorVer) == 10 && parseInt(minorVer) < 11)) {
-							alert("沒有 TargetPicker 功能\n請嘗試更新 LINE");
-						} else {
-							alert("有 TargetPicker 功能，但發送訊息未成功");
-						}
-					}
-				})
-				.catch(function (err) {
-					alert("分享傳送訊息失敗\n請檢查URL及內容\n" + err);
+				// 將錯誤的 Ex3xl 替換為正確的 Ex3Xl
+				var wrongEx3xlElements = document.querySelectorAll(".Ex3xl");
+				wrongEx3xlElements.forEach(function (element) {
+					element.classList.remove("Ex3xl");
+					element.classList.add("Ex3Xl");
 				});
-		}
 
-		// 分享mail按钮的點擊事件
-		function shareButton_mail() {
-			document.getElementById("shareButton_mail").href = "mailto:?subject=【卡片分享】&body=使用瀏覽器預覽照片連結：https://albert20699.github.io/preview/?userId=" + encodeURIComponent(userId);
-			// document.getElementById("shareButton_mail").href = "mailto:?subject=【卡片分享】-&body=請參考圖片附件:[圖片](https://i.ibb.co/8YTW70m/blob.jpg)&attachment=https://i.ibb.co/8YTW70m/blob.jpg";
-		}
-		// 分享twitter按钮的點擊事件
-		function shareButton_twitter() {
-			// 檢查是否有重複按(由於必須click()觸發，將會導致重複)
-			if (!buttonClickFlag) {
-				buttonClickFlag = true;
-				// 截圖卡片後資料存入google sheet
-				document.getElementById("loader").style.display = "flex";
-				var card = document.querySelector(".downloadFlex");
-				domtoimage.toBlob(card).then(async function (blob) {
-					card_img_url = await uploadImg(blob)
-					await sendRequest("save", userId, readShowCardData());
-					var responseData = await sendRequest("uploadGithub", userId, readShowCardData());
-					var shareOG_url = "https://twitter.com/intent/tweet?url=" + responseData.uploadOG_url;
-					document.getElementById("shareButton_twitter").href = shareOG_url;
-					document.getElementById("shareButton_twitter").click();
-				})
-					.catch(function (err) {
-						alert("分享傳送訊息失敗\n" + err);
-					});
+				// 將 LySlider 關閉下方捲動軸
+				var wrongLySliderElements = document.querySelector(".LySlider");
+				wrongLySliderElements.style.webkitOverflowScrolling = "auto";
+				wrongLySliderElements.style.overflowX = "visible";
+
+				// 將 chatbox 上方空白縮短
+				var wrongchatboxElements = document.querySelector(".chatbox");
+				wrongchatboxElements.style.paddingTop = "20px";
 			}
-			else {
-				buttonClickFlag = false;
-				document.getElementById("loader").style.display = "none";
-			}
-		}
-		// 分享facebook按钮的點擊事件
-		function shareButton_facebook() {
-			// 檢查是否有重複按(由於必須click()觸發，將會導致重複)
-			if (!buttonClickFlag) {
-				buttonClickFlag = true;
-				// 截圖卡片後資料存入google sheet
-				document.getElementById("loader").style.display = "flex";
-				var card = document.querySelector(".downloadFlex");
-				domtoimage.toBlob(card).then(async function (blob) {
-					card_img_url = await uploadImg(blob)
-					await sendRequest("save", userId, readShowCardData());
-					var responseData = await sendRequest("uploadGithub", userId, readShowCardData());
-					var shareOG_url = "https://www.facebook.com/sharer.php?u=" + responseData.uploadOG_url;
-					document.getElementById("shareButton_facebook").href = shareOG_url;
-					document.getElementById("shareButton_facebook").click();
-				})
-					.catch(function (err) {
-						alert("分享傳送訊息失敗\n" + err);
-					});
-			}
-			else {
-				buttonClickFlag = false;
-				document.getElementById("loader").style.display = "none";
-			}
-		}
 
-		// 分享Copy Link URL按钮的點擊事件
-		async function shareButton_copyURL() {
-			// 取得要複製的文字
-			var textToCopy = "https://albert20699.github.io/preview/?userId=" + encodeURIComponent(userId)
-
-			try {
-				await navigator.clipboard.writeText(textToCopy);
-			} catch (err) {
-				try {
-					// 建立一個臨時的 textarea 元素
-					var tempTextarea = document.createElement("textarea");
-					tempTextarea.value = textToCopy;
-
-					// 將 textarea 加入到文件中
-					document.body.appendChild(tempTextarea);
-
-					// 選取並複製文字
-					tempTextarea.select();
-					document.execCommand("copy");
-
-					// 移除臨時的 textarea 元素
-					tempTextarea.remove();
-				} catch (err) {
-					alert("無法複製文字")
+			async function sendRequest(status, userId, data_card = "", data = "") {
+				if (!status || !userId) {
+					alert("向google apps script寄送請求時\n有效參數不足");
 					return;
 				}
+
+				const url = "https://script.google.com/macros/s/AKfycbxKiM76YZI-m_mQUDrmIG7vq9PXI2UP5AQpTPljq61KWh-URhW_bIcKFWKZoeFMRx9Dog/exec";
+
+				try {
+					const sendData = { status: status, userId: userId, card: data_card };
+
+					// 將資料轉換成查詢字串
+					const queryString = new URLSearchParams(sendData).toString();
+
+					const response = await fetch(`${url}?${queryString}`);
+					const responseData = await response.json();
+
+					console.log("Data sent:", sendData);
+					console.log("Response:", responseData);
+					if (responseData.status === 'first') { return "first"; }
+					else if (responseData.status === 'ok') { return responseData; }
+					else { alert("向google apps script寄送請求時\n回傳值非ok"); }
+				} catch (error) {
+					alert("向google apps script寄送請求時\n發生錯誤\n" + error);
+				}
 			}
 
-			// 送出提醒框
-			Swal.fire({
-				text: "文字已複製到剪貼簿",
-				timer: 800,
-				showConfirmButton: false
+			// colorPicker創建調色盤元素(文字放textColor)
+			var textColor_Element = document.getElementById("textColor");
+			const colorPicker = Pickr.create({
+				el: '#colorPicker',
+				theme: 'nano', // 使用 NANO 主題
+				default: "#081F58", // 預設顏色
+				components: {
+					preview: true,
+					opacity: true,
+					hue: true,
+					interaction: {
+						input: true,
+					}
+				}
 			});
-		}
+			// colorPicker顏色更改事件
+			colorPicker.on('change', (color) => {
+				textColor_Element.textContent = color.toHEXA().toString();
+			});
+			// colorPicker失去焦點事件
+			colorPicker.on('hide', () => {
+				colorPicker.applyColor(); // 應用顏色到目標元素
+				// 卡片資料存到google sheet
+				sendRequest("save", userId, readShowCardData());
+			});
 
-		// 截圖按钮的點擊事件
-		function downloadButton() {
-			// 獲取瀏覽器的使用者代理
-			var userAgent = navigator.userAgent;
-			// 檢查是否執行於line
-			var isOnLine = /line/i.test(userAgent)
+			window.onload = function () {
+				document.querySelector(".hidden_forward").classList.add("hidden");
+				// document.getElementById('loader').style.display = 'flex';
+				// liff.init({ liffId: "1660908511-DERZWN3m" })
+				// 	.then(() => {
+				// 		if (!liff.isLoggedIn()) {
+				// 			liff.login();
+				// 		}
+				// 		else {
+				// 			liff.getProfile()
+				// 				.then(async function (profile) {
+				// 					userId = profile.userId
+				// 					var responseData = await sendRequest("get", userId)
+				// 					if (responseData != "first") {
+				// 						const data_card = JSON.parse(responseData.card);
+				// 						writeShowCardData(data_card)
+				// 					}
+				// 					document.getElementById('loader').style.display = 'none';
+				// 				})
+				// 				.catch(function (error) {
+				// 					alert("取得使用者資料錯誤\n" + error);
+				// 				});
+				// 		}
+				// 	});
+			};
 
-			if (isOnLine) {
-				// 由於line本身無法下載檔案，一律跳轉用外部瀏覽器下載
-				alert("將自動開啟預設瀏覽器\n並下載檔案")
-				liff.openWindow({
-					url: 'https://albert20699.github.io/download_card/?userId=' + encodeURIComponent(userId),
-					external: true  // 開啟外部瀏覽器
-				});
-			}
-			else {
-				// 取得下載框的元素
-				var card = document.querySelector(".downloadFlex");
-
-				// 使用dom-to-image庫進行截圖
-				domtoimage.toBlob(card).then(function (blob) {
-					// 創建下載連結
-					var link = document.createElement("a");
-					link.href = URL.createObjectURL(blob);
-					// 獲取當前時間戳
-					var timestamp = Date.now();
-					link.download = mainTitle_1 + "_" + timestamp + ".png";
-
-					// 觸發下載
-					link.click();
-
-					// 清理URL對象，釋放資源
-					URL.revokeObjectURL(link.href);
-				})
-					.catch(function (error) {
-						alert("下載錯誤\n" + error);
+			// 分享line按钮的點擊事件
+			function shareButton_line() {
+				liff
+					.shareTargetPicker([flexJson])
+					.then(async function (res) {
+						if (res) {
+							// 向google sheet發送的增加閱讀數
+							await sendRequest("addReadCount", userId);
+							// 送出提醒框
+							Swal.fire({
+								text: "卡片已送出",
+								timer: 800,
+								showConfirmButton: false,
+								customClass: {
+									container: "swal-container",
+									popup: "swal-popup",
+									content: "swal-content",
+								},
+							});
+						} else {
+							const [majorVer, minorVer] = (liff.getLineVersion() || "").split(".");
+							if (parseInt(majorVer) < 10 || (parseInt(majorVer) == 10 && parseInt(minorVer) < 11)) {
+								alert("沒有 TargetPicker 功能\n請嘗試更新 LINE");
+							} else {
+								alert("有 TargetPicker 功能，但發送訊息未成功");
+							}
+						}
+					})
+					.catch(function (err) {
+						alert("分享傳送訊息失敗\n請檢查URL及內容\n" + err);
 					});
 			}
-		}
 
-
-
-		// 檢查是否有新圖片更新到網頁並上傳
-		document.getElementById("upload").addEventListener("change", async function (event) {
-			document.getElementById("loader").style.display = "flex";
-			var file = event.target.files[0]; // 取得選擇的檔案
-			textContent_1_url = await uploadImg(file); // 上傳檔案並回傳URL
-			document.getElementById("upload_text").textContent = textContent_1_url;
-			sendRequest("save", userId, readShowCardData());
-			document.getElementById("loader").style.display = "none";
-		});
-
-		// 上傳檔案並回傳URL
-		function uploadImg(file) {
-			return new Promise((resolve, reject) => {
-				var reader = new FileReader();
-				reader.onload = function () {
-					var fileBlob = dataURLtoBlob(reader.result);
-					var formData = new FormData();
-					formData.append("image", fileBlob);
-
-					fetch("https://api.imgbb.com/1/upload?key=9370c80a93b313d5f526531503162623&expiration=15552000", {
-						method: "POST",
-						body: formData,
-					})
-						.then(function (response) {
-							return response.json();
-						})
-						.then(function (data) {
-							resolve(data.data.display_url);
-						})
-						.catch(function (error) {
-							alert("上傳照片錯誤\n" + error);
-							reject(error);
-						});
-				};
-				reader.readAsDataURL(file);
-			});
-		}
-		function dataURLtoBlob(dataURL) {
-			var arr = dataURL.split(","); // 將資料URL分割成類型和資料部分
-			var mime = arr[0].match(/:(.*?);/)[1]; // 提取資料URL中的MIME類型
-			var bstr = atob(arr[1]); // 解碼Base64編碼的資料部分
-			var n = bstr.length;
-			var u8arr = new Uint8Array(n);
-			while (n--) {
-				u8arr[n] = bstr.charCodeAt(n); // 轉換為Uint8Array
+			// 分享mail按钮的點擊事件
+			function shareButton_mail() {
+				document.getElementById("shareButton_mail").href = "mailto:?subject=【卡片分享】&body=使用瀏覽器預覽照片連結：https://albert20699.github.io/preview/?userId=" + encodeURIComponent(userId);
+				// document.getElementById("shareButton_mail").href = "mailto:?subject=【卡片分享】-&body=請參考圖片附件:[圖片](https://i.ibb.co/8YTW70m/blob.jpg)&attachment=https://i.ibb.co/8YTW70m/blob.jpg";
 			}
-			return new Blob([u8arr], { type: mime }); // 創建Blob物件
-		}
+			// 分享twitter按钮的點擊事件
+			function shareButton_twitter() {
+				// 檢查是否有重複按(由於必須click()觸發，將會導致重複)
+				if (!buttonClickFlag) {
+					buttonClickFlag = true;
+					// 截圖卡片後資料存入google sheet
+					document.getElementById("loader").style.display = "flex";
+					var card = document.querySelector(".downloadFlex");
+					domtoimage.toBlob(card).then(async function (blob) {
+						card_img_url = await uploadImg(blob)
+						await sendRequest("save", userId, readShowCardData());
+						var responseData = await sendRequest("uploadGithub", userId, readShowCardData());
+						var shareOG_url = "https://twitter.com/intent/tweet?url=" + responseData.uploadOG_url;
+						document.getElementById("shareButton_twitter").href = shareOG_url;
+						document.getElementById("shareButton_twitter").click();
+					})
+						.catch(function (err) {
+							alert("分享傳送訊息失敗\n" + err);
+						});
+				}
+				else {
+					buttonClickFlag = false;
+					// 三秒後重整頁面
+					setTimeout(function () { location.reload(); }, 3000);
+				}
+			}
+			// 分享facebook按钮的點擊事件
+			function shareButton_facebook() {
+				// 檢查是否有重複按(由於必須click()觸發，將會導致重複)
+				if (!buttonClickFlag) {
+					buttonClickFlag = true;
+					// 截圖卡片後資料存入google sheet
+					document.getElementById("loader").style.display = "flex";
+					var card = document.querySelector(".downloadFlex");
+					domtoimage.toBlob(card).then(async function (blob) {
+						card_img_url = await uploadImg(blob)
+						await sendRequest("save", userId, readShowCardData());
+						var responseData = await sendRequest("uploadGithub", userId, readShowCardData());
+						var shareOG_url = "https://www.facebook.com/sharer.php?u=" + responseData.uploadOG_url;
+						document.getElementById("shareButton_facebook").href = shareOG_url;
+						document.getElementById("shareButton_facebook").click();
+					})
+						.catch(function (err) {
+							alert("分享傳送訊息失敗\n" + err);
+						});
+				}
+				else {
+					buttonClickFlag = false;
+					// 三秒後重整頁面
+					setTimeout(function () { location.reload(); }, 3000);
+				}
+			}
 
-		// 元素失去焦點事件
-		document.addEventListener("blur", function (event) {
-			// 檢查事件源是否為輸入框且已經loading完成
-			if (event.target.tagName.toLowerCase() === "input" && document.getElementById("loader").style.display == "none") {
-				// 檢查textContent_2_url的input格是否合法的url
-				if (event.target.id === "textContent_2_url" && event.target.value != "") {
+			// 分享Copy Link URL按钮的點擊事件
+			async function shareButton_copyURL() {
+				// 取得要複製的文字
+				var textToCopy = "https://albert20699.github.io/preview/?userId=" + encodeURIComponent(userId)
+
+				try {
+					await navigator.clipboard.writeText(textToCopy);
+				} catch (err) {
 					try {
-						new URL(event.target.value);
-					} catch (error) {
-						alert("URL格式錯誤")
-						event.target.value = ""
+						// 建立一個臨時的 textarea 元素
+						var tempTextarea = document.createElement("textarea");
+						tempTextarea.value = textToCopy;
+
+						// 將 textarea 加入到文件中
+						document.body.appendChild(tempTextarea);
+
+						// 選取並複製文字
+						tempTextarea.select();
+						document.execCommand("copy");
+
+						// 移除臨時的 textarea 元素
+						tempTextarea.remove();
+					} catch (err) {
+						alert("無法複製文字")
 						return;
 					}
 				}
-				// 卡片資料存到google sheet
-				sendRequest("save", userId, readShowCardData());
+
+				// 送出提醒框
+				Swal.fire({
+					text: "文字已複製到剪貼簿",
+					timer: 800,
+					showConfirmButton: false
+				});
 			}
-		}, true); // 注意，這裡的 true 參數是為了在捕獲階段觸發事件，這對於 'blur' 和 'focus' 事件是必要的。
-	</script>
+
+			// 截圖按钮的點擊事件
+			function downloadButton() {
+				// 獲取瀏覽器的使用者代理
+				var userAgent = navigator.userAgent;
+				// 檢查是否執行於line
+				var isOnLine = /line/i.test(userAgent)
+
+				if (isOnLine) {
+					// 由於line本身無法下載檔案，一律跳轉用外部瀏覽器下載
+					alert("將自動開啟預設瀏覽器\n並下載檔案")
+					liff.openWindow({
+						url: 'https://albert20699.github.io/download_card/?userId=' + encodeURIComponent(userId),
+						external: true  // 開啟外部瀏覽器
+					});
+				}
+				else {
+					// 取得下載框的元素
+					var card = document.querySelector(".downloadFlex");
+
+					// 使用dom-to-image庫進行截圖
+					domtoimage.toBlob(card).then(function (blob) {
+						// 創建下載連結
+						var link = document.createElement("a");
+						link.href = URL.createObjectURL(blob);
+						// 獲取當前時間戳
+						var timestamp = Date.now();
+						link.download = mainTitle_1 + "_" + timestamp + ".png";
+
+						// 觸發下載
+						link.click();
+
+						// 清理URL對象，釋放資源
+						URL.revokeObjectURL(link.href);
+					})
+						.catch(function (error) {
+							alert("下載錯誤\n" + error);
+						});
+				}
+			}
+
+			// 跳出promotional_card視窗彈跳
+			function add_promotional_card() {
+				document.getElementById("loadPromotionalCard").style.display = "flex";
+				my_flexToHtml("flex2html_promotional_1")
+				my_flexToHtml("flex2html_promotional_2")
+			}
+
+			// 處理加入宣傳卡片事件
+			function promotional_card() {
+				my_flexToHtml("flex2html_promotional_1")
+			}
+
+			// 檢查是否有新圖片更新到網頁並上傳
+			document.getElementById("upload").addEventListener("change", async function (event) {
+				document.getElementById("loader").style.display = "flex";
+				var file = event.target.files[0]; // 取得選擇的檔案
+				textContent_1_url = await uploadImg(file); // 上傳檔案並回傳URL
+				document.getElementById("upload_text").textContent = textContent_1_url;
+				sendRequest("save", userId, readShowCardData());
+				document.getElementById("loader").style.display = "none";
+			});
+
+			// 上傳檔案並回傳URL
+			function uploadImg(file) {
+				return new Promise((resolve, reject) => {
+					var reader = new FileReader();
+					reader.onload = function () {
+						var fileBlob = dataURLtoBlob(reader.result);
+						var formData = new FormData();
+						formData.append("image", fileBlob);
+
+						fetch("https://api.imgbb.com/1/upload?key=9370c80a93b313d5f526531503162623&expiration=15552000", {
+							method: "POST",
+							body: formData,
+						})
+							.then(function (response) {
+								return response.json();
+							})
+							.then(function (data) {
+								resolve(data.data.display_url);
+							})
+							.catch(function (error) {
+								alert("上傳照片錯誤\n" + error);
+								reject(error);
+							});
+					};
+					reader.readAsDataURL(file);
+				});
+			}
+			function dataURLtoBlob(dataURL) {
+				var arr = dataURL.split(","); // 將資料URL分割成類型和資料部分
+				var mime = arr[0].match(/:(.*?);/)[1]; // 提取資料URL中的MIME類型
+				var bstr = atob(arr[1]); // 解碼Base64編碼的資料部分
+				var n = bstr.length;
+				var u8arr = new Uint8Array(n);
+				while (n--) {
+					u8arr[n] = bstr.charCodeAt(n); // 轉換為Uint8Array
+				}
+				return new Blob([u8arr], { type: mime }); // 創建Blob物件
+			}
+
+			// 元素失去焦點事件
+			document.addEventListener("blur", function (event) {
+				// 檢查事件源是否為輸入框且已經loading完成
+				if (event.target.tagName.toLowerCase() === "input" && document.getElementById("loader").style.display == "none") {
+					// 檢查textContent_2_url的input格是否合法的url
+					if (event.target.id === "textContent_2_url" && event.target.value != "") {
+						try {
+							new URL(event.target.value);
+						} catch (error) {
+							alert("URL格式錯誤")
+							event.target.value = ""
+							return;
+						}
+					}
+					// 卡片資料存到google sheet
+					sendRequest("save", userId, readShowCardData());
+				}
+			}, true); // 注意，這裡的 true 參數是為了在捕獲階段觸發事件，這對於 'blur' 和 'focus' 事件是必要的。
+
+
+			// 拖曳滑動
+			var slider = document.getElementById("slider");
+			var isDown = false;
+			var startX;
+			var scrollLeft;
+
+			slider.addEventListener("mousedown", function (e) {
+				isDown = true;
+				startX = e.pageX - slider.offsetLeft;
+				scrollLeft = slider.scrollLeft;
+			});
+
+			slider.addEventListener("mouseleave", function () {
+				isDown = false;
+			});
+
+			slider.addEventListener("mouseup", function () {
+				isDown = false;
+			});
+
+			slider.addEventListener("mousemove", function (e) {
+				if (!isDown) return;
+				e.preventDefault();
+				var x = e.pageX - slider.offsetLeft;
+				var walk = x - startX;
+				slider.scrollLeft = scrollLeft - walk;
+			});
+		</script>
 </body>
 
 </html>

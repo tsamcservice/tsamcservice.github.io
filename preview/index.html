@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -277,6 +275,7 @@
 
 	<div class="form-container">
 		<h1>LIFF Card Share</h1>
+		<h3 id="readCount" style="height: 10px;"></h3>
 		<div class="chatbox">
 			<div id="flex2html"></div>
 		</div>
@@ -284,7 +283,7 @@
 
 	<script>
 		var mainTitle_1, mainTitle_2, subTitle_1, subTitle_2, textContent_1, textContent_1_url, textContent_2, textContent_2_url, textContent_3, textContent_3_url, companyUnit, share_card, keep_card, cardDescription, bgColor, textColor
-		var flexJson, userId
+		var flexJson, userId, readCount;
 
 		function create_flex(data_card) {
 			mainTitle_1 = data_card.mainTitle_1 || "磊山 人文講堂";
@@ -537,8 +536,8 @@
 				alert("向google apps script寄送請求時\n有效參數不足");
 				return;
 			}
-
-			const url = "https://script.google.com/macros/s/AKfycbyr0G-TZAyz07ar-D83ogRTVMSjyyzz5aEMWZSVQ_dAnvNv2t-chlhOz0GcJDB_91K3/exec";
+			
+			const url = "https://script.google.com/macros/s/AKfycbxKiM76YZI-m_mQUDrmIG7vq9PXI2UP5AQpTPljq61KWh-URhW_bIcKFWKZoeFMRx9Dog/exec";
 
 			try {
 				const sendData = { status: status, userId: userId, card: data_card };
@@ -575,19 +574,19 @@
 
 			userId = parameters["userId"];
 			async function send() {
+				// 向google sheet發送的增加閱讀數
+				await sendRequest("addReadCount", userId);
+				// 取得卡片資料
 				var responseData = await sendRequest("get", userId);
 				if (responseData.status === 'ok') {
 					const data_card = JSON.parse(responseData.card);
 					create_flex(data_card);
+					document.getElementById('readCount').innerHTML = "觀看人數：" + parseInt(responseData.readCount);
 					document.getElementById('loader').style.display = 'none';
-					// 向google sheet發送的增加閱讀數
-					await sendRequest("addReadCount", userId);
 				}
 			}
 			send()
 		}
-
-
 	</script>
 
 </body>
