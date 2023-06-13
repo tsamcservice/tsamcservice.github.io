@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -69,10 +70,30 @@
 			display: none;
 		}
 
+		.card {
+			width: 310px;
+			height: auto;
+			overflow: hidden;
+		}
+
 		.promotionalCard {
-			background-color: #fff;
-			padding: 20px;
-			border-radius: 5px;
+			display: inline-block;
+		}
+
+		.promotionalCard.selected,
+		.promotionalCard:hover {
+			opacity: 0.7;
+			position: relative;
+		}
+
+		.promotionalCard.selected::before {
+			content: "\2714";
+			position: absolute;
+			top: 50%;
+			transform: translate(0%, -50%);
+			font-size: 140px;
+			z-index: 1;
+			margin-left: 110px;
 		}
 
 		.slider {
@@ -281,16 +302,6 @@
 				url('iconfont.svg?t=1585328536727#iconfont') format('svg');
 
 		}
-
-		@keyframes spin {
-			0% {
-				transform: rotate(0deg);
-			}
-
-			100% {
-				transform: rotate(360deg);
-			}
-		}
 	</style>
 </head>
 
@@ -307,19 +318,19 @@
 	</div>
 
 	<div class="loadPromotionalCard" id="loadPromotionalCard">
-		<div class="form-container" style="max-width: 80%; max-height: 90%;">
+		<div class="form-container" style="max-width: 80%; width: auto; max-height: 90%;">
 			<div style="display: flex; gap: 15px; align-items: center; ">
-				<h2>選擇資料</h2>
-				<button onclick="promotional_card()">確定</button>
+				<h2>選擇想要附加宣傳的卡片</h2>
+				<button onclick="close_promotional_card()">返回</button>
 			</div>
-			<div class="slider" id="slider" style="transform: scale(0.7); transform-origin: top left; margin-top: -30px;">
-				<div style="width: 310px; height: auto; overflow: hidden;display: inline-block; pointer-events: none;">
-					<div class="chatbox">
+			<div class="slider" id="slider" style="zoom: 0.7;">
+				<div class="card promotionalCard" onclick="selectPromotionalCard(this)">
+					<div class="chatbox" style="pointer-events: none;">
 						<div id="flex2html_promotional_1"></div>
 					</div>
 				</div>
-				<div style="width: 310px; height: auto; overflow: hidden;display: inline-block; pointer-events: none;">
-					<div class="chatbox">
+				<div class="card promotionalCard" onclick="selectPromotionalCard(this)">
+					<div class="chatbox" style="pointer-events: none;">
 						<div id="flex2html_promotional_2"></div>
 					</div>
 				</div>
@@ -342,18 +353,18 @@
 						<i class="iconfont icon-linkedin"></i>
 					</a>
 					<a title="Share by FaceBook" target="_blank" rel="noopener" id="shareButton_facebook"
-						onclick="shareButton_facebook()">
+						onclick="shareButton_facebook(this)">
 						<i class="iconfont icon-facebook"></i>
 					</a>
 					<a title="Share by Twitter" target="_blank" rel="noopener" id="shareButton_twitter"
-						onclick="shareButton_twitter()">
+						onclick="shareButton_twitter(this)">
 						<i class="iconfont icon-twitter"></i>
 					</a>
 					<a title="Instagram" target="_blank" rel="noopener" href="https://www.instagram.com/wangzhengyan1219/"
 						style="display: none">
 						<i class="iconfont icon-instagram"></i>
 					</a>
-					<a title="Share by Mail" id="shareButton_mail" onclick="shareButton_mail()">
+					<a title="Share by Mail" id="shareButton_mail" onclick="shareButton_mail(this)">
 						<i class="iconfont far fa-envelope"></i>
 					</a>
 					<a title="Copy Link URL" onclick="shareButton_copyURL()">
@@ -365,7 +376,7 @@
 				</div>
 			</div>
 			<div class="downloadFlex">
-				<div style="width: 310px; height: auto; overflow: hidden;">
+				<div class="card">
 					<div class="chatbox">
 						<div id="flex2html_main"></div>
 					</div>
@@ -379,7 +390,7 @@
 			<div class="form-group">
 				<div style="display: flex;justify-content: space-between; width: 310px ;">
 					<button onclick="show_flex()">查看卡片</button>
-					<button onclick="add_promotional_card()">附加宣傳卡片</button>
+					<button onclick="show_promotional_card()">附加宣傳卡片</button>
 				</div>
 				<div class="form-group">
 					<label>大圖 URL</label>
@@ -677,7 +688,7 @@
 													paddingTop: "10px",
 													width: "135px",
 													height: "40px",
-													backgroundColor: "#B5B8BDFF",
+													backgroundColor: "#B5B8BD",
 													contents: [
 														{
 															type: "text",
@@ -699,7 +710,7 @@
 													paddingTop: "10px",
 													width: "135px",
 													height: "40px",
-													backgroundColor: "#B5B8BDFF",
+													backgroundColor: "#B5B8BD",
 													contents: [
 														{
 															type: "text",
@@ -726,7 +737,7 @@
 											paddingTop: "10px",
 											width: "280px",
 											height: "40px",
-											backgroundColor: "#91AFC2FF",
+											backgroundColor: "#91AFC2",
 											contents: [
 												{
 													type: "text",
@@ -750,7 +761,7 @@
 											paddingTop: "10px",
 											width: "280px",
 											height: "40px",
-											backgroundColor: "#91AFC2FF",
+											backgroundColor: "#91AFC2",
 											contents: [
 												{
 													type: "text",
@@ -776,14 +787,14 @@
 				document.getElementById(flex2html_Element_Name).innerHTML = "";
 				flex2html(flex2html_Element_Name, flexJson);
 
-				// 將錯誤的 ExXxs 替換為正確的 ExXXs
+				// 将錯誤的 ExXxs 替換為正確的 ExXXs
 				var wrongExXxsElements = document.querySelectorAll(".ExXxs");
 				wrongExXxsElements.forEach(function (element) {
 					element.classList.remove("ExXxs");
 					element.classList.add("ExXXs");
 				});
 
-				// 將錯誤的 Ex3xl 替換為正確的 Ex3Xl
+				// 将錯誤的 Ex3xl 替換為正確的 Ex3Xl
 				var wrongEx3xlElements = document.querySelectorAll(".Ex3xl");
 				wrongEx3xlElements.forEach(function (element) {
 					element.classList.remove("Ex3xl");
@@ -791,13 +802,17 @@
 				});
 
 				// 將 LySlider 關閉下方捲動軸
-				var wrongLySliderElements = document.querySelector(".LySlider");
-				wrongLySliderElements.style.webkitOverflowScrolling = "auto";
-				wrongLySliderElements.style.overflowX = "visible";
+				var wrongLySliderElements = document.querySelectorAll(".LySlider");
+				wrongLySliderElements.forEach(function (element) {
+					element.style.webkitOverflowScrolling = "auto";
+					element.style.overflowX = "visible";
+				});
 
 				// 將 chatbox 上方空白縮短
-				var wrongchatboxElements = document.querySelector(".chatbox");
-				wrongchatboxElements.style.paddingTop = "20px";
+				var wrongChatboxElements = document.querySelectorAll(".chatbox");
+				wrongChatboxElements.forEach(function (element) {
+					element.style.paddingTop = "20px";
+				});
 			}
 
 			async function sendRequest(status, userId, data_card = "", data = "") {
@@ -913,12 +928,12 @@
 			}
 
 			// 分享mail按钮的點擊事件
-			function shareButton_mail() {
-				document.getElementById("shareButton_mail").href = "mailto:?subject=【卡片分享】&body=使用瀏覽器預覽照片連結：https://albert20699.github.io/preview/?userId=" + encodeURIComponent(userId);
+			function shareButton_mail(element) {
+				element.href = "mailto:?subject=【卡片分享】&body=使用瀏覽器預覽照片連結：https://albert20699.github.io/preview/?userId=" + encodeURIComponent(userId);
 				// document.getElementById("shareButton_mail").href = "mailto:?subject=【卡片分享】-&body=請參考圖片附件:[圖片](https://i.ibb.co/8YTW70m/blob.jpg)&attachment=https://i.ibb.co/8YTW70m/blob.jpg";
 			}
 			// 分享twitter按钮的點擊事件
-			function shareButton_twitter() {
+			function shareButton_twitter(element) {
 				// 檢查是否有重複按(由於必須click()觸發，將會導致重複)
 				if (!buttonClickFlag) {
 					buttonClickFlag = true;
@@ -930,8 +945,8 @@
 						await sendRequest("save", userId, readShowCardData());
 						var responseData = await sendRequest("uploadGithub", userId, readShowCardData());
 						var shareOG_url = "https://twitter.com/intent/tweet?url=" + responseData.uploadOG_url;
-						document.getElementById("shareButton_twitter").href = shareOG_url;
-						document.getElementById("shareButton_twitter").click();
+						element.href = shareOG_url;
+						element.click();
 					})
 						.catch(function (err) {
 							alert("分享傳送訊息失敗\n" + err);
@@ -944,7 +959,7 @@
 				}
 			}
 			// 分享facebook按钮的點擊事件
-			function shareButton_facebook() {
+			function shareButton_facebook(element) {
 				// 檢查是否有重複按(由於必須click()觸發，將會導致重複)
 				if (!buttonClickFlag) {
 					buttonClickFlag = true;
@@ -956,8 +971,8 @@
 						await sendRequest("save", userId, readShowCardData());
 						var responseData = await sendRequest("uploadGithub", userId, readShowCardData());
 						var shareOG_url = "https://www.facebook.com/sharer.php?u=" + responseData.uploadOG_url;
-						document.getElementById("shareButton_facebook").href = shareOG_url;
-						document.getElementById("shareButton_facebook").click();
+						element.href = shareOG_url;
+						element.click();
 					})
 						.catch(function (err) {
 							alert("分享傳送訊息失敗\n" + err);
@@ -1047,15 +1062,288 @@
 			}
 
 			// 跳出promotional_card視窗彈跳
-			function add_promotional_card() {
+			function show_promotional_card() {
 				document.getElementById("loadPromotionalCard").style.display = "flex";
+				flexJson = {
+					type: "flex",
+					altText: "Flex Message",
+					contents: {
+						type: "carousel",
+						contents: [{
+							"type": "bubble",
+							"size": "mega",
+							"direction": "ltr",
+							"hero": {
+								"type": "box",
+								"layout": "vertical",
+								"contents": [
+									{
+										"type": "box",
+										"layout": "horizontal",
+										"contents": [
+											{
+												"url": "https://3428750.so-buy.com/_files/50/3428750/23/06/862f45dba9dfa742.png",
+												"flex": 1,
+												"size": "full",
+												"type": "image",
+												"action": {
+													"type": "uri",
+													"label": "action",
+													"uri": "https://line.me/R/home/public/post?id=665xzprl&postId=1168603399615311352"
+												},
+												"gravity": "center",
+												"aspectMode": "cover",
+												"aspectRatio": "1:1"
+											}
+										]
+									}
+								],
+								"paddingAll": "0px"
+							},
+							"body": {
+								"type": "box",
+								"layout": "vertical",
+								"contents": [
+									{
+										"type": "box",
+										"layout": "horizontal",
+										"spacing": "none",
+										"contents": [
+											{
+												"size": "lg",
+												"text": "【磊山 人文講堂】",
+												"type": "text",
+												"align": "center",
+												"color": "#ffffff",
+												"style": "normal",
+												"weight": "bold",
+												"position": "relative"
+											}
+										],
+										"position": "relative",
+										"paddingTop": "3px",
+										"cornerRadius": "sm",
+										"paddingBottom": "3px",
+										"backgroundColor": "#38455F"
+									},
+									{
+										"type": "box",
+										"layout": "vertical",
+										"margin": "10px",
+										"contents": [
+											{
+												"type": "box",
+												"layout": "horizontal",
+												"spacing": "sm",
+												"contents": [
+													{
+														"flex": 1,
+														"size": "xl",
+														"text": "楊錦聰",
+														"type": "text",
+														"wrap": true,
+														"color": "#38455F",
+														"weight": "bold",
+														"contents": []
+													},
+													{
+														"flex": 2,
+														"size": "sm",
+														"text": "風潮音樂創辦人",
+														"type": "text",
+														"align": "start",
+														"color": "#38455F",
+														"gravity": "center"
+													}
+												]
+											},
+											{
+												"type": "box",
+												"layout": "horizontal",
+												"margin": "sm",
+												"spacing": "xs",
+												"contents": [
+													{
+														"size": "md",
+														"text": "日期:07/08(六)",
+														"type": "text",
+														"color": "#38455F",
+														"action": {
+															"uri": "mailto:xx@example.com",
+															"type": "uri",
+															"label": "action"
+														},
+														"margin": "none",
+														"weight": "regular"
+													}
+												],
+												"justifyContent": "center"
+											},
+											{
+												"type": "box",
+												"layout": "horizontal",
+												"margin": "xs",
+												"contents": [
+													{
+														"size": "md",
+														"text": "時間:09:50~12:00",
+														"type": "text",
+														"color": "#38455F",
+														"action": {
+															"uri": "tel:0922000000",
+															"type": "uri",
+															"label": "action"
+														},
+														"gravity": "center"
+													}
+												],
+												"justifyContent": "center"
+											},
+											{
+												"type": "box",
+												"layout": "vertical",
+												"margin": "xs",
+												"contents": [
+													{
+														"size": "sm",
+														"text": "地點:磊山學院101教室 (台北市中山區南京東路二段178號10樓)",
+														"type": "text",
+														"wrap": true,
+														"color": "#38455F",
+														"action": {
+															"uri": "https://lihi3.cc/0MnY5",
+															"type": "uri",
+															"label": "action"
+														},
+														"gravity": "center"
+													}
+												],
+												"justifyContent": "center"
+											}
+										]
+									}
+								],
+								"paddingAll": "20px"
+							},
+							"footer": {
+								"type": "box",
+								"layout": "vertical",
+								"contents": [
+									{
+										"type": "box",
+										"height": "40px",
+										"layout": "horizontal",
+										"margin": "none",
+										"spacing": "none",
+										"contents": [
+											{
+												"type": "box",
+												"layout": "horizontal",
+												"contents": [
+													{
+														"type": "button",
+														"color": "#fffffF",
+														"style": "link",
+														"action": {
+															"uri": "https://www",
+															"type": "uri",
+															"label": "分享給好友"
+														},
+														"gravity": "center"
+													}
+												],
+												"alignItems": "center",
+												"justifyContent": "center",
+												"backgroundColor": "#A3ABB6"
+											},
+											{
+												"type": "separator",
+												"color": "#ffffff",
+												"margin": "10px"
+											},
+											{
+												"type": "box",
+												"layout": "horizontal",
+												"contents": [
+													{
+														"type": "button",
+														"color": "#fffffF",
+														"style": "link",
+														"action": {
+															"uri": "https://lihi3.cc/iNKGu",
+															"type": "uri",
+															"label": "呈璽官LINE"
+														},
+														"gravity": "center"
+													}
+												],
+												"alignItems": "center",
+												"cornerRadius": "none",
+												"justifyContent": "center",
+												"backgroundColor": "#A3ABB6"
+											}
+										],
+										"offsetBottom": "none",
+										"paddingBottom": "none"
+									},
+									{
+										"type": "box",
+										"height": "40px",
+										"layout": "horizontal",
+										"margin": "10px",
+										"contents": [
+											{
+												"type": "button",
+												"color": "#ffffff",
+												"action": {
+													"uri": "https://lihi3.cc/uU8Q5",
+													"type": "uri",
+													"label": "設立提醒(google行事曆)"
+												},
+												"gravity": "center"
+											}
+										],
+										"alignItems": "center",
+										"justifyContent": "center",
+										"backgroundColor": "#85A4B8"
+									},
+									{
+										"type": "box",
+										"height": "40px",
+										"layout": "horizontal",
+										"margin": "10px",
+										"contents": [
+											{
+												"type": "button",
+												"color": "#ffffff",
+												"action": {
+													"uri": "https://3428750.so-buy.com/",
+													"type": "uri",
+													"label": "✨製作美美的卡片✨"
+												},
+												"gravity": "center"
+											}
+										],
+										"alignItems": "center",
+										"justifyContent": "center",
+										"backgroundColor": "#86B8B1"
+									}
+								]
+							}
+						}]
+					}
+				}
 				my_flexToHtml("flex2html_promotional_1")
 				my_flexToHtml("flex2html_promotional_2")
 			}
 
 			// 處理加入宣傳卡片事件
-			function promotional_card() {
-				my_flexToHtml("flex2html_promotional_1")
+			function close_promotional_card() {
+				document.getElementById("loadPromotionalCard").style.display = "none";
+			}
+
+			function selectPromotionalCard(element) {
+				element.classList.toggle("selected");
 			}
 
 			// 檢查是否有新圖片更新到網頁並上傳
