@@ -827,7 +827,7 @@
 										writeShowCardData(data_card)
 									}
 									var cardJsonPromotional = responseData.cardJsonPromotional
-									for (var i = 1; i <= cardJsonPromotional.length; i++) {
+									for (var i = 0; i < cardJsonPromotional.length; i++) {
 										var tempHtml = `
 											<div class="card promotionalCard" onclick="selectPromotionalCard(this)">
 												<div class="chatbox" style="pointer-events: none;">
@@ -840,7 +840,8 @@
 										alert(cardJsonPromotional[i])
 										alert(typeof cardJsonPromotional[i])
 										alert(JSON.stringify(cardJsonPromotional[i]))
-										my_flexToHtml("flex2htmlPromotional" + i, cardJsonPromotional[i])
+										alert(JSON.stringify((JSON.parse(cardJsonPromotional[i]))))
+										my_flexToHtml("flex2htmlPromotional" + i, JSON.parse(cardJsonPromotional[i]))
 									}
 									document.getElementById('loader').style.display = 'none';
 								})
