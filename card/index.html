@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -837,8 +838,9 @@
 										// 把卡片元素 html 加寫入到 slider
 										document.getElementById("slider").innerHTML += tempHtml;
 										alert(cardJsonPromotional[i])
-										alert(JSON.parse(cardJsonPromotional[i]))
-										my_flexToHtml("flex2htmlPromotional" + i, JSON.parse(cardJsonPromotional[i]))
+										alert(typeof cardJsonPromotional[i])
+										alert(JSON.stringify(cardJsonPromotional[i]))
+										my_flexToHtml("flex2htmlPromotional" + i, cardJsonPromotional[i])
 									}
 									document.getElementById('loader').style.display = 'none';
 								})
