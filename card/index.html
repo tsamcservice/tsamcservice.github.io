@@ -812,21 +812,25 @@
 			window.onload = function () {
 				document.querySelector(".hiddenForward").classList.add("hidden");
 				document.getElementById('loader').style.display = 'flex';
-				liff.init({ liffId: "1660908511-DERZWN3m" })
-					.then(() => {
-						if (!liff.isLoggedIn()) {
-							liff.login();
-						}
-						else {
-							liff.getProfile()
-								.then(async function (profile) {
-									userId = profile.userId
+				// liff.init({ liffId: "1660908511-DERZWN3m" })
+				// 	.then(() => {
+				// 		if (!liff.isLoggedIn()) {
+				// 			liff.login();
+				// 		}
+				// 		else {
+				// 			liff.getProfile()
+				// 				.then(
+					async function Ad() {
+				// 					userId = profile.userId
+									userId="Ubf173d5565f235f620fdd28116034e30"
+									console.log(userId)
 									var responseData = await sendRequest("get", userId)
 									if (responseData.status != "first") {
 										const data_card = JSON.parse(responseData.card);
 										writeShowCardData(data_card)
 									}
 									var cardJsonPromotional = responseData.cardJsonPromotional
+									console.log(cardJsonPromotional)
 									for (var i = 0; i < cardJsonPromotional.length; i++) {
 										var tempHtml = `
 											<div class="card promotionalCard" onclick="selectPromotionalCard(this)">
@@ -841,16 +845,20 @@
 										alert(typeof cardJsonPromotional[i])
 										alert(JSON.stringify(cardJsonPromotional[i]))
 										alert(JSON.stringify((JSON.parse(cardJsonPromotional[i]))))
-										my_flexToHtml("flex2htmlPromotional" + i, cardJsonPromotional[i])
+										var json=JSON.stringify((JSON.parse(cardJsonPromotional[i])))
+										my_flexToHtml("flex2htmlPromotional" +i, json)
 									}
 									document.getElementById('loader').style.display = 'none';
-								})
-								.catch(function (error) {
-									alert("取得使用者資料錯誤\n" + error);
-								});
-						}
-					});
-			};
+								}
+								Ad()
+							}
+			// 					)
+			// 					.catch(function (error) {
+			// 						alert("取得使用者資料錯誤\n" + error);
+			// 					});
+			// 			}
+			// 		});
+			// };
 
 			// 分享line按钮的點擊事件
 			function shareButtonLine() {
