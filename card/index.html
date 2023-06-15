@@ -813,18 +813,7 @@
 
 			window.onload = function () {
 				document.querySelector(".hiddenForward").classList.add("hidden");
-				// document.getElementById('loader').style.display = 'flex';
-				// 获取加载的JSON数据
-				const jsonData = document.getElementById('dataJson').textContent;
-
-				// 解析JSON数据
-				alert(jsonData)
-				const parsedData = JSON.parse(jsonData);
-
-				// 在控制台上打印数据
-				alert(parsedData);
-				alert(JSON.stringify(parsedData));
-				return;
+				document.getElementById('loader').style.display = 'flex';
 				liff.init({ liffId: "1660908511-DERZWN3m" })
 					.then(() => {
 						if (!liff.isLoggedIn()) {
