@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>LIFF Card Share</title>
 	<!-- 載入資料 -->
-	<script src="../data/data.json" type="application/json" id="dataJson"></script>
+	<script src="../data/data.json"></script>
 	<!-- flex2html -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/PamornT/flex2html@main/css/flex2html.css" />
 	<script src="https://cdn.jsdelivr.net/gh/PamornT/flex2html@main/js/flex2html.min.js"></script>
@@ -765,8 +765,7 @@
 					return;
 				}
 
-				const url = "https://script.google.com/macros/s/AKfycbxh3vJQxfYdXZIot89X63EoWAqw2NN8xh3v1n9uxQvgV2rYimF0U2o9ik5zqiUxWEPlMQ/exec";
-
+				const url = googleAppsScriptUrl;
 				try {
 					const sendData = { status: status, userId: userId, card: dataCard };
 
