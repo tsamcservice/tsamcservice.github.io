@@ -434,10 +434,12 @@
 		</div>
 
 		<script>
-			// var mainTitle_1, mainTitle_2, subTitle_1, subTitle_2, textContent_1, textContent_1_url, textContent_2, textContent_2_url, textContent_3, textColor;
-			// var cardImgUrl;
+			// 這張會員卡片的 URL
+			var card_img_url;
+			// 檢查 FB 跟 Twitter 按鈕是否有重複按下的旗標
 			var buttonClickFlag = false;
-			var flexJson,  userId, flexJsonMessage, cardJsonPromotional
+			// 需要跨 function 的參數
+			var flexJson, userId, flexJsonMessage, cardJsonPromotional
 
 			function readShowCardData() {
 				return JSON.stringify({
@@ -451,6 +453,7 @@
 					textContent_2_url: document.getElementById("textContent_2_url").value || "",
 					textContent_3: document.getElementById("textContent_3").value || "",
 					textColor: document.getElementById("textColor").textContent || "",
+					card_img_url: card_img_url,
 				});
 			}
 
@@ -464,7 +467,7 @@
 				document.getElementById("textContent_2").value = data_card.textContent_2 || "";
 				document.getElementById("textContent_2_url").value = data_card.textContent_2_url || "";
 				document.getElementById("textContent_3").value = data_card.textContent_3 || "";
-				// 設定textColor文字顏色
+				// 設定textColor文字
 				document.getElementById("textColor").textContent = data_card.textColor || "#081F58";
 				// 設定colorPicker調色盤顏色
 				colorPicker.setColor(data_card.textColor || "#081F58")
@@ -479,34 +482,34 @@
 				document.querySelector(".hiddenBackward").classList.add("hidden");
 
 				var mainTitle_1_Element = document.getElementById("mainTitle_1");
-				mainTitle_1 = mainTitle_1_Element.value || mainTitle_1_Element.placeholder;
+				var mainTitle_1 = mainTitle_1_Element.value || mainTitle_1_Element.placeholder;
 
 				var mainTitle_2_Element = document.getElementById("mainTitle_2");
-				mainTitle_2 = mainTitle_2_Element.value || mainTitle_2_Element.placeholder;
+				var mainTitle_2 = mainTitle_2_Element.value || mainTitle_2_Element.placeholder;
 
 				var subTitle_1_Element = document.getElementById("subTitle_1");
-				subTitle_1 = subTitle_1_Element.value || subTitle_1_Element.placeholder;
+				var subTitle_1 = subTitle_1_Element.value || subTitle_1_Element.placeholder;
 
 				var subTitle_2_Element = document.getElementById("subTitle_2");
-				subTitle_2 = subTitle_2_Element.value || subTitle_2_Element.placeholder;
+				var subTitle_2 = subTitle_2_Element.value || subTitle_2_Element.placeholder;
 
 				var textContent_1_Element = document.getElementById("textContent_1");
-				textContent_1 = textContent_1_Element.value || textContent_1_Element.placeholder;
+				var textContent_1 = textContent_1_Element.value || textContent_1_Element.placeholder;
 
 				var textContent_1_url_Element = document.getElementById("upload_text");
-				textContent_1_url = textContent_1_url_Element.textContent || "https://i.ibb.co/B6KNp92/01-1-cafe.png";
+				var textContent_1_url = textContent_1_url_Element.textContent || "https://i.ibb.co/B6KNp92/01-1-cafe.png";
 
 				var textContent_2_Element = document.getElementById("textContent_2");
-				textContent_2 = textContent_2_Element.value || textContent_2_Element.placeholder;
+				var textContent_2 = textContent_2_Element.value || textContent_2_Element.placeholder;
 
 				var textContent_2_url_Element = document.getElementById("textContent_2_url");
-				textContent_2_url = textContent_2_url_Element.value || textContent_2_url_Element.placeholder;
+				var textContent_2_url = textContent_2_url_Element.value || textContent_2_url_Element.placeholder;
 
 				var textContent_3_Element = document.getElementById("textContent_3");
-				textContent_3 = textContent_3_Element.value || textContent_3_Element.placeholder;
+				var textContent_3 = textContent_3_Element.value || textContent_3_Element.placeholder;
 
 				var textColor_Element = document.getElementById("textColor");
-				textColor = textColor_Element.textContent;
+				var textColor = textColor_Element.textContent;
 
 				flexJson = [{
 					type: "bubble",
@@ -889,7 +892,7 @@
 					document.getElementById("loader").style.display = "flex";
 					var card = document.querySelector(".downloadFlex");
 					domtoimage.toBlob(card).then(async function (blob) {
-						await uploadImg(blob)
+						card_img_url = await uploadImg(blob)
 						await sendRequest("save", userId, readShowCardData());
 						var responseData = await sendRequest("uploadGithub", userId, readShowCardData());
 						var shareOG_url = "https://twitter.com/intent/tweet?url=" + responseData.uploadOG_url;
@@ -915,7 +918,7 @@
 					document.getElementById("loader").style.display = "flex";
 					var card = document.querySelector(".downloadFlex");
 					domtoimage.toBlob(card).then(async function (blob) {
-						await uploadImg(blob)
+						card_img_url = await uploadImg(blob)
 						await sendRequest("save", userId, readShowCardData());
 						var responseData = await sendRequest("uploadGithub", userId, readShowCardData());
 						var shareOG_url = "https://www.facebook.com/sharer.php?u=" + responseData.uploadOG_url;
@@ -1026,8 +1029,7 @@
 			document.getElementById("upload").addEventListener("change", async function (event) {
 				document.getElementById("loader").style.display = "flex";
 				var file = event.target.files[0]; // 取得選擇的檔案
-				var cardImgUrl = await uploadImg(file); // 上傳檔案並回傳URL
-				document.getElementById("upload_text").textContent = cardImgUrl;
+				document.getElementById("upload_text").textContent = await uploadImg(file); // 上傳檔案並回傳URL
 				sendRequest("save", userId, readShowCardData());
 				document.getElementById("loader").style.display = "none";
 			});
