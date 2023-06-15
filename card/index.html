@@ -743,7 +743,8 @@
 				var wrongLySliderElements = document.querySelectorAll(".LySlider");
 				wrongLySliderElements.forEach(function (element) {
 					element.style.webkitOverflowScrolling = "auto";
-					element.style.overflowX = "visible";
+					// element.style.overflowX = "visible";
+					element.style.overflow = "hidden";
 				});
 
 				// 將 chatbox 上方空白縮短
@@ -1101,15 +1102,12 @@
 				startX = e.pageX - slider.offsetLeft;
 				scrollLeft = slider.scrollLeft;
 			});
-
 			slider.addEventListener("mouseleave", function () {
 				isDown = false;
 			});
-
 			slider.addEventListener("mouseup", function () {
 				isDown = false;
 			});
-
 			slider.addEventListener("mousemove", function (e) {
 				if (!isDown) return;
 				e.preventDefault();
