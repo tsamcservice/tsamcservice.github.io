@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -340,25 +338,25 @@
 					<a title="Share by Line" onclick="shareButtonLine()">
 						<i class="iconfont fab fa-line"></i>
 					</a>
-					<a title="Share by LinkedIn" id="shareButton_linkedin" onclick="shareButton_linkedin()" style="display: none">
+					<a title="Share by LinkedIn" id="shareButtonLinkedin" onclick="shareButtonLinkedin()" style="display: none">
 						<i class="iconfont icon-linkedin"></i>
 					</a>
-					<a title="Share by FaceBook" target="_blank" rel="noopener" id="shareButton_facebook"
-						onclick="shareButton_facebook(this)">
+					<a title="Share by FaceBook" target="_blank" rel="noopener" id="shareButtonFacebook"
+						onclick="shareButtonFacebook(this)">
 						<i class="iconfont icon-facebook"></i>
 					</a>
-					<a title="Share by Twitter" target="_blank" rel="noopener" id="shareButton_twitter"
-						onclick="shareButton_twitter(this)">
+					<a title="Share by Twitter" target="_blank" rel="noopener" id="shareButtonTwitter"
+						onclick="shareButtonTwitter(this)">
 						<i class="iconfont icon-twitter"></i>
 					</a>
 					<a title="Instagram" target="_blank" rel="noopener" href="https://www.instagram.com/wangzhengyan1219/"
 						style="display: none">
 						<i class="iconfont icon-instagram"></i>
 					</a>
-					<a title="Share by Mail" id="shareButton_mail" onclick="shareButton_mail(this)">
+					<a title="Share by Mail" id="shareButtonMail" onclick="shareButtonMail(this)">
 						<i class="iconfont far fa-envelope"></i>
 					</a>
-					<a title="Copy Link URL" onclick="shareButton_copyURL()">
+					<a title="Copy Link URL" onclick="shareButtonCopyURL()">
 						<i class="iconfont fas fa-share"></i>
 					</a>
 					<a title="Download Card" onclick="downloadButton()">
@@ -376,11 +374,11 @@
 		</div>
 	</div>
 
-	<div class="hidden_backward">
+	<div class="hiddenBackward">
 		<div class="form-container">
 			<div class="form-group">
 				<div style="display: flex;justify-content: space-between; width: 310px ;">
-					<button onclick="show_flex()">查看卡片</button>
+					<button onclick="showFlex()">查看卡片</button>
 					<button onclick="showPromotionalCard()">附加宣傳卡片</button>
 				</div>
 				<div class="form-group">
@@ -438,7 +436,7 @@
 		<script>
 			var mainTitle_1, mainTitle_2, subTitle_1, subTitle_2, textContent_1, textContent_1_url, textContent_2, textContent_2_url, textContent_3, textColor, card_img_url;
 			var buttonClickFlag = false;
-			var flexJson, flexJson_1, userId, readCount, flexJsonMessage
+			var flexJson, flexJson_1, userId, readCount, flexJsonMessage, cardJsonPromotional
 
 			function readShowCardData() {
 				return JSON.stringify({
@@ -474,11 +472,11 @@
 
 			function closeFlex() {
 				document.querySelector(".hiddenForward").classList.add("hidden");
-				document.querySelector(".hidden_backward").classList.remove("hidden");
+				document.querySelector(".hiddenBackward").classList.remove("hidden");
 			}
-			function show_flex() {
+			function showFlex() {
 				document.querySelector(".hiddenForward").classList.remove("hidden");
-				document.querySelector(".hidden_backward").classList.add("hidden");
+				document.querySelector(".hiddenBackward").classList.add("hidden");
 
 				var mainTitle_1_Element = document.getElementById("mainTitle_1");
 				mainTitle_1 = mainTitle_1_Element.value || mainTitle_1_Element.placeholder;
@@ -705,12 +703,11 @@
 					},
 				}];
 
-				// flexJson.push()
 				// 找出已被選擇的宣傳卡片id
 				var selectedElements = document.querySelectorAll(".card.promotionalCard.selected [id^='flex2htmlPromotional']");
 				selectedElements.forEach(function (tempElement) {
-					var id = tempElement.id;
-					console.log(id);
+					var selectedElementsIdNumer = parseInt(tempElement.id.replace("flex2htmlPromotional", ""));
+					flexJson.push(JSON.parse(cardJsonPromotional[selectedElementsIdNumer]))
 				});
 				// 將flexJson繪出到HTML上
 				my_flexToHtml("flex2html_main", flexJson);
@@ -756,7 +753,7 @@
 				});
 			}
 
-			async function sendRequest(status, userId, data_card = "", data = "") {
+			async function sendRequest(status, userId, dataCard = "", data = "") {
 				if (!status || !userId) {
 					alert("向google apps script寄送請求時\n有效參數不足");
 					return;
@@ -765,7 +762,7 @@
 				const url = "https://script.google.com/macros/s/AKfycbxh3vJQxfYdXZIot89X63EoWAqw2NN8xh3v1n9uxQvgV2rYimF0U2o9ik5zqiUxWEPlMQ/exec";
 
 				try {
-					const sendData = { status: status, userId: userId, card: data_card };
+					const sendData = { status: status, userId: userId, card: dataCard };
 
 					// 將資料轉換成查詢字串
 					const queryString = new URLSearchParams(sendData).toString();
@@ -812,53 +809,42 @@
 			window.onload = function () {
 				document.querySelector(".hiddenForward").classList.add("hidden");
 				document.getElementById('loader').style.display = 'flex';
-				// liff.init({ liffId: "1660908511-DERZWN3m" })
-				// 	.then(() => {
-				// 		if (!liff.isLoggedIn()) {
-				// 			liff.login();
-				// 		}
-				// 		else {
-				// 			liff.getProfile()
-				// 				.then(
-					async function Ad() {
-				// 					userId = profile.userId
-									userId="Ubf173d5565f235f620fdd28116034e30"
-									console.log(userId)
+				liff.init({ liffId: "1660908511-DERZWN3m" })
+					.then(() => {
+						if (!liff.isLoggedIn()) {
+							liff.login();
+						}
+						else {
+							liff.getProfile()
+								.then(async function (profile) {
+									userId = profile.userId
 									var responseData = await sendRequest("get", userId)
 									if (responseData.status != "first") {
-										const data_card = JSON.parse(responseData.card);
-										writeShowCardData(data_card)
+										const dataCard = JSON.parse(responseData.card);
+										writeShowCardData(dataCard)
 									}
-									var cardJsonPromotional = responseData.cardJsonPromotional
-									console.log(cardJsonPromotional)
+
+									cardJsonPromotional = responseData.cardJsonPromotional
 									for (var i = 0; i < cardJsonPromotional.length; i++) {
 										var tempHtml = `
-											<div class="card promotionalCard" onclick="selectPromotionalCard(this)">
-												<div class="chatbox" style="pointer-events: none;">
-													<div id="flex2htmlPromotional${i}"></div>
-												</div>
-											</div>`;
+												<div class="card promotionalCard" onclick="selectPromotionalCard(this)">
+													<div class="chatbox" style="pointer-events: none;">
+														<div id="flex2htmlPromotional${i}"></div>
+													</div>
+												</div>`;
 
 										// 把卡片元素 html 加寫入到 slider
 										document.getElementById("slider").innerHTML += tempHtml;
-										alert(cardJsonPromotional[i])
-										alert(typeof cardJsonPromotional[i])
-										alert(JSON.stringify(cardJsonPromotional[i]))
-										alert(JSON.stringify((JSON.parse(cardJsonPromotional[i]))))
-										var json=JSON.stringify((JSON.parse(cardJsonPromotional[i])))
-										my_flexToHtml("flex2htmlPromotional" +i, json)
+										my_flexToHtml("flex2htmlPromotional" + i, [JSON.parse(cardJsonPromotional[i])])
 									}
 									document.getElementById('loader').style.display = 'none';
-								}
-								Ad()
-							}
-			// 					)
-			// 					.catch(function (error) {
-			// 						alert("取得使用者資料錯誤\n" + error);
-			// 					});
-			// 			}
-			// 		});
-			// };
+								})
+								.catch(function (error) {
+									alert("取得使用者資料錯誤\n" + error);
+								});
+						}
+					});
+			};
 
 			// 分享line按钮的點擊事件
 			function shareButtonLine() {
@@ -872,12 +858,7 @@
 							Swal.fire({
 								text: "卡片已送出",
 								timer: 800,
-								showConfirmButton: false,
-								customClass: {
-									container: "swal-container",
-									popup: "swal-popup",
-									content: "swal-content",
-								},
+								showConfirmButton: false
 							});
 						} else {
 							const [majorVer, minorVer] = (liff.getLineVersion() || "").split(".");
@@ -894,12 +875,12 @@
 			}
 
 			// 分享mail按钮的點擊事件
-			function shareButton_mail(element) {
+			function shareButtonMail(element) {
 				element.href = "mailto:?subject=【卡片分享】&body=使用瀏覽器預覽照片連結：https://albert20699.github.io/preview/?userId=" + encodeURIComponent(userId);
-				// document.getElementById("shareButton_mail").href = "mailto:?subject=【卡片分享】-&body=請參考圖片附件:[圖片](https://i.ibb.co/8YTW70m/blob.jpg)&attachment=https://i.ibb.co/8YTW70m/blob.jpg";
+				// document.getElementById("shareButtonMail").href = "mailto:?subject=【卡片分享】-&body=請參考圖片附件:[圖片](https://i.ibb.co/8YTW70m/blob.jpg)&attachment=https://i.ibb.co/8YTW70m/blob.jpg";
 			}
 			// 分享twitter按钮的點擊事件
-			function shareButton_twitter(element) {
+			function shareButtonTwitter(element) {
 				// 檢查是否有重複按(由於必須click()觸發，將會導致重複)
 				if (!buttonClickFlag) {
 					buttonClickFlag = true;
@@ -925,7 +906,7 @@
 				}
 			}
 			// 分享facebook按钮的點擊事件
-			function shareButton_facebook(element) {
+			function shareButtonFacebook(element) {
 				// 檢查是否有重複按(由於必須click()觸發，將會導致重複)
 				if (!buttonClickFlag) {
 					buttonClickFlag = true;
@@ -952,7 +933,7 @@
 			}
 
 			// 分享Copy Link URL按钮的點擊事件
-			async function shareButton_copyURL() {
+			async function shareButtonCopyURL() {
 				// 取得要複製的文字
 				var textToCopy = "https://albert20699.github.io/preview/?userId=" + encodeURIComponent(userId)
 
