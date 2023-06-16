@@ -537,42 +537,42 @@
 
 			window.onload = function () {
 				document.querySelector(".hiddenForward").classList.add("hidden");
-				document.getElementById('loader').style.display = 'flex';
-				liff.init({ liffId: "1660908511-DERZWN3m" })
-					.then(() => {
-						if (!liff.isLoggedIn()) {
-							liff.login();
-						}
-						else {
-							liff.getProfile()
-								.then(async function (profile) {
-									userId = profile.userId
-									var responseData = await sendRequest("get", userId)
-									if (responseData.status != "first") {
-										const dataCard = JSON.parse(responseData.card);
-										writeShowCardData(dataCard)
-									}
+				// document.getElementById('loader').style.display = 'flex';
+				// liff.init({ liffId: "1660908511-DERZWN3m" })
+				// 	.then(() => {
+				// 		if (!liff.isLoggedIn()) {
+				// 			liff.login();
+				// 		}
+				// 		else {
+				// 			liff.getProfile()
+				// 				.then(async function (profile) {
+				// 					userId = profile.userId
+				// 					var responseData = await sendRequest("get", userId)
+				// 					if (responseData.status != "first") {
+				// 						const dataCard = JSON.parse(responseData.card);
+				// 						writeShowCardData(dataCard)
+				// 					}
 
-									cardJsonPromotional = responseData.cardJsonPromotional
-									for (var i = 0; i < cardJsonPromotional.length; i++) {
-										var tempHtml = `
-												<div class="card promotionalCard" onclick="selectPromotionalCard(this)">
-													<div class="chatbox" style="pointer-events: none;">
-														<div id="flex2htmlPromotional${i}"></div>
-													</div>
-												</div>`;
+				// 					cardJsonPromotional = responseData.cardJsonPromotional
+				// 					for (var i = 0; i < cardJsonPromotional.length; i++) {
+				// 						var tempHtml = `
+				// 								<div class="card promotionalCard" onclick="selectPromotionalCard(this)">
+				// 									<div class="chatbox" style="pointer-events: none;">
+				// 										<div id="flex2htmlPromotional${i}"></div>
+				// 									</div>
+				// 								</div>`;
 
-										// 把卡片元素 html 加寫入到 slider
-										document.getElementById("slider").innerHTML += tempHtml;
-										my_flexToHtml("flex2htmlPromotional" + i, [JSON.parse(cardJsonPromotional[i])])
-									}
-									document.getElementById('loader').style.display = 'none';
-								})
-								.catch(function (error) {
-									alert("取得使用者資料錯誤\n" + error);
-								});
-						}
-					});
+				// 						// 把卡片元素 html 加寫入到 slider
+				// 						document.getElementById("slider").innerHTML += tempHtml;
+				// 						my_flexToHtml("flex2htmlPromotional" + i, [JSON.parse(cardJsonPromotional[i])])
+				// 					}
+				// 					document.getElementById('loader').style.display = 'none';
+				// 				})
+				// 				.catch(function (error) {
+				// 					alert("取得使用者資料錯誤\n" + error);
+				// 				});
+				// 		}
+				// 	});
 			};
 
 			// 分享line按钮的點擊事件

@@ -36,7 +36,7 @@ button:hover {
 }
 
 .chatbox {
-	background-color: transparent;
+	background-color: transparent !important;
 }
 
 .hidden {
@@ -48,6 +48,8 @@ button:hover {
 	height: auto;
 	overflow: hidden;
 }
+
+
 
 .promotionalCard {
 	display: inline-block;
