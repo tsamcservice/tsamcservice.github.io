@@ -610,29 +610,22 @@
 			}
 			// 分享twitter按钮的點擊事件
 			function shareButtonTwitter(element) {
-				// 檢查是否有重複按(由於必須click()觸發，將會導致重複)
-				if (!buttonClickFlag) {
-					buttonClickFlag = true;
-					// 截圖卡片後資料存入google sheet
-					document.getElementById("loader").style.display = "flex";
-					var card = document.querySelector(".downloadFlex");
-					domtoimage.toBlob(card).then(async function (blob) {
-						card_img_url = await uploadImg(blob)
-						await sendRequest("save", userId, readShowCardData());
-						var responseData = await sendRequest("uploadGithub", userId, readShowCardData());
-						var shareOG_url = "https://twitter.com/intent/tweet?url=" + responseData.uploadOG_url;
-						element.href = shareOG_url;
-						element.click();
-					})
-						.catch(function (err) {
-							alert("分享傳送訊息失敗\n" + err);
-						});
-				}
-				else {
-					buttonClickFlag = false;
-					// 三秒後重整頁面
-					setTimeout(function () { location.reload(); }, 3000);
-				}
+				// 截圖卡片後資料存入google sheet
+				document.getElementById("loader").style.display = "flex";
+				var card = document.querySelector(".downloadFlex");
+				domtoimage.toBlob(card).then(async function (blob) {
+					card_img_url = await uploadImg(blob)
+					await sendRequest("save", userId, readShowCardData());
+					var responseData = await sendRequest("uploadGithub", userId, readShowCardData());
+					var shareOG_url = "https://twitter.com/intent/tweet?url=" + responseData.uploadOG_url;
+					// 若URL錯誤則爆錯
+					new URL(shareOG_url);
+					// 跳轉
+					location.href = shareOG_url;
+				})
+					.catch(function (err) {
+						alert("分享傳送訊息失敗\n" + err);
+					});
 			}
 			// 分享facebook按钮的點擊事件
 			function shareButtonFacebook(element) {
@@ -646,24 +639,8 @@
 					var shareOG_url = "https://www.facebook.com/sharer.php?u=" + responseData.uploadOG_url;
 					// 若URL錯誤則爆錯
 					new URL(shareOG_url);
-					// 跳轉並檢查分頁是否開啟
-					var newWindow = liff.openWindow({
-						url: shareOG_url,
-						external: true  // 開啟外部瀏覽器
-					});
-					alert(newWindow)
-					// 設定三秒後的定時器
-					var timeout = setTimeout(function () {
-						if (newWindow.closed) {
-							alert("1")
-						} else {
-							// location.reload()
-							alert("若無跳轉請確認是否有阻擋彈跳視窗\n或自行複製分享網址：" + shareOG_url)
-							console.log('新分頁未成功打開');
-							// 在此處添加彈出通知的相應程式碼
-						}
-					}, 3000); // 三秒後執行
-					alert("2")
+					// 跳轉
+					location.href = shareOG_url;
 				})
 					.catch(function (err) {
 						alert("分享傳送訊息失敗\n" + err);
