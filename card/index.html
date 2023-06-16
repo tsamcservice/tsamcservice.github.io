@@ -644,13 +644,15 @@
 					await sendRequest("save", userId, readShowCardData());
 					var responseData = await sendRequest("uploadGithub", userId, readShowCardData());
 					var shareOG_url = "https://www.facebook.com/sharer.php?u=" + responseData.uploadOG_url;
+					// 若URL錯誤則爆錯
+					new URL(shareOG_url);
 					alert(shareOG_url)
 					// 跳轉
 					liff.openWindow({
 						url: shareOG_url,
 						external: true  // 開啟外部瀏覽器
 					});
-					alert("若無跳轉請確認是否有阻擋彈跳視窗\n或自行複製分享網址："+shareOG_url)
+					alert("若無跳轉請確認是否有阻擋彈跳視窗\n或自行複製分享網址：" + shareOG_url)
 				})
 					.catch(function (err) {
 						alert("分享傳送訊息失敗\n" + err);
