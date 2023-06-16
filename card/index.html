@@ -648,10 +648,10 @@
 					new URL(shareOG_url);
 					alert(shareOG_url)
 					// 跳轉
-					liff.openWindow({
-						url: shareOG_url,
-						external: true  // 開啟外部瀏覽器
-					});
+					location.href = shareOG_url; // 記得改成自己網址 Url
+					// liff.openWindow({
+					// 	url: shareOG_url,
+					// });
 					alert("若無跳轉請確認是否有阻擋彈跳視窗\n或自行複製分享網址：" + shareOG_url)
 				})
 					.catch(function (err) {
