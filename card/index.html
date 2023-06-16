@@ -636,33 +636,24 @@
 			}
 			// 分享facebook按钮的點擊事件
 			function shareButtonFacebook(element) {
-				// 檢查是否有重複按(由於必須click()觸發，將會導致重複)
-				if (!buttonClickFlag) {
-					buttonClickFlag = true;
-					// 截圖卡片後資料存入google sheet
-					document.getElementById("loader").style.display = "flex";
-					var card = document.querySelector(".downloadFlex");
-					domtoimage.toBlob(card).then(async function (blob) {
-						card_img_url = await uploadImg(blob)
-						await sendRequest("save", userId, readShowCardData());
-						var responseData = await sendRequest("uploadGithub", userId, readShowCardData());
-						alert(responseData)
-						alert(JSON.stringify(responseData))
-						alert(responseData.uploadOG_url)
-						var shareOG_url = "https://www.facebook.com/sharer.php?u=" + responseData.uploadOG_url;
-						alert(shareOG_url)
-						element.href = shareOG_url;
-						element.click();
-					})
-						.catch(function (err) {
-							alert("分享傳送訊息失敗\n" + err);
-						});
-				}
-				else {
-					buttonClickFlag = false;
-					// 三秒後重整頁面
-					setTimeout(function () { location.reload(); }, 3000);
-				}
+				// 截圖卡片後資料存入google sheet
+				document.getElementById("loader").style.display = "flex";
+				var card = document.querySelector(".downloadFlex");
+				domtoimage.toBlob(card).then(async function (blob) {
+					card_img_url = await uploadImg(blob)
+					await sendRequest("save", userId, readShowCardData());
+					var responseData = await sendRequest("uploadGithub", userId, readShowCardData());
+					var shareOG_url = "https://www.facebook.com/sharer.php?u=" + responseData.uploadOG_url;
+					alert(shareOG_url)
+					// 跳轉
+					liff.openWindow({
+						url: shareOG_url,
+						external: true  // 開啟外部瀏覽器
+					});
+				})
+					.catch(function (err) {
+						alert("分享傳送訊息失敗\n" + err);
+					});
 			}
 
 			// 分享Copy Link URL按钮的點擊事件
