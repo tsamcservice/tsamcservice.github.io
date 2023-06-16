@@ -160,13 +160,6 @@
 		</div>
 
 		<script>
-			// 這張會員卡片的 URL
-			var card_img_url;
-			// 檢查 FB 跟 Twitter 按鈕是否有重複按下的旗標
-			var buttonClickFlag = false;
-			// 需要跨 function 的參數
-			var flexJson, userId, flexJsonMessage, cardJsonPromotional
-
 			function readShowCardData() {
 				return JSON.stringify({
 					mainTitle_1: document.getElementById("mainTitle_1").value || "",
