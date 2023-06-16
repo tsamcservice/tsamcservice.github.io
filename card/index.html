@@ -646,7 +646,11 @@
 						card_img_url = await uploadImg(blob)
 						await sendRequest("save", userId, readShowCardData());
 						var responseData = await sendRequest("uploadGithub", userId, readShowCardData());
+						alert(responseData)
+						alert(JSON.stringify(responseData))
+						alert(responseData.uploadOG_url)
 						var shareOG_url = "https://www.facebook.com/sharer.php?u=" + responseData.uploadOG_url;
+						alert(shareOG_url)
 						element.href = shareOG_url;
 						element.click();
 					})
@@ -723,6 +727,9 @@
 						link.href = URL.createObjectURL(blob);
 						// 獲取當前時間戳
 						var timestamp = Date.now();
+
+						var mainTitle_1_Element = document.getElementById("mainTitle_1");
+						var mainTitle_1 = mainTitle_1_Element.value || mainTitle_1_Element.placeholder;
 						link.download = mainTitle_1 + "_" + timestamp + ".png";
 
 						// 觸發下載
