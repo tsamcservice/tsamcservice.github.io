@@ -6,6 +6,8 @@
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>LIFF Share Example</title>
+	<!-- 載入資料 -->
+	<script src="../data/data.js"></script>
 	<!-- flex2html -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/PamornT/flex2html@main/css/flex2html.css" />
 	<script src="https://cdn.jsdelivr.net/gh/PamornT/flex2html@main/js/flex2html.min.js"></script>
@@ -19,6 +21,10 @@
 	<!-- fontawesome -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 	<script src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
+	<!-- pickr 調色盤 -->
+	<link rel="stylesheet" type="text/css"
+		href="https://cdn.jsdelivr.net/npm/@simonwep/pickr@latest/dist/themes/nano.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr@latest/dist/pickr.min.js"></script>
 
 	<style>
 		body {
@@ -539,16 +545,15 @@
 			wrongchatboxElements.style.paddingTop = "20px";
 		}
 
-		async function sendRequest(status, userId, data_card = "", data = "") {
+		async function sendRequest(status, userId, dataCard = "", data = "") {
 			if (!status || !userId) {
 				alert("向google apps script寄送請求時\n有效參數不足");
 				return;
 			}
 
-			const url = "https://script.google.com/macros/s/AKfycbxKiM76YZI-m_mQUDrmIG7vq9PXI2UP5AQpTPljq61KWh-URhW_bIcKFWKZoeFMRx9Dog/exec";
-
+			const url = googleAppsScriptUrl;
 			try {
-				const sendData = { status: status, userId: userId, card: data_card };
+				const sendData = { status: status, userId: userId, card: dataCard };
 
 				// 將資料轉換成查詢字串
 				const queryString = new URLSearchParams(sendData).toString();
@@ -558,7 +563,7 @@
 
 				console.log("Data sent:", sendData);
 				console.log("Response:", responseData);
-				if (responseData.status === 'first') { return "first"; }
+				if (responseData.status === 'first') { return responseData; }
 				else if (responseData.status === 'ok') { return responseData; }
 				else { alert("向google apps script寄送請求時\n回傳值非ok"); }
 			} catch (error) {
