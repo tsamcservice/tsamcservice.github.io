@@ -647,7 +647,11 @@
 					// 若URL錯誤則爆錯
 					new URL(shareOG_url);
 					// 跳轉並檢查分頁是否開啟
-					var newWindow = window.open(shareOG_url, '_blank');
+					var newWindow = liff.openWindow({
+						url: shareOG_url,
+						external: true  // 開啟外部瀏覽器
+					});
+					alert(newWindow)
 					// 設定三秒後的定時器
 					var timeout = setTimeout(function () {
 						if (newWindow.closed) {
@@ -659,11 +663,11 @@
 							// 在此處添加彈出通知的相應程式碼
 						}
 					}, 3000); // 三秒後執行
+					alert("2")
 				})
 					.catch(function (err) {
 						alert("分享傳送訊息失敗\n" + err);
 					});
-				alert("2")
 			}
 
 			// 分享Copy Link URL按钮的點擊事件
