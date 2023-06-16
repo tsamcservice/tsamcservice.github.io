@@ -646,17 +646,24 @@
 					var shareOG_url = "https://www.facebook.com/sharer.php?u=" + responseData.uploadOG_url;
 					// 若URL錯誤則爆錯
 					new URL(shareOG_url);
-					alert(shareOG_url)
-					// 跳轉
-					location.href = shareOG_url; // 記得改成自己網址 Url
-					// liff.openWindow({
-					// 	url: shareOG_url,
-					// });
-					alert("若無跳轉請確認是否有阻擋彈跳視窗\n或自行複製分享網址：" + shareOG_url)
+					// 跳轉並檢查分頁是否開啟
+					var newWindow = window.open(shareOG_url, '_blank');
+					// 設定三秒後的定時器
+					var timeout = setTimeout(function () {
+						if (newWindow.closed) {
+							alert("1")
+						} else {
+							// location.reload()
+							alert("若無跳轉請確認是否有阻擋彈跳視窗\n或自行複製分享網址：" + shareOG_url)
+							console.log('新分頁未成功打開');
+							// 在此處添加彈出通知的相應程式碼
+						}
+					}, 3000); // 三秒後執行
 				})
 					.catch(function (err) {
 						alert("分享傳送訊息失敗\n" + err);
 					});
+				alert("2")
 			}
 
 			// 分享Copy Link URL按钮的點擊事件
