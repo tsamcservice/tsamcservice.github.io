@@ -31,7 +31,7 @@ function writeElementDefaultValues() {
 
 // flexJson_main 的框 (list可再加入cardJsonPromotional)
 function createFlexJsonList() {
-	flexJsonList = [{
+	return flexJsonList = [{
 		type: "bubble",
 		hero: {
 			type: "image",
