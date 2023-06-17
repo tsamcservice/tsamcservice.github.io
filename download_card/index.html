@@ -299,8 +299,7 @@
 						// 獲取當前時間戳
 						var timestamp = Date.now();
 						// 命名檔名
-						var mainTitle_1_Element = document.getElementById("mainTitle_1");
-						var mainTitle_1 = mainTitle_1_Element.value || mainTitle_1_Element.placeholder;
+						var mainTitle_1 = data_card.mainTitle_1 || "磊山 人文講堂";
 						link.download = mainTitle_1 + "_" + timestamp + ".png";
 
 						// 觸發下載
