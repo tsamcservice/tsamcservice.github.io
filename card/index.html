@@ -216,7 +216,7 @@
 				var textContent_1 = textContent_1_Element.value || textContent_1_Element.placeholder;
 
 				var textContent_1_url_Element = document.getElementById("upload_text");
-				var textContent_1_url = textContent_1_url_Element.textContent ;
+				var textContent_1_url = textContent_1_url_Element.textContent;
 
 				var textContent_2_Element = document.getElementById("textContent_2");
 				var textContent_2 = textContent_2_Element.value || textContent_2_Element.placeholder;
@@ -479,7 +479,7 @@
 									if (responseData.status != "first") {
 										const dataCard = JSON.parse(responseData.card);
 										writeShowCardData(dataCard)
-									}
+									} else { sendRequest("save", userId, readShowCardData()); }
 
 									cardJsonPromotional = responseData.cardJsonPromotional
 									for (var i = 0; i < cardJsonPromotional.length; i++) {
