@@ -21,6 +21,8 @@ async function sendRequest(status, userId, dataCard = "", data = "") {
 		else if (responseData.status === 'ok') { return responseData; }
 		else { alert("向google apps script寄送請求時\n回傳值非ok"); }
 	} catch (error) {
+		// 忽略 "TypeError: Failed to fetch" 錯誤
+		if (error instanceof TypeError && error.message === "Failed to fetch") { return; }
 		alert("向google apps script寄送請求時\n發生錯誤\n" + error);
 	}
 }
