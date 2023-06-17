@@ -65,7 +65,7 @@
 			textContent_3 = data_card.textContent_3 || textContent_3;
 			textColor = data_card.textColor || textColor;
 
-			// 更新 flexJsonList 內容 (改變內部變數)
+			// 創立並更新 flexJsonList 內容 (改變內部變數)
 			flexJsonList = createFlexJsonList()
 			// 將 flexJson 繪出到 HTML 上 (flexJsonList框已在data.js)
 			my_flexToHtml("flex2html_main", flexJsonList);
@@ -74,17 +74,17 @@
 		window.onload = function () {
 			document.getElementById('loader').style.display = 'flex';
 			liff.init({ liffId: "1660908511-Ol7grGPY" }).then(() => {
-				// 获取查询字符串
+				// 獲取查詢字串
 				var queryString = window.location.search;
-				// 移除问号（?）
+				// 移除第一個問號字元 (?)
 				queryString = queryString.slice(1);
-				// 创建一个对象来存储参数和对应的值
+				// 遍歷全部參數，將其拆分為參數名和值，並存到對象中
 				var parameters = {};
-				// 遍历参数对，将其拆分为参数名和值，并存储到对象中
-				queryString.split("&").forEach((pair) => {
-					const [paramName, paramValue] = pair.split("=").map(decodeURIComponent);
+				queryString.split('&').forEach(pair => {
+					const [paramName, paramValue] = pair.split('=').map(decodeURIComponent);
 					parameters[paramName] = paramValue;
 				});
+
 				if (!liff.isLoggedIn()) {
 					document.cookie = "userId=" + parameters["userId"];
 					liff.login();

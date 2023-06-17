@@ -232,8 +232,8 @@
 				var textColor_Element = document.getElementById("textColor");
 				textColor = textColor_Element.textContent;
 
-				// 更新 flexJsonList 內容 (改變內部變數)
-				createFlexJsonList()
+				// 創立並更新 flexJsonList 內容 (改變內部變數)
+				flexJsonList = createFlexJsonList()
 				// 找出已被選擇的宣傳卡片id
 				var selectedElements = document.querySelectorAll(".card.promotionalCard.selected [id^='flex2htmlPromotional']");
 				selectedElements.forEach(function (tempElement) {
