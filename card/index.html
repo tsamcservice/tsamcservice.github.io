@@ -27,7 +27,6 @@
 	<link rel="stylesheet" type="text/css"
 		href="https://cdn.jsdelivr.net/npm/@simonwep/pickr@latest/dist/themes/nano.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr@latest/dist/pickr.min.js"></script>
-
 </head>
 
 <body>
@@ -107,7 +106,7 @@
 				<div style="display: flex;justify-content: space-between; width: 310px ;">
 					<button onclick="showFlex()">查看卡片</button>
 					<button onclick="document.getElementById('loadPromotionalCard').style.display = 'flex'">附加宣傳卡片</button>
-			</div>
+				</div>
 				<div class="form-group">
 					<label>大圖 URL</label>
 					<form>
@@ -120,41 +119,41 @@
 				</div>
 				<div class="form-group">
 					<label>點擊大圖 URL</label>
-					<input id="textContent_2_url" style="width: 100%" type="text" placeholder="https://linecorp.com/" />
+					<input id="textContent_2_url" style="width: 100%" type="text" placeholder="" />
 				</div>
 				<div class="form-group">
 					<label>主標1</label>
-					<input id="mainTitle_1" style="width: 100%" type="text" placeholder="磊山 人文講堂" />
+					<input id="mainTitle_1" style="width: 100%" type="text" placeholder="" />
 				</div>
 				<div class="form-group">
 					<label>名稱</label>
-					<input id="subTitle_1" style="width: 100%" type="text" placeholder="余浩瑋" />
+					<input id="subTitle_1" style="width: 100%" type="text" placeholder="" />
 				</div>
 				<div class="form-group">
 					<label>別名</label>
-					<input id="subTitle_2" style="width: 100%" type="text" placeholder="青藝盟盟主" />
+					<input id="subTitle_2" style="width: 100%" type="text" placeholder="" />
 				</div>
 				<div class="form-group">
 					<label>主標2</label>
-					<input id="mainTitle_2" style="width: 100%" type="text" placeholder="《牽風箏的人》" />
+					<input id="mainTitle_2" style="width: 100%" type="text" placeholder="" />
 				</div>
 				<div class="form-group">
 					<label>時間</label>
-					<input id="textContent_1" style="width: 100%" type="text" placeholder="05/06(六)09:50~12:00" />
+					<input id="textContent_1" style="width: 100%" type="text" placeholder="" />
 				</div>
 				<div class="form-group">
 					<label>地點</label>
-					<input id="textContent_2" style="width: 100%" type="text" placeholder="磊山學院" />
+					<input id="textContent_2" style="width: 100%" type="text" placeholder="" />
 				</div>
 				<div class="form-group">
 					<label>地址</label>
-					<input id="textContent_3" style="width: 100%" type="text" placeholder="台北市南京東路二段178號10樓" />
+					<input id="textContent_3" style="width: 100%" type="text" placeholder="" />
 				</div>
 				<div class="form-group">
 					<label>文字顏色</label>
 					<div style="display: flex;  align-items: center; width: 310px; gap: 10px;">
 						<div id="colorPicker"></div>
-						<span id="textColor">#081F58FF</span>
+						<span id="textColor"></span>
 					</div>
 				</div>
 			</div>
@@ -217,7 +216,7 @@
 				var textContent_1 = textContent_1_Element.value || textContent_1_Element.placeholder;
 
 				var textContent_1_url_Element = document.getElementById("upload_text");
-				var textContent_1_url = textContent_1_url_Element.textContent || "https://i.ibb.co/B6KNp92/01-1-cafe.png";
+				var textContent_1_url = textContent_1_url_Element.textContent ;
 
 				var textContent_2_Element = document.getElementById("textContent_2");
 				var textContent_2 = textContent_2_Element.value || textContent_2_Element.placeholder;
@@ -463,6 +462,8 @@
 			});
 
 			window.onload = function () {
+				// 寫入卡片製作標籤裡面參數預設值
+				writeElementDefaultValues()
 				document.querySelector(".hiddenForward").classList.add("hidden");
 				document.getElementById('loader').style.display = 'flex';
 				liff.init({ liffId: "1660908511-DERZWN3m" })
