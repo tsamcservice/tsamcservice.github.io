@@ -22,6 +22,7 @@ class CardJsonParams {
 
 // 卡片製作標籤裡面參數預設值
 function writeElementDefaultValues() {
+	alert(CardJsonParams.mainTitle_1)
 	document.getElementById("mainTitle_1").placeholder = CardJsonParams.mainTitle_1;
 	document.getElementById("mainTitle_2").placeholder = CardJsonParams.mainTitle_2;
 	document.getElementById("subTitle_1").placeholder = CardJsonParams.subTitle_1;

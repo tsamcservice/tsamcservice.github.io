@@ -6,15 +6,15 @@
   
   <title>Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="设置placeholder值              function handleInputLoad() {       var mainTitle_1 &#x3D; &quot;磊山 人文講堂&quot;; 			alert(&#39;1&#39;)       document.getElementById(&quot;mainTitle_1&quot;).placeholder &#x3D; mainTitle_1;     }">
+  <meta name="description" content="CardJsonParams Demo    	  	  		console.log(CardJsonParams.mainTitle_1); 		CardJsonParams.mainTitle_1 &#x3D; 1; 		console.log(CardJsonParams.mainTitle_1);   		function otherFunction() { 			console.lo">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Hexo">
 <meta property="og:url" content="https://tsamcservice.github.io/test/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="设置placeholder值              function handleInputLoad() {       var mainTitle_1 &#x3D; &quot;磊山 人文講堂&quot;; 			alert(&#39;1&#39;)       document.getElementById(&quot;mainTitle_1&quot;).placeholder &#x3D; mainTitle_1;     }">
+<meta property="og:description" content="CardJsonParams Demo    	  	  		console.log(CardJsonParams.mainTitle_1); 		CardJsonParams.mainTitle_1 &#x3D; 1; 		console.log(CardJsonParams.mainTitle_1);   		function otherFunction() { 			console.lo">
 <meta property="og:locale" content="zh_TW">
-<meta property="article:published_time" content="2023-06-17T03:25:12.360Z">
-<meta property="article:modified_time" content="2023-06-17T03:25:12.360Z">
+<meta property="article:published_time" content="2023-06-17T07:26:49.522Z">
+<meta property="article:modified_time" content="2023-06-17T07:26:49.522Z">
 <meta property="article:author" content="tsamcservice">
 <meta name="twitter:card" content="summary">
   
@@ -80,7 +80,7 @@
         <section id="main"><article id="page-" class="h-entry article article-type-page" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/test/index.html" class="article-date">
-  <time class="dt-published" datetime="2023-06-17T03:25:12.360Z" itemprop="datePublished">2023-06-17</time>
+  <time class="dt-published" datetime="2023-06-17T07:26:49.522Z" itemprop="datePublished">2023-06-17</time>
 </a>
     
   </div>
@@ -91,22 +91,31 @@
       
         <!DOCTYPE html>
 <html>
+
 <head>
-  <title>设置placeholder值</title>
+	<meta charset="UTF-8">
+	<title>CardJsonParams Demo</title>
 </head>
+
 <body>
-  <input id="mainTitle_1" style="width: 100%" type="text" placeholder="" onload="handleInputLoad()" />
+	<script src="../data/data.js"></script>
 
-  <script>
-    function handleInputLoad() {
-      var mainTitle_1 = "磊山 人文講堂";
-			alert('1')
-      document.getElementById("mainTitle_1").placeholder = mainTitle_1;
-    }
-  </script>
+	<script>
+
+		console.log(CardJsonParams.mainTitle_1);
+		CardJsonParams.mainTitle_1 = 1;
+		console.log(CardJsonParams.mainTitle_1);
+
+
+		function otherFunction() {
+			console.log(CardJsonParams.mainTitle_1);
+		}
+
+		otherFunction();
+	</script>
 </body>
-</html>
 
+</html>
       
     </div>
     <footer class="article-footer">
