@@ -3,7 +3,7 @@ const googleAppsScriptUrl = "https://script.google.com/macros/s/AKfycbxG0VHIJjS4
 // 這張會員卡片的 URL
 var card_img_url;
 // 需要跨 function 的參數
-var  userId, flexJsonMessage, cardJsonPromotional
+var userId, flexJsonMessage, cardJsonPromotional
 // cardJson 裡面參數預設值
 var mainTitle_1 = "磊山 人文講堂";
 var mainTitle_2 = "《牽風箏的人》";

@@ -160,6 +160,7 @@
 		</div>
 
 		<script>
+			// 從頁面上的卡片參數讀取出來
 			function readShowCardData() {
 				return JSON.stringify({
 					mainTitle_1: document.getElementById("mainTitle_1").value || "",
@@ -176,6 +177,7 @@
 				});
 			}
 
+			// 把從 google sheet 讀回來的 data_card 寫到頁面上的卡片參數
 			function writeShowCardData(data_card) {
 				document.getElementById("mainTitle_1").value = data_card.mainTitle_1 || "";
 				document.getElementById("mainTitle_2").value = data_card.mainTitle_2 || "";
@@ -186,12 +188,12 @@
 				document.getElementById("textContent_2").value = data_card.textContent_2 || "";
 				document.getElementById("textContent_2_url").value = data_card.textContent_2_url || "";
 				document.getElementById("textContent_3").value = data_card.textContent_3 || "";
-				// 設定textColor文字
-				document.getElementById("textColor").textContent = data_card.textColor || "#081F58";
+				document.getElementById("textColor").textContent = data_card.textColor || "";
 				// 設定colorPicker調色盤顏色
-				colorPicker.setColor(data_card.textColor || "#081F58")
+				colorPicker.setColor(data_card.textColor || textColor)
 			}
 
+			// 顯示與關閉 flexJson_main 卡片 (flexJsonList框已在data.js)
 			function closeFlex() {
 				document.querySelector(".hiddenForward").classList.add("hidden");
 				document.querySelector(".hiddenBackward").classList.remove("hidden");
@@ -240,37 +242,13 @@
 				my_flexToHtml("flex2html_main", flexJsonList);
 			}
 
-			// colorPicker創建調色盤元素(文字放textColor)
-			var textColor_Element = document.getElementById("textColor");
-			const colorPicker = Pickr.create({
-				el: '#colorPicker',
-				theme: 'nano', // 使用 NANO 主題
-				default: textColor, // 預設顏色
-				components: {
-					preview: true,
-					opacity: true,
-					hue: true,
-					interaction: {
-						input: true,
-					}
-				}
-			});
-			// colorPicker顏色更改事件
-			colorPicker.on('change', (color) => {
-				textColor_Element.textContent = color.toHEXA().toString();
-			});
-			// colorPicker失去焦點事件
-			colorPicker.on('hide', () => {
-				colorPicker.applyColor(); // 應用顏色到目標元素
-				// 卡片資料存到google sheet
-				sendRequest("save", userId, readShowCardData());
-			});
-
+			// 網頁載入完後值行
 			window.onload = function () {
-				// 寫入卡片製作標籤裡面參數預設值
-				writeElementDefaultValues()
 				document.querySelector(".hiddenForward").classList.add("hidden");
 				document.getElementById('loader').style.display = 'flex';
+				// 寫入卡片製作標籤裡面參數預設值 (在data.js)
+				writeElementDefaultValues()
+				// 登入line並取得個人資料
 				liff.init({ liffId: "1660908511-DERZWN3m" })
 					.then(() => {
 						if (!liff.isLoggedIn()) {
@@ -279,6 +257,7 @@
 						else {
 							liff.getProfile()
 								.then(async function (profile) {
+									// 取得 google sheet 個人資料顯示在頁面 (若為首次登入則 google sheet 建立新資料)
 									userId = profile.userId
 									var responseData = await sendRequest("get", userId)
 									if (responseData.status != "first") {
@@ -286,6 +265,7 @@
 										writeShowCardData(dataCard)
 									} else { sendRequest("save", userId, readShowCardData()); }
 
+									// 宣傳卡片 cardJsonPromotional 讀取並寫入顯示在頁面
 									cardJsonPromotional = responseData.cardJsonPromotional
 									for (var i = 0; i < cardJsonPromotional.length; i++) {
 										var tempHtml = `
@@ -314,7 +294,7 @@
 					.shareTargetPicker([flexJsonMessage])
 					.then(async function (res) {
 						if (res) {
-							// 向google sheet發送的增加閱讀數
+							// 向 google sheet 發送請求增加閱讀數
 							await sendRequest("addReadCount", userId);
 							// 送出提醒框
 							Swal.fire({
@@ -339,7 +319,6 @@
 			// 分享mail按钮的點擊事件
 			function shareButtonMail(element) {
 				element.href = "mailto:?subject=【卡片分享】&body=使用瀏覽器預覽照片連結：https://tsamcservice.github.io/preview/?userId=" + encodeURIComponent(userId);
-				// document.getElementById("shareButtonMail").href = "mailto:?subject=【卡片分享】-&body=請參考圖片附件:[圖片](https://i.ibb.co/8YTW70m/blob.jpg)&attachment=https://i.ibb.co/8YTW70m/blob.jpg";
 			}
 			// 分享twitter按钮的點擊事件
 			function shareButtonTwitter(element) {
@@ -347,13 +326,14 @@
 				document.getElementById("loader").style.display = "flex";
 				var card = document.querySelector(".downloadFlex");
 				domtoimage.toBlob(card).then(async function (blob) {
+					// 寫入全域變數 (這張會員卡片的 URL)
 					card_img_url = await uploadImg(blob)
 					await sendRequest("save", userId, readShowCardData());
 					var responseData = await sendRequest("uploadGithub", userId, readShowCardData());
 					var shareOG_url = "https://twitter.com/intent/tweet?url=" + responseData.uploadOG_url;
 					// 若URL錯誤則爆錯
 					new URL(shareOG_url);
-					// 跳轉
+					// 跳轉 (分享畫面)
 					location.href = shareOG_url;
 				})
 					.catch(function (err) {
@@ -366,13 +346,14 @@
 				document.getElementById("loader").style.display = "flex";
 				var card = document.querySelector(".downloadFlex");
 				domtoimage.toBlob(card).then(async function (blob) {
+					// 寫入全域變數 (這張會員卡片的 URL)
 					card_img_url = await uploadImg(blob)
 					await sendRequest("save", userId, readShowCardData());
 					var responseData = await sendRequest("uploadGithub", userId, readShowCardData());
 					var shareOG_url = "https://www.facebook.com/sharer.php?u=" + responseData.uploadOG_url;
 					// 若URL錯誤則爆錯
 					new URL(shareOG_url);
-					// 跳轉
+					// 跳轉 (分享畫面)
 					location.href = shareOG_url;
 				})
 					.catch(function (err) {
@@ -392,14 +373,11 @@
 						// 建立一個臨時的 tempElement 元素
 						var tempElement = document.createElement("textarea");
 						tempElement.value = textToCopy;
-
 						// 將 textarea 加入到文件中
 						document.body.appendChild(tempElement);
-
 						// 選取並複製文字
 						tempElement.select();
 						document.execCommand("copy");
-
 						// 移除臨時的 textarea 元素
 						tempElement.remove();
 					} catch (err) {
@@ -521,18 +499,40 @@
 							return;
 						}
 					}
-					// 卡片資料存到google sheet
 					sendRequest("save", userId, readShowCardData());
 				}
-			}, true); // 注意，這裡的 true 參數是為了在捕獲階段觸發事件，這對於 'blur' 和 'focus' 事件是必要的。
+			}, true); // 注意，這裡的 true 參數是為了在捕獲階段觸發事件，這對於 'blur' 和 'focus' 事件是必要的
 
+			// colorPicker創建調色盤元素(文字放textColor)
+			var textColor_Element = document.getElementById("textColor");
+			const colorPicker = Pickr.create({
+				el: '#colorPicker',
+				theme: 'nano', // 使用 NANO 主題
+				default: textColor, // 預設顏色
+				components: {
+					preview: true,
+					opacity: true,
+					hue: true,
+					interaction: {
+						input: true,
+					}
+				}
+			});
+			// colorPicker顏色更改事件
+			colorPicker.on('change', (color) => {
+				textColor_Element.textContent = color.toHEXA().toString();
+			});
+			// colorPicker失去焦點事件
+			colorPicker.on('hide', () => {
+				colorPicker.applyColor(); // 應用顏色到目標元素
+				sendRequest("save", userId, readShowCardData());
+			});
 
 			// 拖曳滑動
 			var slider = document.getElementById("slider");
 			var isDown = false;
 			var startX;
 			var scrollLeft;
-
 			slider.addEventListener("mousedown", function (e) {
 				isDown = true;
 				startX = e.pageX - slider.offsetLeft;
