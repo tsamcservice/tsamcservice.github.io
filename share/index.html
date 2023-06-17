@@ -65,6 +65,8 @@
 			textContent_3 = data_card.textContent_3 || textContent_3;
 			textColor = data_card.textColor || textColor;
 
+			// 更新 flexJsonList 內容 (改變內部變數)
+			createFlexJsonList()
 			// 將 flexJson 繪出到 HTML 上 (flexJsonList框已在data.js)
 			my_flexToHtml("flex2html_main", flexJsonList);
 		}
