@@ -203,34 +203,34 @@
 				document.querySelector(".hiddenBackward").classList.add("hidden");
 
 				var mainTitle_1_Element = document.getElementById("mainTitle_1");
-				var mainTitle_1 = mainTitle_1_Element.value || mainTitle_1_Element.placeholder;
+				CardJsonParams.mainTitle_1 = mainTitle_1_Element.value || mainTitle_1_Element.placeholder;
 
 				var mainTitle_2_Element = document.getElementById("mainTitle_2");
-				var mainTitle_2 = mainTitle_2_Element.value || mainTitle_2_Element.placeholder;
+				CardJsonParams.mainTitle_2 = mainTitle_2_Element.value || mainTitle_2_Element.placeholder;
 
 				var subTitle_1_Element = document.getElementById("subTitle_1");
-				var subTitle_1 = subTitle_1_Element.value || subTitle_1_Element.placeholder;
+				CardJsonParams.subTitle_1 = subTitle_1_Element.value || subTitle_1_Element.placeholder;
 
 				var subTitle_2_Element = document.getElementById("subTitle_2");
-				var subTitle_2 = subTitle_2_Element.value || subTitle_2_Element.placeholder;
+				CardJsonParams.subTitle_2 = subTitle_2_Element.value || subTitle_2_Element.placeholder;
 
 				var textContent_1_Element = document.getElementById("textContent_1");
-				var textContent_1 = textContent_1_Element.value || textContent_1_Element.placeholder;
+				CardJsonParams.textContent_1 = textContent_1_Element.value || textContent_1_Element.placeholder;
 
 				var textContent_1_url_Element = document.getElementById("upload_text");
-				var textContent_1_url = textContent_1_url_Element.textContent;
+				CardJsonParams.textContent_1_url = textContent_1_url_Element.textContent;
 
 				var textContent_2_Element = document.getElementById("textContent_2");
-				var textContent_2 = textContent_2_Element.value || textContent_2_Element.placeholder;
+				CardJsonParams.textContent_2 = textContent_2_Element.value || textContent_2_Element.placeholder;
 
 				var textContent_2_url_Element = document.getElementById("textContent_2_url");
-				var textContent_2_url = textContent_2_url_Element.value || textContent_2_url_Element.placeholder;
+				CardJsonParams.textContent_2_url = textContent_2_url_Element.value || textContent_2_url_Element.placeholder;
 
 				var textContent_3_Element = document.getElementById("textContent_3");
-				var textContent_3 = textContent_3_Element.value || textContent_3_Element.placeholder;
+				CardJsonParams.textContent_3 = textContent_3_Element.value || textContent_3_Element.placeholder;
 
 				var textColor_Element = document.getElementById("textColor");
-				var textColor = textColor_Element.textContent;
+				CardJsonParams.textColor = textColor_Element.textContent;
 
 				// 找出已被選擇的宣傳卡片id
 				var selectedElements = document.querySelectorAll(".card.promotionalCard.selected [id^='flex2htmlPromotional']");
@@ -258,12 +258,12 @@
 							liff.getProfile()
 								.then(async function (profile) {
 									// 取得 google sheet 個人資料顯示在頁面 (若為首次登入則 google sheet 建立新資料)
-									userId = profile.userId
-									var responseData = await sendRequest("get", userId)
+									userId.userId = profile.userId
+									var responseData = await sendRequest("get", userId.userId)
 									if (responseData.status != "first") {
 										const dataCard = JSON.parse(responseData.card);
 										writeShowCardData(dataCard)
-									} else { sendRequest("save", userId, readShowCardData()); }
+									} else { sendRequest("save", userId.userId, readShowCardData()); }
 
 									// 宣傳卡片 cardJsonPromotional 讀取並寫入顯示在頁面
 									cardJsonPromotional = responseData.cardJsonPromotional
@@ -295,7 +295,7 @@
 					.then(async function (res) {
 						if (res) {
 							// 向 google sheet 發送請求增加閱讀數
-							await sendRequest("addReadCount", userId);
+							await sendRequest("addReadCount", userId.userId);
 							// 送出提醒框
 							Swal.fire({
 								text: "卡片已送出",
@@ -318,7 +318,7 @@
 
 			// 分享mail按钮的點擊事件
 			function shareButtonMail(element) {
-				element.href = "mailto:?subject=【卡片分享】&body=使用瀏覽器預覽照片連結：https://tsamcservice.github.io/preview/?userId=" + encodeURIComponent(userId);
+				element.href = "mailto:?subject=【卡片分享】&body=使用瀏覽器預覽照片連結：https://tsamcservice.github.io/preview/?userId=" + encodeURIComponent(userId.userId);
 			}
 			// 分享twitter按钮的點擊事件
 			function shareButtonTwitter(element) {
@@ -328,8 +328,8 @@
 				domtoimage.toBlob(card).then(async function (blob) {
 					// 寫入全域變數 (這張會員卡片的 URL)
 					card_img_url = await uploadImg(blob)
-					await sendRequest("save", userId, readShowCardData());
-					var responseData = await sendRequest("uploadGithub", userId, readShowCardData());
+					await sendRequest("save", userId.userId, readShowCardData());
+					var responseData = await sendRequest("uploadGithub", userId.userId, readShowCardData());
 					var shareOG_url = "https://twitter.com/intent/tweet?url=" + responseData.uploadOG_url;
 					// 若URL錯誤則爆錯
 					new URL(shareOG_url);
@@ -348,8 +348,8 @@
 				domtoimage.toBlob(card).then(async function (blob) {
 					// 寫入全域變數 (這張會員卡片的 URL)
 					card_img_url = await uploadImg(blob)
-					await sendRequest("save", userId, readShowCardData());
-					var responseData = await sendRequest("uploadGithub", userId, readShowCardData());
+					await sendRequest("save", userId.userId, readShowCardData());
+					var responseData = await sendRequest("uploadGithub", userId.userId, readShowCardData());
 					var shareOG_url = "https://www.facebook.com/sharer.php?u=" + responseData.uploadOG_url;
 					// 若URL錯誤則爆錯
 					new URL(shareOG_url);
@@ -364,7 +364,7 @@
 			// 分享Copy Link URL按钮的點擊事件
 			async function shareButtonCopyURL() {
 				// 取得要複製的文字
-				var textToCopy = "https://tsamcservice.github.io/preview/?userId=" + encodeURIComponent(userId)
+				var textToCopy = "https://tsamcservice.github.io/preview/?userId=" + encodeURIComponent(userId.userId)
 
 				try {
 					await navigator.clipboard.writeText(textToCopy);
@@ -405,7 +405,7 @@
 					// 由於line本身無法下載檔案，一律跳轉用外部瀏覽器下載
 					alert("將自動開啟預設瀏覽器\n並下載檔案")
 					liff.openWindow({
-						url: 'https://tsamcservice.github.io/download_card/?userId=' + encodeURIComponent(userId),
+						url: 'https://tsamcservice.github.io/download_card/?userId=' + encodeURIComponent(userId.userId),
 						external: true  // 開啟外部瀏覽器
 					});
 				}
@@ -442,7 +442,7 @@
 				document.getElementById("loader").style.display = "flex";
 				var file = event.target.files[0]; // 取得選擇的檔案
 				document.getElementById("upload_text").textContent = await uploadImg(file); // 上傳檔案並回傳URL
-				sendRequest("save", userId, readShowCardData());
+				sendRequest("save", userId.userId, readShowCardData());
 				document.getElementById("loader").style.display = "none";
 			});
 
@@ -499,7 +499,7 @@
 							return;
 						}
 					}
-					sendRequest("save", userId, readShowCardData());
+					sendRequest("save", userId.userId, readShowCardData(), isDebug = false);
 				}
 			}, true); // 注意，這裡的 true 參數是為了在捕獲階段觸發事件，這對於 'blur' 和 'focus' 事件是必要的
 
@@ -525,7 +525,7 @@
 			// colorPicker失去焦點事件
 			colorPicker.on('hide', () => {
 				colorPicker.applyColor(); // 應用顏色到目標元素
-				sendRequest("save", userId, readShowCardData());
+				sendRequest("save", userId.userId, readShowCardData());
 			});
 
 			// 拖曳滑動
