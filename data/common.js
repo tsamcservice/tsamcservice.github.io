@@ -1,5 +1,5 @@
 // google Apps Script 傳送訊息
-async function sendRequest(status, userId, dataCard = "", data = "") {
+async function sendRequest(status, userId, dataCard = "", isDebug = true) {
 	if (!status || !userId) {
 		alert("向google apps script寄送請求時\n有效參數不足");
 		return;
@@ -22,7 +22,7 @@ async function sendRequest(status, userId, dataCard = "", data = "") {
 		else { alert("向google apps script寄送請求時\n回傳值非ok"); }
 	} catch (error) {
 		// 忽略 "TypeError: Failed to fetch" 錯誤
-		if (error instanceof TypeError && error.message === "Failed to fetch") { return; }
+		if (!isDebug && error instanceof TypeError && error.message === "Failed to fetch") { return; }
 		alert("向google apps script寄送請求時\n發生錯誤\n" + error);
 	}
 }

@@ -3,30 +3,35 @@ const googleAppsScriptUrl = "https://script.google.com/macros/s/AKfycbxG0VHIJjS4
 // 這張會員卡片的 URL
 var card_img_url;
 // 需要跨 function 的參數
-var userId, flexJsonMessage, cardJsonPromotional
+var flexJsonMessage, cardJsonPromotional
+// 需要跨 function 的 userId
+class userId { userId }
 // cardJson 裡面參數預設值
-var mainTitle_1 = "磊山 人文講堂";
-var mainTitle_2 = "《牽風箏的人》";
-var subTitle_1 = "余浩瑋";
-var subTitle_2 = "青藝盟盟主";
-var textContent_1 = "05/06(六)09:50~12:00";
-var textContent_1_url = "https://i.ibb.co/B6KNp92/01-1-cafe.png";
-var textContent_2 = "磊山學院";
-var textContent_2_url = "https://linecorp.com/";
-var textContent_3 = "台北市南京東路二段178號10樓";
-var textColor = "#081F58";
+class CardJsonParams {
+	mainTitle_1 = "磊山 人文講堂";
+	mainTitle_2 = "《牽風箏的人》";
+	subTitle_1 = "余浩瑋";
+	subTitle_2 = "青藝盟盟主";
+	textContent_1 = "05/06(六)09:50~12:00";
+	textContent_1_url = "https://i.ibb.co/B6KNp92/01-1-cafe.png";
+	textContent_2 = "磊山學院";
+	textContent_2_url = "https://linecorp.com/";
+	textContent_3 = "台北市南京東路二段178號10樓";
+	textColor = "#081F58";
+}
+
 // 卡片製作標籤裡面參數預設值
 function writeElementDefaultValues() {
-	document.getElementById("mainTitle_1").placeholder = mainTitle_1;
-	document.getElementById("mainTitle_2").placeholder = mainTitle_2;
-	document.getElementById("subTitle_1").placeholder = subTitle_1;
-	document.getElementById("subTitle_2").placeholder = subTitle_2;
-	document.getElementById("textContent_1").placeholder = textContent_1;
-	document.getElementById("upload_text").textContent = textContent_1_url; // 參數 textContent_1_url 對應 upload_text 元素
-	document.getElementById("textContent_2").placeholder = textContent_2;
-	document.getElementById("textContent_2_url").placeholder = textContent_2_url;
-	document.getElementById("textContent_3").placeholder = textContent_3;
-	document.getElementById("textColor").textContent = textColor;
+	document.getElementById("mainTitle_1").placeholder = CardJsonParams.mainTitle_1;
+	document.getElementById("mainTitle_2").placeholder = CardJsonParams.mainTitle_2;
+	document.getElementById("subTitle_1").placeholder = CardJsonParams.subTitle_1;
+	document.getElementById("subTitle_2").placeholder = CardJsonParams.subTitle_2;
+	document.getElementById("textContent_1").placeholder = CardJsonParams.textContent_1;
+	document.getElementById("upload_text").textContent = CardJsonParams.textContent_1_url; // 參數 textContent_1_url 對應 upload_text 元素
+	document.getElementById("textContent_2").placeholder = CardJsonParams.textContent_2;
+	document.getElementById("textContent_2_url").placeholder = CardJsonParams.textContent_2_url;
+	document.getElementById("textContent_3").placeholder = CardJsonParams.textContent_3;
+	document.getElementById("textColor").textContent = CardJsonParams.textColor;
 }
 
 // flexJson_main 的框 (list可再加入cardJsonPromotional)
@@ -34,13 +39,13 @@ var flexJsonList = [{
 	type: "bubble",
 	hero: {
 		type: "image",
-		url: textContent_1_url,
+		url: CardJsonParams.textContent_1_url,
 		size: "full",
 		aspectRatio: "1:1",
 		aspectMode: "cover",
 		action: {
 			type: "uri",
-			uri: textContent_2_url,
+			uri: CardJsonParams.textContent_2_url,
 		},
 	},
 	body: {
@@ -52,12 +57,12 @@ var flexJsonList = [{
 			{
 				type: "box",
 				layout: "vertical",
-				backgroundColor: textColor,
+				backgroundColor: CardJsonParams.textColor,
 				cornerRadius: "5px",
 				contents: [
 					{
 						type: "text",
-						text: "【" + mainTitle_1 + "】",
+						text: "【" + CardJsonParams.mainTitle_1 + "】",
 						weight: "bold",
 						size: "xl",
 						color: "#FFFFFFFF",
@@ -75,19 +80,19 @@ var flexJsonList = [{
 				contents: [
 					{
 						type: "text",
-						text: subTitle_1,
+						text: CardJsonParams.subTitle_1,
 						weight: "bold",
 						size: "xl",
-						color: textColor,
+						color: CardJsonParams.textColor,
 						flex: 4,
 						gravity: "center",
 						contents: [],
 					},
 					{
 						type: "text",
-						text: subTitle_2,
+						text: CardJsonParams.subTitle_2,
 						weight: "bold",
-						color: textColor,
+						color: CardJsonParams.textColor,
 						flex: 8,
 						gravity: "center",
 						contents: [],
@@ -96,31 +101,31 @@ var flexJsonList = [{
 			},
 			{
 				type: "text",
-				text: mainTitle_2,
+				text: CardJsonParams.mainTitle_2,
 				weight: "regular",
-				color: textColor,
+				color: CardJsonParams.textColor,
 				contents: [],
 			},
 			{
 				type: "text",
-				text: "時間:" + textContent_1,
+				text: "時間:" + CardJsonParams.textContent_1,
 				weight: "regular",
-				color: textColor,
+				color: CardJsonParams.textColor,
 				contents: [],
 			},
 			{
 				type: "text",
-				text: "地點:" + textContent_2,
+				text: "地點:" + CardJsonParams.textContent_2,
 				weight: "regular",
-				color: textColor,
+				color: CardJsonParams.textColor,
 				contents: [],
 			},
 			{
 				type: "text",
-				text: "(" + textContent_3 + ")",
+				text: "(" + CardJsonParams.textContent_3 + ")",
 				weight: "regular",
 				size: "sm",
-				color: textColor,
+				color: CardJsonParams.textColor,
 				contents: [],
 			},
 			{
@@ -146,7 +151,7 @@ var flexJsonList = [{
 								align: "center",
 								action: {
 									type: "uri",
-									uri: "https://liff.line.me/1660908511-Ol7grGPY/?userId=" + encodeURIComponent(userId),
+									uri: "https://liff.line.me/1660908511-Ol7grGPY/?userId=" + encodeURIComponent(userId.userId),
 								},
 								contents: [],
 							},
@@ -177,7 +182,6 @@ var flexJsonList = [{
 				layout: "vertical",
 				action: {
 					type: "uri",
-					// "uri": "https://3428750.so-buy.com/"
 					uri: "https://calendar.google.com/calendar/u/0/r/eventedit?pli=1&uid=62890calndrlink&sf=1&output=xml&dates=20230603T095000/20230603T120000&ctz=Asia/Taipei&text=【磊山+人文講堂】&details=【公益可以不一樣+成為改變的起點】",
 				},
 				position: "absolute",
