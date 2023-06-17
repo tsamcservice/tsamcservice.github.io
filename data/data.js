@@ -8,16 +8,16 @@ var flexJsonMessage, cardJsonPromotional
 class userId { userId }
 // cardJson 裡面參數預設值
 class CardJsonParams {
-	mainTitle_1 = "磊山 人文講堂";
-	mainTitle_2 = "《牽風箏的人》";
-	subTitle_1 = "余浩瑋";
-	subTitle_2 = "青藝盟盟主";
-	textContent_1 = "05/06(六)09:50~12:00";
-	textContent_1_url = "https://i.ibb.co/B6KNp92/01-1-cafe.png";
-	textContent_2 = "磊山學院";
-	textContent_2_url = "https://linecorp.com/";
-	textContent_3 = "台北市南京東路二段178號10樓";
-	textColor = "#081F58";
+	static mainTitle_1 = "磊山 人文講堂";
+	static mainTitle_2 = "《牽風箏的人》";
+	static subTitle_1 = "余浩瑋";
+	static subTitle_2 = "青藝盟盟主";
+	static textContent_1 = "05/06(六)09:50~12:00";
+	static textContent_1_url = "https://i.ibb.co/B6KNp92/01-1-cafe.png";
+	static textContent_2 = "磊山學院";
+	static textContent_2_url = "https://linecorp.com/";
+	static textContent_3 = "台北市南京東路二段178號10樓";
+	static textColor = "#081F58";
 }
 
 // 卡片製作標籤裡面參數預設值
