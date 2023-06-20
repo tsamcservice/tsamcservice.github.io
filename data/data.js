@@ -34,15 +34,19 @@ function createFlexJsonList() {
 	return flexJsonList = [{
 		type: "bubble",
 		hero: {
-			type: "image",
-			url: textContent_1_url,
-			size: "full",
-			aspectRatio: "1:1",
-			aspectMode: "cover",
-			action: {
-				type: "uri",
-				uri: textContent_2_url,
-			},
+			"type": "box",
+			"layout": "vertical",
+			"contents": [{
+				type: "image",
+				url: textContent_1_url,
+				size: "full",
+				aspectRatio: "1:1",
+				aspectMode: "cover",
+				action: {
+					type: "uri",
+					uri: textContent_2_url,
+				},
+			}]
 		},
 		body: {
 			type: "box",
