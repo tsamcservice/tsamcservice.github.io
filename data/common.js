@@ -44,20 +44,6 @@ function my_flexToHtml(flex2htmlElementName, flexJsonList) {
 	document.getElementById(flex2htmlElementName).innerHTML = "";
 	flex2html(flex2htmlElementName, flexJsonMessage);
 
-	// 将錯誤的 ExXxs 替換為正確的 ExXXs
-	var wrongExXxsElements = document.querySelectorAll(".ExXxs");
-	wrongExXxsElements.forEach(function (element) {
-		element.classList.remove("ExXxs");
-		element.classList.add("ExXXs");
-	});
-
-	// 将錯誤的 Ex3xl 替換為正確的 Ex3Xl
-	var wrongEx3xlElements = document.querySelectorAll(".Ex3xl");
-	wrongEx3xlElements.forEach(function (element) {
-		element.classList.remove("Ex3xl");
-		element.classList.add("Ex3Xl");
-	});
-
 	// 將 LySlider 關閉下方捲動軸
 	var wrongLySliderElements = document.querySelectorAll(".LySlider");
 	wrongLySliderElements.forEach(function (element) {
