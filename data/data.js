@@ -32,267 +32,197 @@ function writeElementDefaultValues() {
 // flexJson_main 的框 (list可再加入cardJsonPromotional)
 function createFlexJsonList() {
 	return flexJsonList = [{
-		"type": "bubble",
-		"size": "mega",
-		"direction": "ltr",
-		"hero": {
-			"type": "box",
-			"layout": "vertical",
-			"contents": [
-				{
-					"type": "box",
-					"layout": "horizontal",
-					"contents": [
-						{
-							"url": "https://3428750.so-buy.com/_files/50/3428750/23/06/862f45dba9dfa742.png",
-							"flex": 1,
-							"size": "full",
-							"type": "image",
-							"action": {
-								"type": "uri",
-								"label": "action",
-								"uri": "https://line.me/R/home/public/post?id=665xzprl&postId=1168603399615311352"
-							},
-							"gravity": "center",
-							"aspectMode": "cover",
-							"aspectRatio": "1:1"
-						}
-					]
-				}
-			],
-			"paddingAll": "0px"
+		type: "bubble",
+		hero: {
+			type: "image",
+			url: textContent_1_url,
+			size: "full",
+			aspectRatio: "1:1",
+			aspectMode: "cover",
+			action: {
+				type: "uri",
+				uri: textContent_2_url,
+			},
 		},
-		"body": {
-			"type": "box",
-			"layout": "vertical",
-			"contents": [
+		body: {
+			type: "box",
+			layout: "vertical",
+			position: "relative",
+			height: "355px",
+			contents: [
 				{
-					"type": "box",
-					"layout": "horizontal",
-					"spacing": "none",
-					"contents": [
+					type: "box",
+					layout: "vertical",
+					backgroundColor: textColor,
+					cornerRadius: "5px",
+					contents: [
 						{
-							"size": "lg",
-							"text": "【磊山 人文講堂】",
-							"type": "text",
-							"align": "center",
-							"color": "#ffffff",
-							"style": "normal",
-							"weight": "bold",
-							"position": "relative"
-						}
+							type: "text",
+							text: "【" + mainTitle_1 + "】",
+							weight: "bold",
+							size: "xl",
+							color: "#FFFFFFFF",
+							align: "center",
+							gravity: "center",
+							contents: [],
+						},
 					],
-					"position": "relative",
-					"paddingTop": "3px",
-					"cornerRadius": "sm",
-					"paddingBottom": "3px",
-					"backgroundColor": "#38455F"
 				},
 				{
-					"type": "box",
-					"layout": "vertical",
-					"margin": "10px",
-					"contents": [
+					type: "box",
+					layout: "horizontal",
+					offsetTop: "5px",
+					height: "45px",
+					contents: [
 						{
-							"type": "box",
-							"layout": "horizontal",
-							"spacing": "sm",
-							"contents": [
+							type: "text",
+							text: subTitle_1,
+							weight: "bold",
+							size: "xl",
+							color: textColor,
+							flex: 4,
+							gravity: "center",
+							contents: [],
+						},
+						{
+							type: "text",
+							text: subTitle_2,
+							weight: "bold",
+							color: textColor,
+							flex: 8,
+							gravity: "center",
+							contents: [],
+						},
+					],
+				},
+				{
+					type: "text",
+					text: mainTitle_2,
+					weight: "regular",
+					color: textColor,
+					contents: [],
+				},
+				{
+					type: "text",
+					text: "時間:" + textContent_1,
+					weight: "regular",
+					color: textColor,
+					contents: [],
+				},
+				{
+					type: "text",
+					text: "地點:" + textContent_2,
+					weight: "regular",
+					color: textColor,
+					contents: [],
+				},
+				{
+					type: "text",
+					text: "(" + textContent_3 + ")",
+					weight: "regular",
+					size: "sm",
+					color: textColor,
+					contents: [],
+				},
+				{
+					type: "box",
+					layout: "horizontal",
+					position: "absolute",
+					offsetTop: "200px",
+					offsetStart: "10px",
+					width: "320px",
+					contents: [
+						{
+							type: "box",
+							layout: "vertical",
+							paddingTop: "10px",
+							width: "135px",
+							height: "40px",
+							backgroundColor: "#B5B8BD",
+							contents: [
 								{
-									"flex": 1,
-									"size": "xl",
-									"text": "楊錦聰",
-									"type": "text",
-									"wrap": true,
-									"color": "#38455F",
-									"weight": "bold",
-									"contents": []
+									type: "text",
+									text: "分享給好友",
+									color: "#FFFFFFFF",
+									align: "center",
+									action: {
+										type: "uri",
+										uri: "https://liff.line.me/1660908511-Ol7grGPY/?userId=" + encodeURIComponent(userId),
+									},
+									contents: [],
 								},
-								{
-									"flex": 2,
-									"size": "sm",
-									"text": "風潮音樂創辦人",
-									"type": "text",
-									"align": "start",
-									"color": "#38455F",
-									"gravity": "center"
-								}
-							]
+							],
 						},
 						{
-							"type": "box",
-							"layout": "horizontal",
-							"margin": "sm",
-							"spacing": "xs",
-							"contents": [
+							type: "box",
+							layout: "vertical",
+							offsetStart: "10px",
+							paddingTop: "10px",
+							width: "135px",
+							height: "40px",
+							backgroundColor: "#B5B8BD",
+							contents: [
 								{
-									"size": "md",
-									"text": "日期:07/08(六)",
-									"type": "text",
-									"color": "#38455F",
-									"action": {
-										"uri": "mailto:xx@example.com",
-										"type": "uri",
-										"label": "action"
-									},
-									"margin": "none",
-									"weight": "regular"
-								}
+									type: "text",
+									text: "收藏資訊",
+									color: "#FFFFFFFF",
+									align: "center",
+									contents: [],
+								},
 							],
-							"justifyContent": "center"
 						},
+					],
+				},
+				{
+					type: "box",
+					layout: "vertical",
+					action: {
+						type: "uri",
+						// "uri": "https://3428750.so-buy.com/"
+						uri: "https://calendar.google.com/calendar/u/0/r/eventedit?pli=1&uid=62890calndrlink&sf=1&output=xml&dates=20230603T095000/20230603T120000&ctz=Asia/Taipei&text=【磊山+人文講堂】&details=【公益可以不一樣+成為改變的起點】",
+					},
+					position: "absolute",
+					offsetTop: "250px",
+					offsetStart: "10px",
+					paddingTop: "10px",
+					width: "280px",
+					height: "40px",
+					backgroundColor: "#91AFC2",
+					contents: [
 						{
-							"type": "box",
-							"layout": "horizontal",
-							"margin": "xs",
-							"contents": [
-								{
-									"size": "md",
-									"text": "時間:09:50~12:00",
-									"type": "text",
-									"color": "#38455F",
-									"action": {
-										"uri": "tel:0922000000",
-										"type": "uri",
-										"label": "action"
-									},
-									"gravity": "center"
-								}
-							],
-							"justifyContent": "center"
+							type: "text",
+							text: "設定提醒(google行事曆)",
+							color: "#FFFFFFFF",
+							align: "center",
+							contents: [],
 						},
+					],
+				},
+				{
+					type: "box",
+					layout: "vertical",
+					action: {
+						type: "uri",
+						uri: "https://3428750.so-buy.com/",
+					},
+					position: "absolute",
+					offsetTop: "300px",
+					offsetStart: "10px",
+					paddingTop: "10px",
+					width: "280px",
+					height: "40px",
+					backgroundColor: "#91AFC2",
+					contents: [
 						{
-							"type": "box",
-							"layout": "vertical",
-							"margin": "xs",
-							"contents": [
-								{
-									"size": "sm",
-									"text": "地點:磊山學院101教室 (台北市中山區南京東路二段178號10樓)",
-									"type": "text",
-									"wrap": true,
-									"color": "#38455F",
-									"action": {
-										"uri": "https://lihi3.cc/0MnY5",
-										"type": "uri",
-										"label": "action"
-									},
-									"gravity": "center"
-								}
-							],
-							"justifyContent": "center"
-						}
-					]
-				}
+							type: "text",
+							text: "製作美美的卡片✨",
+							color: "#FFFFFFFF",
+							align: "center",
+							contents: [],
+						},
+					],
+				},
 			],
-			"paddingAll": "20px"
 		},
-		"footer": {
-			"type": "box",
-			"layout": "vertical",
-			"contents": [
-				{
-					"type": "box",
-					"height": "40px",
-					"layout": "horizontal",
-					"margin": "none",
-					"spacing": "none",
-					"contents": [
-						{
-							"type": "box",
-							"layout": "horizontal",
-							"contents": [
-								{
-									"type": "button",
-									"color": "#fffffF",
-									"style": "link",
-									"action": {
-										"uri": "https://www",
-										"type": "uri",
-										"label": "分享給好友"
-									},
-									"gravity": "center"
-								}
-							],
-							"alignItems": "center",
-							"justifyContent": "center",
-							"backgroundColor": "#A3ABB6"
-						},
-						{
-							"type": "separator",
-							"color": "#ffffff",
-							"margin": "10px"
-						},
-						{
-							"type": "box",
-							"layout": "horizontal",
-							"contents": [
-								{
-									"type": "button",
-									"color": "#fffffF",
-									"style": "link",
-									"action": {
-										"uri": "https://lihi3.cc/iNKGu",
-										"type": "uri",
-										"label": "呈璽官LINE"
-									},
-									"gravity": "center"
-								}
-							],
-							"alignItems": "center",
-							"cornerRadius": "none",
-							"justifyContent": "center",
-							"backgroundColor": "#A3ABB6"
-						}
-					],
-					"offsetBottom": "none",
-					"paddingBottom": "none"
-				},
-				{
-					"type": "box",
-					"height": "40px",
-					"layout": "horizontal",
-					"margin": "10px",
-					"contents": [
-						{
-							"type": "button",
-							"color": "#ffffff",
-							"style": "link",
-							"action": {
-								"uri": "https://lihi3.cc/uU8Q5",
-								"type": "uri",
-								"label": "設立提醒(google行事曆)"
-							},
-							"gravity": "center"
-						}
-					],
-					"alignItems": "center",
-					"justifyContent": "center",
-					"backgroundColor": "#85A4B8"
-				},
-				{
-					"type": "box",
-					"height": "40px",
-					"layout": "horizontal",
-					"margin": "10px",
-					"contents": [
-						{
-							"type": "button",
-							"color": "#ffffff",
-							"style": "link",
-							"action": {
-								"uri": "https://3428750.so-buy.com/",
-								"type": "uri",
-								"label": "✨製作美美的卡片✨"
-							},
-							"gravity": "center"
-						}
-					],
-					"alignItems": "center",
-					"justifyContent": "center",
-					"backgroundColor": "#86B8B1"
-				}
-			]
-		}
 	}];
 }
