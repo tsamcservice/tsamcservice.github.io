@@ -95,6 +95,12 @@
 						if (responseData.status === "ok") {
 							const data_card = JSON.parse(responseData.card);
 							createFlex(data_card);
+							// 送出提醒框 (彈跳視窗)
+							Swal.fire({
+								text: "請勿封鎖彈跳視窗",
+								timer: 800,
+								showConfirmButton: false
+							});
 							liff
 								.shareTargetPicker([flexJsonMessage])
 								.then(async function (res) {

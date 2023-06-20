@@ -292,6 +292,12 @@
 
 			// 分享line按钮的點擊事件
 			function shareButtonLine() {
+				// 送出提醒框 (彈跳視窗)
+				Swal.fire({
+					text: "請勿封鎖彈跳視窗",
+					timer: 800,
+					showConfirmButton: false
+				});
 				liff
 					.shareTargetPicker([flexJsonMessage])
 					.then(async function (res) {
