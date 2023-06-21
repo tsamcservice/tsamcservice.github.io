@@ -11,8 +11,8 @@
 	<script src="../data/data.js"></script>
 	<link rel="stylesheet" type="text/css" href="../data/styles.css">
 	<!-- flex2html -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/PamornT/flex2html/css/flex2html.css" />
-	<script src="https://cdn.jsdelivr.net/gh/PamornT/flex2html/js/flex2html.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/PamornT/flex2html@main/css/flex2html.css" />
+	<script src="https://cdn.jsdelivr.net/gh/PamornT/flex2html@main/js/flex2html.js"></script>
 	<!-- liff -->
 	<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
 	<!-- 提示框 -->
@@ -247,47 +247,47 @@
 			// 網頁載入完後值行
 			window.onload = function () {
 				document.querySelector(".hiddenForward").classList.add("hidden");
-				document.getElementById('loader').style.display = 'flex';
+				// document.getElementById('loader').style.display = 'flex';
 				// 寫入卡片製作標籤裡面參數預設值 (在data.js)
 				writeElementDefaultValues()
 				// 登入line並取得個人資料
-				liff.init({ liffId: "1660908511-DERZWN3m" })
-					.then(() => {
-						if (!liff.isLoggedIn()) {
-							liff.login();
-						}
-						else {
-							liff.getProfile()
-								.then(async function (profile) {
-									// 取得 google sheet 個人資料顯示在頁面 (若為首次登入則 google sheet 建立新資料)
-									userId = profile.userId
-									var responseData = await sendRequest("get", userId)
-									if (responseData.status != "first") {
-										const dataCard = JSON.parse(responseData.card);
-										writeShowCardData(dataCard)
-									} else { sendRequest("save", userId, readShowCardData()); }
+				// liff.init({ liffId: "1660908511-DERZWN3m" })
+				// 	.then(() => {
+				// 		if (!liff.isLoggedIn()) {
+				// 			liff.login();
+				// 		}
+				// 		else {
+				// 			liff.getProfile()
+				// 				.then(async function (profile) {
+				// 					// 取得 google sheet 個人資料顯示在頁面 (若為首次登入則 google sheet 建立新資料)
+				// 					userId = profile.userId
+				// 					var responseData = await sendRequest("get", userId)
+				// 					if (responseData.status != "first") {
+				// 						const dataCard = JSON.parse(responseData.card);
+				// 						writeShowCardData(dataCard)
+				// 					} else { sendRequest("save", userId, readShowCardData()); }
 
-									// 宣傳卡片 cardJsonPromotional 讀取並寫入顯示在頁面
-									cardJsonPromotional = responseData.cardJsonPromotional
-									for (var i = 0; i < cardJsonPromotional.length; i++) {
-										var tempHtml = `
-											<div class="card promotionalCard" onclick="this.classList.toggle('selected')">
-												<div class="chatbox" style="pointer-events: none;">
-													<div id="flex2htmlPromotional${i}"></div>
-												</div>
-											</div>`;
+				// 					// 宣傳卡片 cardJsonPromotional 讀取並寫入顯示在頁面
+				// 					cardJsonPromotional = responseData.cardJsonPromotional
+				// 					for (var i = 0; i < cardJsonPromotional.length; i++) {
+				// 						var tempHtml = `
+				// 							<div class="card promotionalCard" onclick="this.classList.toggle('selected')">
+				// 								<div class="chatbox" style="pointer-events: none;">
+				// 									<div id="flex2htmlPromotional${i}"></div>
+				// 								</div>
+				// 							</div>`;
 
-										// 把卡片元素 html 加寫入到 slider
-										document.getElementById("slider").innerHTML += tempHtml;
-										my_flexToHtml("flex2htmlPromotional" + i, [JSON.parse(cardJsonPromotional[i])])
-									}
-									document.getElementById('loader').style.display = 'none';
-								})
-								.catch(function (error) {
-									alert("取得使用者資料錯誤\n" + error);
-								});
-						}
-					});
+				// 						// 把卡片元素 html 加寫入到 slider
+				// 						document.getElementById("slider").innerHTML += tempHtml;
+				// 						my_flexToHtml("flex2htmlPromotional" + i, [JSON.parse(cardJsonPromotional[i])])
+				// 					}
+				// 					document.getElementById('loader').style.display = 'none';
+				// 				})
+				// 				.catch(function (error) {
+				// 					alert("取得使用者資料錯誤\n" + error);
+				// 				});
+				// 		}
+				// 	});
 			};
 
 			// 分享line按钮的點擊事件
