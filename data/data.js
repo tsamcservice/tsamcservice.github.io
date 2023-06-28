@@ -31,7 +31,7 @@ function writeElementDefaultValues() {
 
 // flexJson_main 的框 (list可再加入cardJsonPromotional)
 function createFlexJsonList() {
-	i=4
+	i=5
 	alert(i)
 	flexJsonList = flexJsonList.replace(/A{3,}/g, mainTitle_1);
 	flexJsonList = flexJsonList.replace(/textColor/g, textColor);
@@ -46,8 +46,8 @@ function createFlexJsonList() {
 	alert(i)
 	alert(JSON.stringify(flexJsonList))
 	alert(i)
-	alert([JSON.parse(flexJsonList)])
-	return [JSON.parse(flexJsonList)]
+	alert(flexJsonList)
+	return [flexJsonList]
 }
 
 
