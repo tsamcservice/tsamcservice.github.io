@@ -41,7 +41,7 @@ function createFlexJsonList() {
 	// flexJsonList = flexJsonList.replace(/textContent_2_url/g, '"' + textContent_2_url + '"');
 	// flexJsonList = flexJsonList.replace(/textContent_2/g, '"' + textContent_2 + '"');
 	// flexJsonList = flexJsonList.replace(/textContent_3/g, '"' + textContent_3 + '"');
-	flexJsonList = flexJsonList.replace(/S{3,}/g, '"' + "https://liff.line.me/1660908511-Ol7grGPY/?userId=" + encodeURIComponent(userId) + '"');
+	flexJsonList = flexJsonList.replace(/S{3,}/g, "https://liff.line.me/1660908511-Ol7grGPY/?userId=" + encodeURIComponent(userId) );
 	document.getElementById("test").innerHTML = flexJsonList
 	return [JSON.parse(flexJsonList)]
 }
