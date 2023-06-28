@@ -31,29 +31,17 @@ function writeElementDefaultValues() {
 
 // flexJson_main 的框 (list可再加入cardJsonPromotional)
 function createFlexJsonList() {
-	i=7
-	alert(i)
-	flexJsonList = flexJsonList.replace(/A{3,}/g, mainTitle_1);
-	flexJsonList = flexJsonList.replace(/textColor/g, textColor);
-	flexJsonList = flexJsonList.replace(/mainTitle_2/g, mainTitle_2);
-	flexJsonList = flexJsonList.replace(/subTitle_1/g, subTitle_1);
-	flexJsonList = flexJsonList.replace(/subTitle_2/g, subTitle_2);
-	flexJsonList = flexJsonList.replace(/textContent_1_url/g, textContent_1_url);
-	flexJsonList = flexJsonList.replace(/textContent_1/g, textContent_1);
-	flexJsonList = flexJsonList.replace(/textContent_2_url/g, textContent_2_url);
-	flexJsonList = flexJsonList.replace(/textContent_2/g, textContent_2);
-	flexJsonList = flexJsonList.replace(/textContent_3/g, textContent_3);
-	alert(i)
-	alert(JSON.stringify(flexJsonList))
-	alert(flexJsonList)
-	alert(typeof flexJsonList)
-	alert(i)
-	alert(JSON.parse(JSON.stringify(flexJsonList)))
-	alert(typeof JSON.parse(JSON.stringify(flexJsonList)))
-	alert(i)
-	alert(JSON.parse(flexJsonList))
-	alert(typeof JSON.parse(flexJsonList))
-	return [JSON.parse(JSON.stringify(flexJsonList))]
+	// flexJsonList = flexJsonList.replace(/A{3,}/g, mainTitle_1);
+	// flexJsonList = flexJsonList.replace(/textColor/g, textColor);
+	// flexJsonList = flexJsonList.replace(/mainTitle_2/g, mainTitle_2);
+	// flexJsonList = flexJsonList.replace(/subTitle_1/g, subTitle_1);
+	// flexJsonList = flexJsonList.replace(/subTitle_2/g, subTitle_2);
+	// flexJsonList = flexJsonList.replace(/textContent_1_url/g, textContent_1_url);
+	// flexJsonList = flexJsonList.replace(/textContent_1/g, textContent_1);
+	// flexJsonList = flexJsonList.replace(/textContent_2_url/g, textContent_2_url);
+	// flexJsonList = flexJsonList.replace(/textContent_2/g, textContent_2);
+	// flexJsonList = flexJsonList.replace(/textContent_3/g, textContent_3);
+	return [JSON.parse(flexJsonList)]
 }
 
 
