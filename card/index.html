@@ -268,7 +268,7 @@
 									} else { sendRequest("save", userId, readShowCardData()); }
 
 									// 會員卡片 cardJson[0] 讀取並紀錄存下
-									flexJsonList = responseData.cardJson[1]
+									flexJsonList = responseData.cardJson[0]
 									// 宣傳卡片 cardJson[1:] 讀取並寫入顯示在頁面
 									cardJson = responseData.cardJson
 									for (var i = 1; i < cardJson.length; i++) {
