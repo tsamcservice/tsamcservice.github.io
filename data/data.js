@@ -35,10 +35,13 @@ function createFlexJsonList() {
 	 alert(typeof flexJsonList)
 	//  flexJsonList=JSON.stringify(flexJsonList)
 	 flexJsonList.replace(/A{3,}/g, mainTitle_1);
+	 flexJsonList.replace("textColor", textColor);
 	 alert(flexJsonList)
 	 alert(typeof flexJsonList)
 	 alert(JSON.parse(flexJsonList))
 	 alert(typeof JSON.parse(flexJsonList))
+	 alert(JSON.parse((JSON.parse(flexJsonList))))
+	 alert(typeof JSON.parse(JSON.parse(flexJsonList)))
 	 return JSON.parse(flexJsonList)
 }
 
