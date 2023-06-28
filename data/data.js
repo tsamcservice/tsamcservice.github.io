@@ -30,221 +30,225 @@ function writeElementDefaultValues() {
 }
 
 // flexJson_main 的框 (list可再加入cardJsonPromotional)
-// function createFlexJsonList() {
-// 	flexJsonList = flexJsonList.replace(/A{3,}/g, mainTitle_1);
-// 	flexJsonList = flexJsonList.replace("textColor", textColor);
-// 	flexJsonList = flexJsonList.replace("mainTitle_2", mainTitle_2);
-// 	flexJsonList = flexJsonList.replace("subTitle_1", subTitle_1);
-// 	flexJsonList = flexJsonList.replace("subTitle_2", subTitle_2);
-// 	flexJsonList = flexJsonList.replace("textContent_1", textContent_1);
-// 	flexJsonList = flexJsonList.replace("textContent_1_url", textContent_1_url);
-// 	flexJsonList = flexJsonList.replace("textContent_2", textContent_2);
-// 	flexJsonList = flexJsonList.replace("textContent_2_url", textContent_2_url);
-// 	flexJsonList = flexJsonList.replace("textContent_3", textContent_3);
-// 	return [JSON.parse(flexJsonList)]
-// }
+function createFlexJsonList() {
+	alert(1)
+	alert(flexJsonList)
+	flexJsonList = flexJsonList.replace("box", mainTitle_1);
+	alert(flexJsonList)
+	flexJsonList = flexJsonList.replace(/A{3,}/g, mainTitle_1);
+	flexJsonList = flexJsonList.replace("textColor", textColor);
+	flexJsonList = flexJsonList.replace("mainTitle_2", mainTitle_2);
+	flexJsonList = flexJsonList.replace("subTitle_1", subTitle_1);
+	flexJsonList = flexJsonList.replace("subTitle_2", subTitle_2);
+	flexJsonList = flexJsonList.replace("textContent_1", textContent_1);
+	flexJsonList = flexJsonList.replace("textContent_1_url", textContent_1_url);
+	flexJsonList = flexJsonList.replace("textContent_2", textContent_2);
+	flexJsonList = flexJsonList.replace("textContent_2_url", textContent_2_url);
+	flexJsonList = flexJsonList.replace("textContent_3", textContent_3);
+	return [JSON.parse(flexJsonList)]
+}
 
 
 // flexJson_main 的框 (list可再加入cardJsonPromotional)
-function createFlexJsonList() {
-	return flexJsonList = [{
-		type: "bubble",
-		hero: {
-			type: "box",
-			layout: "vertical",
-			contents: [
-				{
-					type: "image",
-					url: textContent_1_url,
-					aspectRatio: "1:1",
-					aspectMode: "cover",
-					size: "full",
-					action: {
-						type: "uri",
-						uri: textContent_2_url,
-					}
-				}
-			]
-		},
-		body: {
-			type: "box",
-			layout: "vertical",
-			position: "relative",
-			height: "355px",
-			contents: [
-				{
-					type: "box",
-					layout: "vertical",
-					backgroundColor: textColor,
-					cornerRadius: "5px",
-					contents: [
-						{
-							type: "text",
-							text: "【" + mainTitle_1 + "】",
-							weight: "bold",
-							size: "xl",
-							color: "#FFFFFFFF",
-							align: "center",
-							gravity: "center",
-							contents: [],
-						},
-					],
-				},
-				{
-					type: "box",
-					layout: "horizontal",
-					offsetTop: "5px",
-					height: "45px",
-					contents: [
-						{
-							type: "text",
-							text: subTitle_1,
-							weight: "bold",
-							size: "xl",
-							color: textColor,
-							flex: 4,
-							gravity: "center",
-							contents: [],
-						},
-						{
-							type: "text",
-							text: subTitle_2,
-							weight: "bold",
-							color: textColor,
-							flex: 8,
-							gravity: "center",
-							contents: [],
-						},
-					],
-				},
-				{
-					type: "text",
-					text: mainTitle_2,
-					weight: "regular",
-					color: textColor,
-					contents: [],
-				},
-				{
-					type: "text",
-					text: "時間:" + textContent_1,
-					weight: "regular",
-					color: textColor,
-					contents: [],
-				},
-				{
-					type: "text",
-					text: "地點:" + textContent_2,
-					weight: "regular",
-					color: textColor,
-					contents: [],
-				},
-				{
-					type: "text",
-					text: "(" + textContent_3 + ")",
-					weight: "regular",
-					size: "sm",
-					color: textColor,
-					contents: [],
-				},
-				{
-					type: "box",
-					layout: "horizontal",
-					position: "absolute",
-					offsetTop: "200px",
-					offsetStart: "10px",
-					width: "320px",
-					contents: [
-						{
-							type: "box",
-							layout: "vertical",
-							paddingTop: "10px",
-							width: "135px",
-							height: "40px",
-							backgroundColor: "#B5B8BD",
-							contents: [
-								{
-									type: "text",
-									text: "分享給好友",
-									color: "#FFFFFFFF",
-									align: "center",
-									action: {
-										type: "uri",
-										uri: "https://liff.line.me/1660908511-Ol7grGPY/?userId=" + encodeURIComponent(userId),
-									},
-									contents: [],
-								},
-							],
-						},
-						{
-							type: "box",
-							layout: "vertical",
-							offsetStart: "10px",
-							paddingTop: "10px",
-							width: "135px",
-							height: "40px",
-							backgroundColor: "#B5B8BD",
-							contents: [
-								{
-									type: "text",
-									text: "收藏資訊",
-									color: "#FFFFFFFF",
-									align: "center",
-									contents: [],
-								},
-							],
-						},
-					],
-				},
-				{
-					type: "box",
-					layout: "vertical",
-					action: {
-						type: "uri",
-						// "uri": "https://3428750.so-buy.com/"
-						uri: "https://calendar.google.com/calendar/u/0/r/eventedit?pli=1&uid=62890calndrlink&sf=1&output=xml&dates=20230603T095000/20230603T120000&ctz=Asia/Taipei&text=【磊山+人文講堂】&details=【公益可以不一樣+成為改變的起點】",
-					},
-					position: "absolute",
-					offsetTop: "250px",
-					offsetStart: "10px",
-					paddingTop: "10px",
-					width: "280px",
-					height: "40px",
-					backgroundColor: "#91AFC2",
-					contents: [
-						{
-							type: "text",
-							text: "設定提醒(google行事曆)",
-							color: "#FFFFFFFF",
-							align: "center",
-							contents: [],
-						},
-					],
-				},
-				{
-					type: "box",
-					layout: "vertical",
-					action: {
-						type: "uri",
-						uri: "https://3428750.so-buy.com/",
-					},
-					position: "absolute",
-					offsetTop: "300px",
-					offsetStart: "10px",
-					paddingTop: "10px",
-					width: "280px",
-					height: "40px",
-					backgroundColor: "#91AFC2",
-					contents: [
-						{
-							type: "text",
-							text: "製作美美的卡片✨",
-							color: "#FFFFFFFF",
-							align: "center",
-							contents: [],
-						},
-					],
-				},
-			],
-		},
-	}];
-}
+// function createFlexJsonList() {
+// 	return flexJsonList = [{
+// 		type: "bubble",
+// 		hero: {
+// 			type: "box",
+// 			layout: "vertical",
+// 			contents: [
+// 				{
+// 					type: "image",
+// 					url: textContent_1_url,
+// 					aspectRatio: "1:1",
+// 					aspectMode: "cover",
+// 					size: "full",
+// 					action: {
+// 						type: "uri",
+// 						uri: textContent_2_url,
+// 					}
+// 				}
+// 			]
+// 		},
+// 		body: {
+// 			type: "box",
+// 			layout: "vertical",
+// 			position: "relative",
+// 			height: "355px",
+// 			contents: [
+// 				{
+// 					type: "box",
+// 					layout: "vertical",
+// 					backgroundColor: textColor,
+// 					cornerRadius: "5px",
+// 					contents: [
+// 						{
+// 							type: "text",
+// 							text: "【" + mainTitle_1 + "】",
+// 							weight: "bold",
+// 							size: "xl",
+// 							color: "#FFFFFFFF",
+// 							align: "center",
+// 							gravity: "center",
+// 							contents: [],
+// 						},
+// 					],
+// 				},
+// 				{
+// 					type: "box",
+// 					layout: "horizontal",
+// 					offsetTop: "5px",
+// 					height: "45px",
+// 					contents: [
+// 						{
+// 							type: "text",
+// 							text: subTitle_1,
+// 							weight: "bold",
+// 							size: "xl",
+// 							color: textColor,
+// 							flex: 4,
+// 							gravity: "center",
+// 							contents: [],
+// 						},
+// 						{
+// 							type: "text",
+// 							text: subTitle_2,
+// 							weight: "bold",
+// 							color: textColor,
+// 							flex: 8,
+// 							gravity: "center",
+// 							contents: [],
+// 						},
+// 					],
+// 				},
+// 				{
+// 					type: "text",
+// 					text: mainTitle_2,
+// 					weight: "regular",
+// 					color: textColor,
+// 					contents: [],
+// 				},
+// 				{
+// 					type: "text",
+// 					text: "時間:" + textContent_1,
+// 					weight: "regular",
+// 					color: textColor,
+// 					contents: [],
+// 				},
+// 				{
+// 					type: "text",
+// 					text: "地點:" + textContent_2,
+// 					weight: "regular",
+// 					color: textColor,
+// 					contents: [],
+// 				},
+// 				{
+// 					type: "text",
+// 					text: "(" + textContent_3 + ")",
+// 					weight: "regular",
+// 					size: "sm",
+// 					color: textColor,
+// 					contents: [],
+// 				},
+// 				{
+// 					type: "box",
+// 					layout: "horizontal",
+// 					position: "absolute",
+// 					offsetTop: "200px",
+// 					offsetStart: "10px",
+// 					width: "320px",
+// 					contents: [
+// 						{
+// 							type: "box",
+// 							layout: "vertical",
+// 							paddingTop: "10px",
+// 							width: "135px",
+// 							height: "40px",
+// 							backgroundColor: "#B5B8BD",
+// 							contents: [
+// 								{
+// 									type: "text",
+// 									text: "分享給好友",
+// 									color: "#FFFFFFFF",
+// 									align: "center",
+// 									action: {
+// 										type: "uri",
+// 										uri: "https://liff.line.me/1660908511-Ol7grGPY/?userId=" + encodeURIComponent(userId),
+// 									},
+// 									contents: [],
+// 								},
+// 							],
+// 						},
+// 						{
+// 							type: "box",
+// 							layout: "vertical",
+// 							offsetStart: "10px",
+// 							paddingTop: "10px",
+// 							width: "135px",
+// 							height: "40px",
+// 							backgroundColor: "#B5B8BD",
+// 							contents: [
+// 								{
+// 									type: "text",
+// 									text: "收藏資訊",
+// 									color: "#FFFFFFFF",
+// 									align: "center",
+// 									contents: [],
+// 								},
+// 							],
+// 						},
+// 					],
+// 				},
+// 				{
+// 					type: "box",
+// 					layout: "vertical",
+// 					action: {
+// 						type: "uri",
+// 						// "uri": "https://3428750.so-buy.com/"
+// 						uri: "https://calendar.google.com/calendar/u/0/r/eventedit?pli=1&uid=62890calndrlink&sf=1&output=xml&dates=20230603T095000/20230603T120000&ctz=Asia/Taipei&text=【磊山+人文講堂】&details=【公益可以不一樣+成為改變的起點】",
+// 					},
+// 					position: "absolute",
+// 					offsetTop: "250px",
+// 					offsetStart: "10px",
+// 					paddingTop: "10px",
+// 					width: "280px",
+// 					height: "40px",
+// 					backgroundColor: "#91AFC2",
+// 					contents: [
+// 						{
+// 							type: "text",
+// 							text: "設定提醒(google行事曆)",
+// 							color: "#FFFFFFFF",
+// 							align: "center",
+// 							contents: [],
+// 						},
+// 					],
+// 				},
+// 				{
+// 					type: "box",
+// 					layout: "vertical",
+// 					action: {
+// 						type: "uri",
+// 						uri: "https://3428750.so-buy.com/",
+// 					},
+// 					position: "absolute",
+// 					offsetTop: "300px",
+// 					offsetStart: "10px",
+// 					paddingTop: "10px",
+// 					width: "280px",
+// 					height: "40px",
+// 					backgroundColor: "#91AFC2",
+// 					contents: [
+// 						{
+// 							type: "text",
+// 							text: "製作美美的卡片✨",
+// 							color: "#FFFFFFFF",
+// 							align: "center",
+// 							contents: [],
+// 						},
+// 					],
+// 				},
+// 			],
+// 		},
+// 	}];
+// }
