@@ -42,6 +42,5 @@ function createFlexJsonList() {
 	// flexJsonList = flexJsonList.replace(/textContent_2/g, '"' + textContent_2 + '"');
 	// flexJsonList = flexJsonList.replace(/textContent_3/g, '"' + textContent_3 + '"');
 	flexJsonList = flexJsonList.replace(/S{3,}/g, "https://liff.line.me/2000001236-Vzj8RRW9/?userId=" + encodeURIComponent(userId) );
-	document.getElementById("test").innerHTML = flexJsonList
 	return [JSON.parse(flexJsonList)]
 }
