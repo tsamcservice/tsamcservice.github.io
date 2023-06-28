@@ -31,7 +31,7 @@ function writeElementDefaultValues() {
 
 // flexJson_main 的框 (list可再加入cardJsonPromotional)
 function createFlexJsonList() {
-	// flexJsonList = flexJsonList.replace(/A{3,}/g, '"' + mainTitle_1 + '"');
+	flexJsonList = flexJsonList.replace(/A{3,}/g, '"' + mainTitle_1 + '"');
 	// flexJsonList = flexJsonList.replace(/textColor/g, '"' + textColor + '"');
 	// flexJsonList = flexJsonList.replace(/mainTitle_2/g, '"' + mainTitle_2 + '"');
 	// flexJsonList = flexJsonList.replace(/subTitle_1/g, '"' + subTitle_1 + '"');
