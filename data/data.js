@@ -44,7 +44,11 @@ function createFlexJsonList() {
 	flexJsonList = flexJsonList.replace(/textContent_2_url/g, textContent_2_url);
 	flexJsonList = flexJsonList.replace(/textContent_2/g, textContent_2);
 	flexJsonList = flexJsonList.replace(/textContent_3/g, textContent_3);
+	alert(1)
 	alert(flexJsonList)
+	alert(typeof flexJsonList)
+	alert(JSON.stringify(flexJsonList))
+	alert(2)
 	alert(JSON.parse(flexJsonList))
 	return [JSON.parse(flexJsonList)]
 }
