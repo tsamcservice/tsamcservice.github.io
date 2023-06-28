@@ -31,19 +31,16 @@ function writeElementDefaultValues() {
 
 // flexJson_main 的框 (list可再加入cardJsonPromotional)
 function createFlexJsonList() {
-	alert(flexJsonList)
-	alert(typeof flexJsonList)
-	alert(JSON.parse(flexJsonList))
-	alert(typeof JSON.parse(flexJsonList))
 	flexJsonList = flexJsonList.replace(/A{3,}/g, mainTitle_1);
 	flexJsonList = flexJsonList.replace("textColor", textColor);
+	flexJsonList = flexJsonList.replace("mainTitle_2", mainTitle_2);
+	flexJsonList = flexJsonList.replace("subTitle_1", subTitle_1);
+	flexJsonList = flexJsonList.replace("subTitle_2", subTitle_2);
+	flexJsonList = flexJsonList.replace("textContent_1", textContent_1);
 	flexJsonList = flexJsonList.replace("textContent_1_url", textContent_1_url);
-	alert(flexJsonList)
-	alert(typeof flexJsonList)
-	// alert(JSON.parse(flexJsonList))
-	alert(typeof JSON.parse(flexJsonList))
-	// alert(JSON.parse((JSON.parse(flexJsonList))))
-	alert(typeof JSON.parse(JSON.parse(flexJsonList)))
+	flexJsonList = flexJsonList.replace("textContent_2", textContent_2);
+	flexJsonList = flexJsonList.replace("textContent_2_url", textContent_2_url);
+	flexJsonList = flexJsonList.replace("textContent_3", textContent_3);
 	return [JSON.parse(flexJsonList)]
 }
 
