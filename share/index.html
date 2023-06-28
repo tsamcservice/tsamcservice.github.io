@@ -94,6 +94,9 @@
 						var responseData = await sendRequest("get", userId);
 						if (responseData.status === "ok") {
 							const data_card = JSON.parse(responseData.card);
+							// 會員卡片 cardJson[0] 讀取並紀錄存下 (flexJsonList框已在data.js)
+							flexJsonList = JSON.parse(responseData.cardJson[0])
+							// 會員卡片 參數寫入
 							createFlex(data_card);
 							// 送出提醒框 (彈跳視窗)
 							Swal.fire({

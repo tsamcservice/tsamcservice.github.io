@@ -238,7 +238,7 @@
 				var selectedElements = document.querySelectorAll(".card.promotionalCard.selected [id^='flex2htmlPromotional']");
 				selectedElements.forEach(function (tempElement) {
 					var selectedElementsIdNumer = parseInt(tempElement.id.replace("flex2htmlPromotional", ""));
-					flexJsonList.push(JSON.parse(cardJsonPromotional[selectedElementsIdNumer]))
+					flexJsonList.push(JSON.parse(cardJson[selectedElementsIdNumer]))
 				});
 				// 將 flexJson 繪出到 HTML 上 (flexJsonList框已在data.js)
 				my_flexToHtml("flex2html_main", flexJsonList);
@@ -267,9 +267,11 @@
 										writeShowCardData(dataCard)
 									} else { sendRequest("save", userId, readShowCardData()); }
 
-									// 宣傳卡片 cardJsonPromotional 讀取並寫入顯示在頁面
-									cardJsonPromotional = responseData.cardJsonPromotional
-									for (var i = 0; i < cardJsonPromotional.length; i++) {
+									// 會員卡片 cardJson[0] 讀取並紀錄存下
+									flexJsonList = JSON.parse(responseData.cardJson[0])
+									// 宣傳卡片 cardJson[1:] 讀取並寫入顯示在頁面
+									cardJson = responseData.cardJson
+									for (var i = 1; i < cardJson.length; i++) {
 										var tempHtml = `
 											<div class="card promotionalCard" onclick="this.classList.toggle('selected')">
 												<div class="chatbox" style="pointer-events: none;">
@@ -279,7 +281,7 @@
 
 										// 把卡片元素 html 加寫入到 slider
 										document.getElementById("slider").innerHTML += tempHtml;
-										my_flexToHtml("flex2htmlPromotional" + i, [JSON.parse(cardJsonPromotional[i])])
+										my_flexToHtml("flex2htmlPromotional" + i, [JSON.parse(cardJson[i])])
 									}
 									document.getElementById('loader').style.display = 'none';
 								})
