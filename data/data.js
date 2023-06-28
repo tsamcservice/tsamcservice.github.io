@@ -47,9 +47,12 @@ function createFlexJsonList() {
 	alert(JSON.stringify(flexJsonList))
 	alert(i)
 	alert(flexJsonList)
+	alert(typeof flexJsonList)
 	alert(JSON.parse(JSON.stringify(flexJsonList)))
+	alert(typeof JSON.parse(JSON.stringify(flexJsonList)))
 	alert(JSON.parse(flexJsonList))
-	return [flexJsonList]
+	alert(typeof JSON.parse(flexJsonList))
+	return [JSON.parse(JSON.stringify(flexJsonList))]
 }
 
 
