@@ -49,6 +49,7 @@ function createFlexJsonList() {
 	alert(typeof flexJsonList)
 	alert(JSON.stringify(flexJsonList))
 	alert(2)
+	document.getElementById("test").innerHTML=flexJsonList
 	alert(JSON.parse(flexJsonList))
 	return [JSON.parse(flexJsonList)]
 }
