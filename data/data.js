@@ -38,15 +38,15 @@ function createFlexJsonList() {
 	flexJsonList = flexJsonList.replace(/mainTitle_2/g, mainTitle_2);
 	flexJsonList = flexJsonList.replace(/subTitle_1/g, subTitle_1);
 	flexJsonList = flexJsonList.replace(/subTitle_2/g, subTitle_2);
-	flexJsonList = flexJsonList.replace(/textContent_1/g, textContent_1);
 	flexJsonList = flexJsonList.replace(/textContent_1_url/g, textContent_1_url);
-	flexJsonList = flexJsonList.replace(/textContent_2/g, textContent_2);
+	flexJsonList = flexJsonList.replace(/textContent_1/g, textContent_1);
 	flexJsonList = flexJsonList.replace(/textContent_2_url/g, textContent_2_url);
+	flexJsonList = flexJsonList.replace(/textContent_2/g, textContent_2);
 	flexJsonList = flexJsonList.replace(/textContent_3/g, textContent_3);
 	alert(i)
 	alert(JSON.stringify(flexJsonList))
 	alert(i)
-	alert(JSON.parse(flexJsonList))
+	alert([JSON.parse(flexJsonList)])
 	return [JSON.parse(flexJsonList)]
 }
 
