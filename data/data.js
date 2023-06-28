@@ -33,9 +33,10 @@ function writeElementDefaultValues() {
 function createFlexJsonList() {
 	 alert(flexJsonList)
 	 alert(typeof flexJsonList)
-	 flexJsonList=JSON.stringify(flexJsonList)
-	 alert(flexJsonList)
+	//  flexJsonList=JSON.stringify(flexJsonList)
 	 flexJsonList.replace(/A{3,}/g, mainTitle_1);
+	 alert(flexJsonList)
+	 alert(typeof flexJsonList)
 	 alert(JSON.parse(flexJsonList))
 	 alert(typeof JSON.parse(flexJsonList))
 	 return JSON.parse(flexJsonList)
