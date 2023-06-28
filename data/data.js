@@ -31,9 +31,6 @@ function writeElementDefaultValues() {
 
 // flexJson_main 的框 (list可再加入cardJsonPromotional)
 function createFlexJsonList() {
-	alert(flexJsonList)
-	alert(typeof flexJsonList)
-	alert(JSON.stringify(flexJsonList))
 	flexJsonList = flexJsonList.replace(/A{3,}/g, mainTitle_1);
 	flexJsonList = flexJsonList.replace(/textColor/g, textColor);
 	flexJsonList = flexJsonList.replace(/mainTitle_2/g, mainTitle_2);
@@ -45,5 +42,6 @@ function createFlexJsonList() {
 	flexJsonList = flexJsonList.replace(/textContent_2/g, textContent_2);
 	flexJsonList = flexJsonList.replace(/textContent_3/g, textContent_3);
 	flexJsonList = flexJsonList.replace(/S{3,}/g, "https://liff.line.me/1660908511-Ol7grGPY/?userId" + encodeURIComponent(userId));
-	return [JSON.parse(flexJsonList)]
+	document.getElementById("test").innerHTML = flexJsonList
+	return [flexJsonList]
 }
