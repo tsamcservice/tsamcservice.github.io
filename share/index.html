@@ -91,6 +91,7 @@
 					liff.login();
 				} else {
 					userId = parameters["userId"] || document.cookie.split("; ").find((row) => row.startsWith("userId=")).split("=")[1];
+					alert(userId)
 					PromotionalCard = (parameters["PromotionalCard"] || document.cookie.split("; ").find((row) => row.startsWith("PromotionalCard=")).split("=")[1]) || 0;
 					alert(userId)
 					alert(PromotionalCard)
