@@ -73,7 +73,7 @@
 
 		window.onload = function () {
 			document.getElementById('loader').style.display = 'flex';
-			liff.init({ liffId: "2000001236-Vzj8RRW9" }).then(() => {
+			liff.init({ liffId: shareLIFFid }).then(() => {
 				// 獲取查詢字串
 				var queryString = window.location.search;
 				// 移除第一個問號字元 (?)
@@ -86,15 +86,18 @@
 				});
 
 				if (!liff.isLoggedIn()) {
-					document.cookie = "userId=" + parameters["userId"];
+					document.cookie = "userId=" + parameters["userId"] + "; path=/";
+					document.cookie = "PromotionalCard=" + parameters["PromotionalCard"] + "; path=/";
 					liff.login();
 				} else {
 					userId = parameters["userId"] || document.cookie.split("; ").find((row) => row.startsWith("userId=")).split("=")[1];
+					PromotionalCard = (parameters["PromotionalCard"] || document.cookie.split("; ").find((row) => row.startsWith("PromotionalCard=")).split("=")[1]) || 0;
 					async function send() {
 						var responseData = await sendRequest("get", userId);
 						if (responseData.status === "ok") {
 							// 會員卡片 cardJson[0] 讀取並紀錄存下 (flexJsonList框已在data.js)
-							flexJsonList = responseData.cardJson[0]
+							flexJsonList = responseData.cardJson[PromotionalCard]
+							flexJsonList = flexJsonList.replace(/S{3,}/g, "https://liff.line.me/" + shareLIFFid + "/?PromotionalCard=" + PromotionalCard);
 							// 會員卡片 參數寫入
 							const data_card = JSON.parse(responseData.card);
 							createFlex(data_card);

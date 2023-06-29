@@ -1,4 +1,5 @@
 const googleAppsScriptUrl = "https://script.google.com/macros/s/AKfycbwWBvS3-wkqZyPld3NSgMZ1jVbxXbB8iLCSIRvzJm9pgru3YqPZ9wu8PGyzVT2Q3d7E/exec";
+const shareLIFFid = "2000001236-Vzj8RRW9"
 
 // 這張會員卡片的 URL
 var card_img_url;
@@ -31,7 +32,7 @@ function writeElementDefaultValues() {
 
 // flexJson_main 的框 (list可再加入cardJsonPromotional)
 function createFlexJsonList() {
-	flexJsonList = flexJsonList.replace(/A{3,}/g,  mainTitle_1 );
+	flexJsonList = flexJsonList.replace(/A{3,}/g, mainTitle_1);
 	flexJsonList = flexJsonList.replace(/textColor/g, '"' + textColor + '"');
 	// flexJsonList = flexJsonList.replace(/mainTitle_2/g, '"' + mainTitle_2 + '"');
 	// flexJsonList = flexJsonList.replace(/subTitle_1/g, '"' + subTitle_1 + '"');
@@ -41,7 +42,7 @@ function createFlexJsonList() {
 	// flexJsonList = flexJsonList.replace(/textContent_2_url/g, '"' + textContent_2_url + '"');
 	// flexJsonList = flexJsonList.replace(/textContent_2/g, '"' + textContent_2 + '"');
 	// flexJsonList = flexJsonList.replace(/textContent_3/g, '"' + textContent_3 + '"');
-	flexJsonList = flexJsonList.replace(/S{3,}/g, "https://liff.line.me/2000001236-Vzj8RRW9/?userId=" + encodeURIComponent(userId) );
+	flexJsonList = flexJsonList.replace(/S{3,}/g, "https://liff.line.me/" + shareLIFFid + "/?userId=" + encodeURIComponent(userId));
 	return [JSON.parse(flexJsonList)]
 }
 
