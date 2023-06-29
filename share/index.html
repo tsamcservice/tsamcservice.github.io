@@ -92,6 +92,7 @@
 				} else {
 					userId = parameters["userId"] || document.cookie.split("; ").find((row) => row.startsWith("userId=")).split("=")[1];
 					PromotionalCard = (parameters["PromotionalCard"] || document.cookie.split("; ").find((row) => row.startsWith("PromotionalCard=")).split("=")[1]) || 0;
+					alert(PromotionalCard)
 					async function send() {
 						var responseData = await sendRequest("get", userId);
 						if (responseData.status === "ok") {
