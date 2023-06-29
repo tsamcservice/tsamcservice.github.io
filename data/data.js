@@ -44,3 +44,8 @@ function createFlexJsonList() {
 	flexJsonList = flexJsonList.replace(/S{3,}/g, "https://liff.line.me/2000001236-Vzj8RRW9/?userId=" + encodeURIComponent(userId) );
 	return [JSON.parse(flexJsonList)]
 }
+
+
+
+
+
