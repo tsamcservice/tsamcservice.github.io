@@ -283,6 +283,7 @@
 										// 把卡片元素 html 加寫入到 slider
 										document.getElementById("slider").innerHTML += tempHtml;
 										// 把卡片元素 html 加寫入到 slider
+										alert("https://liff.line.me/" + shareLIFFid + "/?PromotionalCard=" + i)
 										cardJson[i] = cardJson[i].replace(/S{3,}/g, "https://liff.line.me/" + shareLIFFid + "/?PromotionalCard=" + i);
 										my_flexToHtml("flex2htmlPromotional" + i, [JSON.parse(cardJson[i])])
 									}
