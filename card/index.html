@@ -264,9 +264,9 @@
 									userId = profile.userId
 									var responseData = await sendRequest("get", userId)
 									if (responseData.status == "first") {
-										memberId = responseData.memberId
 										await sendRequest("save", userId, readShowCardData());
 										responseData = await sendRequest("get", userId)
+										memberId = responseData.memberId
 									} else {
 										const dataCard = JSON.parse(responseData.card);
 										writeShowCardData(dataCard)
