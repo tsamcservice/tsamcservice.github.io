@@ -1,4 +1,4 @@
-const googleAppsScriptUrl = "https://script.google.com/macros/s/AKfycbzGUNiibUFsF3APs3hYMzi-I1aMDFzD968Gju_XmqBkghgKG6bjF5J4-tTr3EsniFX3/exec";
+const googleAppsScriptUrl = "https://script.google.com/macros/s/AKfycbzZUO3X9wtWxQq2aXZA1TkjZjva25T_cdhPe_TwJD5hcvkSqmBKqBK-yWAsyRBdvzbf/exec";
 const shareLIFFid = "2000001236-Vzj8RRW9"
 
 // 這張會員卡片的 URL
@@ -11,7 +11,7 @@ var mainTitle_2 = "我在呈璽，欣賞美好幸福 我在呈璽，喝茶喝咖
 var memberId = "000";
 var subTitle_2 = "青藝盟盟主";
 var textContent_1 = "05/06(六)09:50~12:00";
-var textContent_1_url = "https://raw.githubusercontent.com/tsamcservice/tsamcservice.github.io/main/data/images/TS.jpg";
+var textContent_1_url = "https://script.google.com/macros/s/AKfycbxG9DFuIaez9_VNxuQbpGRlSZgfImqDx9_oyrjK-JhBVjxOp1zyPNkTkksrTLh_R9CS/exec";
 var textContent_2 = "呈璽LINE@";
 var textContent_2_url = "https://donate.ls-love.org/";
 var textContent_3 = "台北市南京東路二段178號10樓";

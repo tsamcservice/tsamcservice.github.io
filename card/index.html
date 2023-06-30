@@ -166,7 +166,6 @@
 				return JSON.stringify({
 					mainTitle_1: document.getElementById("mainTitle_1").value || "",
 					mainTitle_2: document.getElementById("mainTitle_2").value || "",
-					memberId: memberId,
 					subTitle_2: document.getElementById("subTitle_2").value || "",
 					textContent_1: document.getElementById("textContent_1").value || "",
 					textContent_1_url: document.getElementById("upload_text").textContent || "",
@@ -174,6 +173,7 @@
 					textContent_2_url: document.getElementById("textContent_2_url").value || "",
 					textContent_3: document.getElementById("textContent_3").value || "",
 					textColor: document.getElementById("textColor").textContent || "",
+					memberId: memberId,
 					card_img_url: card_img_url,
 				});
 			}
@@ -182,7 +182,6 @@
 			function writeShowCardData(data_card) {
 				document.getElementById("mainTitle_1").value = data_card.mainTitle_1 || "";
 				document.getElementById("mainTitle_2").value = data_card.mainTitle_2 || "";
-				document.getElementById("memberId").value = data_card.memberId || "";
 				document.getElementById("subTitle_2").value = data_card.subTitle_2 || "";
 				document.getElementById("textContent_1").value = data_card.textContent_1 || "";
 				document.getElementById("upload_text").textContent = data_card.textContent_1_url || "";
@@ -265,9 +264,6 @@
 									var responseData = await sendRequest("get", userId)
 									if (responseData.status == "first") {
 										await sendRequest("save", userId, readShowCardData());
-										responseData = await sendRequest("get", userId)
-										memberId = responseData.memberId
-										alert(responseData.memberId)
 									} else {
 										const dataCard = JSON.parse(responseData.card);
 										writeShowCardData(dataCard)
@@ -459,7 +455,7 @@
 				document.getElementById("loader").style.display = "flex";
 				var file = event.target.files[0]; // 取得選擇的檔案
 				document.getElementById("upload_text").textContent = await uploadImg(file); // 上傳檔案並回傳URL
-				sendRequest("save", userId, readShowCardData());
+				await sendRequest("save", userId, readShowCardData());
 				document.getElementById("loader").style.display = "none";
 			});
 
