@@ -265,10 +265,10 @@
 									var responseData = await sendRequest("get", userId)
 									if (responseData.status == "first") {
 										await sendRequest("save", userId, readShowCardData());
-									} else {
-										const dataCard = JSON.parse(responseData.card);
-										writeShowCardData(dataCard)
+										var responseData = await sendRequest("get", userId)
 									}
+									const dataCard = JSON.parse(responseData.card);
+									writeShowCardData(dataCard)
 
 									// 會員卡片 cardJson[0] 讀取並紀錄存下 (flexJsonStatic框已在data.js)
 									flexJsonStatic = responseData.cardJson[0]
