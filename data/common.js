@@ -22,6 +22,7 @@ async function sendRequest(status, userId, dataCard = "", isDebug = true) {
 		else { alert("向google apps script寄送請求時\n回傳值非ok"); }
 	} catch (error) {
 		// 忽略 "TypeError: Failed to fetch" 錯誤
+		alert("向google apps script寄送請求時\n發生錯誤\n" + error);
 		if (!isDebug && error instanceof TypeError && error.message === "Failed to fetch") { return; }
 		alert("向google apps script寄送請求時\n發生錯誤\n" + error);
 	}
