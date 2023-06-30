@@ -103,12 +103,12 @@
 						var responseData = await sendRequest("get", userId);
 						if (responseData.status === "ok") {
 							// 會員卡片 cardJson[0] 讀取並紀錄存下 (flexJsonStatic框已在data.js)
-							flexJsonList = responseData.cardJson[PromotionalCard]
+							flexJsonStatic = responseData.cardJson[PromotionalCard]
 							alert(PromotionalCard)
 							document.getElementById('test').innerHTML = flexJsonList
 							if (PromotionalCard) {
 								alert(222)
-								flexJsonList = flexJsonList.replace(/S{3,}/g, "https://liff.line.me/" + shareLIFFid + "/?userId=" + encodeURIComponent(userId) + ";PromotionalCard=" + i);
+								flexJsonStatic = flexJsonStatic.replace(/S{3,}/g, "https://liff.line.me/" + shareLIFFid + "/?userId=" + encodeURIComponent(userId) + ";PromotionalCard=" + i);
 							}
 							alert(1)
 							document.getElementById('test').innerHTML = flexJsonList
