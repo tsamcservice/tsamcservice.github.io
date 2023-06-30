@@ -73,7 +73,7 @@
 		}
 
 		window.onload = function () {
-			document.getElementById('loader').style.display = 'flex';
+			// document.getElementById('loader').style.display = 'flex';
 			liff.init({ liffId: shareLIFFid }).then(() => {
 				// 獲取查詢字串
 				var queryString = window.location.search;
@@ -104,7 +104,8 @@
 						if (responseData.status === "ok") {
 							// 會員卡片 cardJson[0] 讀取並紀錄存下 (flexJsonStatic框已在data.js)
 							flexJsonList = responseData.cardJson[PromotionalCard]
-							alert(3)
+							alert(PromotionalCard)
+							document.getElementById('test').innerHTML = flexJsonList
 							if (!PromotionalCard) { flexJsonList = flexJsonList.replace(/S{3,}/g, "https://liff.line.me/" + shareLIFFid + "/?userId=" + encodeURIComponent(userId)) };
 							flexJsonList = flexJsonList.replace(/S{3,}/g, "https://liff.line.me/" + shareLIFFid + "/?userId=" + encodeURIComponent(userId) + ";PromotionalCard=" + i);
 							alert(1)
