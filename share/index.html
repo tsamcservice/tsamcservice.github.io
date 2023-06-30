@@ -91,14 +91,21 @@
 					document.cookie = "PromotionalCard=" + parameters["PromotionalCard"] + "; path=/";
 					liff.login();
 				} else {
-					userId = parameters["userId"] || document.cookie.split("; ").find((row) => row.startsWith("userId=")).split("=")[1] || profile.userId;
+					liff.getProfile()
+						.then(async function (profile) {
+							userId = parameters["userId"] || (document.cookie.split("; ").find((row) => row.startsWith("userId="))?.split("=")[1] ?? null) || profile.userId;
+						})
+						.catch(function (error) {
+							alert("取得使用者資料錯誤\n" + error);
+						});
 					alert(userId)
-					PromotionalCard = ((parameters["PromotionalCard"] || document.cookie.split("; ").find((row) => row.startsWith("PromotionalCard="))?.split("=")[1]) ?? null) || 0;
+					PromotionalCard = (parameters["PromotionalCard"] || (document.cookie.split("; ").find((row) => row.startsWith("PromotionalCard="))?.split("=")[1] ?? null)) || 0;
 					alert(userId)
 					alert(PromotionalCard)
 					// 清除 cookie
 					document.cookie = "userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 					document.cookie = "PromotionalCard=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+					alert(1)
 					async function send() {
 						var responseData = await sendRequest("get", userId);
 						if (responseData.status === "ok") {
