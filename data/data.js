@@ -6,14 +6,14 @@ var card_img_url;
 // 需要跨 function 的參數
 var userId, flexJsonList, flexJsonMessage, cardJsonPromotional
 // cardJson 裡面參數預設值
-var mainTitle_1 = "磊山 人文講堂";
-var mainTitle_2 = "《牽風箏的人》";
+var mainTitle_1 = "呈璽理財藝術共享空間";
+var mainTitle_2 = "我在呈璽，欣賞美好幸福 我在呈璽，喝茶喝咖啡很悠閒 我不在呈璽，就是在前往呈璽的路上";
 var subTitle_1 = "余浩瑋";
 var subTitle_2 = "青藝盟盟主";
 var textContent_1 = "05/06(六)09:50~12:00";
-var textContent_1_url = "https://i.ibb.co/B6KNp92/01-1-cafe.png";
-var textContent_2 = "磊山學院";
-var textContent_2_url = "https://linecorp.com/";
+var textContent_1_url = "https://raw.githubusercontent.com/tsamcservice/tsamcservice.github.io/main/data/images/TS.jpg";
+var textContent_2 = "呈璽LINE@";
+var textContent_2_url = "https://donate.ls-love.org/";
 var textContent_3 = "台北市南京東路二段178號10樓";
 var textColor = "#081F58";
 // 卡片製作標籤裡面參數預設值
@@ -32,17 +32,18 @@ function writeElementDefaultValues() {
 
 // flexJson_main 的框 (list可再加入cardJsonPromotional)
 function createFlexJsonList() {
-	flexJsonList = flexJsonList.replace(/A{3,}/g, mainTitle_1);
-	flexJsonList = flexJsonList.replace(/textColor/g, '"' + textColor + '"');
-	// flexJsonList = flexJsonList.replace(/mainTitle_2/g, '"' + mainTitle_2 + '"');
+	flexJsonList = flexJsonList.replace(/mainTitle_1/g, mainTitle_1);
+	flexJsonList = flexJsonList.replace(/mainTitle_2/g, '"' + mainTitle_2 + '"');
 	// flexJsonList = flexJsonList.replace(/subTitle_1/g, '"' + subTitle_1 + '"');
 	// flexJsonList = flexJsonList.replace(/subTitle_2/g, '"' + subTitle_2 + '"');
-	// flexJsonList = flexJsonList.replace(/textContent_1_url/g, '"' + textContent_1_url + '"');
+	flexJsonList = flexJsonList.replace(/textContent_1_url/g, '"' + textContent_1_url + '"');
 	// flexJsonList = flexJsonList.replace(/textContent_1/g, '"' + textContent_1 + '"');
-	// flexJsonList = flexJsonList.replace(/textContent_2_url/g, '"' + textContent_2_url + '"');
-	// flexJsonList = flexJsonList.replace(/textContent_2/g, '"' + textContent_2 + '"');
+	flexJsonList = flexJsonList.replace(/textContent_2_url/g, '"' + textContent_2_url + '"');
+	flexJsonList = flexJsonList.replace(/textContent_2/g, '"' + textContent_2 + '"');
 	// flexJsonList = flexJsonList.replace(/textContent_3/g, '"' + textContent_3 + '"');
+	flexJsonList = flexJsonList.replace(/textColor/g, '"' + textColor + '"');
 	flexJsonList = flexJsonList.replace(/S{3,}/g, "https://liff.line.me/" + shareLIFFid + "/?userId=" + encodeURIComponent(userId));
+	document.getElementById('test').innerHTML = JSON.parse(flexJsonList)
 	return [JSON.parse(flexJsonList)]
 }
 
