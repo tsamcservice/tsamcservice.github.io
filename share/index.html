@@ -104,10 +104,11 @@
 							flexJsonStatic = responseData.cardJson[PromotionalCard]
 							if (PromotionalCard) {
 								alert(1)
+								document.getElementById('test').innerHTML = flexJsonStatic
 								flexJsonStatic = flexJsonStatic.replace(/S{3,}/g, "https://liff.line.me/" + shareLIFFid + "/?userId=" + encodeURIComponent(userId) + "&PromotionalCard=" + i);
 								alert(2)
 							}
-							document.getElementById('test').innerHTML = flexJsonStatic
+							// document.getElementById('test').innerHTML = flexJsonStatic
 
 							// 會員卡片 參數寫入
 							const data_card = JSON.parse(responseData.card);
