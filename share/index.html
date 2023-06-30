@@ -93,7 +93,7 @@
 				} else {
 					userId = parameters["userId"] || document.cookie.split("; ").find((row) => row.startsWith("userId=")).split("=")[1] || profile.userId;
 					alert(userId)
-					PromotionalCard = (parameters["PromotionalCard"] || document.cookie.split("; ").find((row) => row.startsWith("PromotionalCard=")).split("=")[1]) || 0;
+					PromotionalCard = ((parameters["PromotionalCard"] || document.cookie.split("; ").find((row) => row.startsWith("PromotionalCard="))?.split("=")[1]) ?? null) || 0;
 					alert(userId)
 					alert(PromotionalCard)
 					// 清除 cookie
