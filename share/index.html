@@ -95,59 +95,56 @@
 						.then(async function (profile) {
 							userId = parameters["userId"] || (document.cookie.split("; ").find((row) => row.startsWith("userId="))?.split("=")[1] ?? null) || profile.userId;
 							alert(userId)
+							PromotionalCard = (parameters["PromotionalCard"] || (document.cookie.split("; ").find((row) => row.startsWith("PromotionalCard="))?.split("=")[1] ?? null)) || 0;
+							alert(userId)
+							alert(PromotionalCard)
+							// 清除 cookie
+							document.cookie = "userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+							document.cookie = "PromotionalCard=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+							alert(1)
+							var responseData = await sendRequest("get", userId);
+							if (responseData.status === "ok") {
+								// 會員卡片 cardJson[0] 讀取並紀錄存下 (flexJsonStatic框已在data.js)
+								flexJsonList = responseData.cardJson[PromotionalCard]
+								if (!PromotionalCard) { flexJsonList = flexJsonList.replace(/S{3,}/g, "https://liff.line.me/" + shareLIFFid + "/?userId=" + encodeURIComponent(userId)) }
+								flexJsonList = flexJsonList.replace(/S{3,}/g, "https://liff.line.me/" + shareLIFFid + "/?PromotionalCard=" + PromotionalCard);
+								// 會員卡片 參數寫入
+								const data_card = JSON.parse(responseData.card);
+								createFlex(data_card);
+								// 送出提醒框 (彈跳視窗)
+								Swal.fire({
+									text: "請勿封鎖彈跳視窗",
+									timer: 800,
+									showConfirmButton: false
+								});
+								liff
+									.shareTargetPicker([flexJsonMessage])
+									.then(async function (res) {
+										if (res) {
+											// 向google sheet發送的增加閱讀數
+											await sendRequest("addReadCount", userId);
+											// 關閉 liff 視窗頁面 (手機)
+											try { liff.closeWindow(); } catch (e) { }
+											// 關閉 網頁 視窗頁面 (電腦)
+											try { window.close(); } catch (e) { }
+										} else {
+											const [majorVer, minorVer] = (liff.getLineVersion() || "").split(".");
+											if (parseInt(majorVer) < 10 || (parseInt(majorVer) == 10 && parseInt(minorVer) < 11)) {
+												alert("沒有 TargetPicker 功能\n請嘗試更新 LINE");
+											} else {
+												alert("有 TargetPicker 功能，但發送訊息未成功");
+											}
+										}
+									})
+									.catch(function (error) {
+										alert("分享傳送訊息失敗\n", err);
+									});
+							}
+
 						})
 						.catch(function (error) {
 							alert("取得使用者資料錯誤\n" + error);
 						});
-					alert(userId)
-					PromotionalCard = (parameters["PromotionalCard"] || (document.cookie.split("; ").find((row) => row.startsWith("PromotionalCard="))?.split("=")[1] ?? null)) || 0;
-					alert(userId)
-					alert(PromotionalCard)
-					// 清除 cookie
-					document.cookie = "userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-					document.cookie = "PromotionalCard=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-					alert(1)
-					async function send() {
-						var responseData = await sendRequest("get", userId);
-						if (responseData.status === "ok") {
-							// 會員卡片 cardJson[0] 讀取並紀錄存下 (flexJsonStatic框已在data.js)
-							flexJsonList = responseData.cardJson[PromotionalCard]
-							if (!PromotionalCard) { flexJsonList = flexJsonList.replace(/S{3,}/g, "https://liff.line.me/" + shareLIFFid + "/?userId=" + encodeURIComponent(userId)) }
-							flexJsonList = flexJsonList.replace(/S{3,}/g, "https://liff.line.me/" + shareLIFFid + "/?PromotionalCard=" + PromotionalCard);
-							// 會員卡片 參數寫入
-							const data_card = JSON.parse(responseData.card);
-							createFlex(data_card);
-							// 送出提醒框 (彈跳視窗)
-							Swal.fire({
-								text: "請勿封鎖彈跳視窗",
-								timer: 800,
-								showConfirmButton: false
-							});
-							liff
-								.shareTargetPicker([flexJsonMessage])
-								.then(async function (res) {
-									if (res) {
-										// 向google sheet發送的增加閱讀數
-										await sendRequest("addReadCount", userId);
-										// 關閉 liff 視窗頁面 (手機)
-										try { liff.closeWindow(); } catch (e) { }
-										// 關閉 網頁 視窗頁面 (電腦)
-										try { window.close(); } catch (e) { }
-									} else {
-										const [majorVer, minorVer] = (liff.getLineVersion() || "").split(".");
-										if (parseInt(majorVer) < 10 || (parseInt(majorVer) == 10 && parseInt(minorVer) < 11)) {
-											alert("沒有 TargetPicker 功能\n請嘗試更新 LINE");
-										} else {
-											alert("有 TargetPicker 功能，但發送訊息未成功");
-										}
-									}
-								})
-								.catch(function (error) {
-									alert("分享傳送訊息失敗\n", err);
-								});
-						}
-					}
-					send();
 				}
 			});
 		};
