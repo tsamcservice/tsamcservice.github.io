@@ -173,7 +173,7 @@
 					textContent_2_url: document.getElementById("textContent_2_url").value || "",
 					textContent_3: document.getElementById("textContent_3").value || "",
 					textColor: document.getElementById("textColor").textContent || "",
-					memberId: memberId,
+					memberId: document.getElementById("memberId").value || "",
 					card_img_url: card_img_url,
 				});
 			}
@@ -189,6 +189,7 @@
 				document.getElementById("textContent_2_url").value = data_card.textContent_2_url || "";
 				document.getElementById("textContent_3").value = data_card.textContent_3 || "";
 				document.getElementById("textColor").textContent = data_card.textColor || "";
+				document.getElementById("memberId").value = data_card.memberId || "";
 				// 設定colorPicker調色盤顏色
 				colorPicker.setColor(data_card.textColor || textColor)
 			}
