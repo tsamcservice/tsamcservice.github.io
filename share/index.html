@@ -106,8 +106,10 @@
 							flexJsonList = responseData.cardJson[PromotionalCard]
 							alert(PromotionalCard)
 							document.getElementById('test').innerHTML = flexJsonList
-							if (!PromotionalCard) { flexJsonList = flexJsonList.replace(/S{3,}/g, "https://liff.line.me/" + shareLIFFid + "/?userId=" + encodeURIComponent(userId)) };
-							flexJsonList = flexJsonList.replace(/S{3,}/g, "https://liff.line.me/" + shareLIFFid + "/?userId=" + encodeURIComponent(userId) + ";PromotionalCard=" + i);
+							if (PromotionalCard) {
+								alert(222)
+								flexJsonList = flexJsonList.replace(/S{3,}/g, "https://liff.line.me/" + shareLIFFid + "/?userId=" + encodeURIComponent(userId) + ";PromotionalCard=" + i);
+							}
 							alert(1)
 							document.getElementById('test').innerHTML = flexJsonList
 							// 會員卡片 參數寫入
