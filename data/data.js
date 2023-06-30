@@ -20,13 +20,13 @@ var textColor = "#000000";
 function writeElementDefaultValues() {
 	document.getElementById("mainTitle_1").placeholder = mainTitle_1;
 	document.getElementById("mainTitle_2").placeholder = mainTitle_2;
-	document.getElementById("subTitle_1").placeholder = subTitle_1;
-	document.getElementById("subTitle_2").placeholder = subTitle_2;
-	document.getElementById("textContent_1").placeholder = textContent_1;
+	// document.getElementById("subTitle_1").placeholder = subTitle_1;
+	// document.getElementById("subTitle_2").placeholder = subTitle_2;
+	// document.getElementById("textContent_1").placeholder = textContent_1;
 	document.getElementById("upload_text").textContent = textContent_1_url; // 參數 textContent_1_url 對應 upload_text 元素
 	document.getElementById("textContent_2").placeholder = textContent_2;
 	document.getElementById("textContent_2_url").placeholder = textContent_2_url;
-	document.getElementById("textContent_3").placeholder = textContent_3;
+	// document.getElementById("textContent_3").placeholder = textContent_3;
 	document.getElementById("textColor").textContent = textColor;
 }
 

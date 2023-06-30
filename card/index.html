@@ -261,22 +261,18 @@
 							liff.getProfile()
 								.then(async function (profile) {
 									// 取得 google sheet 個人資料顯示在頁面 (若為首次登入則 google sheet 建立新資料)
-									alert(1)
 									userId = profile.userId
-									alert(1)
 									var responseData = await sendRequest("get", userId)
 									if (responseData.status != "first") {
 										const dataCard = JSON.parse(responseData.card);
 										writeShowCardData(dataCard)
 									} else { sendRequest("save", userId, readShowCardData()); }
-									alert(1)
+
 									// 會員卡片 cardJson[0] 讀取並紀錄存下 (flexJsonStatic框已在data.js)
 									flexJsonStatic = responseData.cardJson[0]
-									alert(flexJsonStatic)
 									// 宣傳卡片 cardJson[1:] 讀取並寫入顯示在頁面
 									cardJson = responseData.cardJson
 									for (var i = 1; i < cardJson.length; i++) {
-										alert(3)
 										var tempHtml = `
 											<div class="card promotionalCard" onclick="this.classList.toggle('selected')">
 												<div class="chatbox" style="pointer-events: none;">
