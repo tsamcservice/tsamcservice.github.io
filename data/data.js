@@ -15,7 +15,7 @@ var textContent_1_url = "https://raw.githubusercontent.com/tsamcservice/tsamcser
 var textContent_2 = "呈璽LINE@";
 var textContent_2_url = "https://donate.ls-love.org/";
 var textContent_3 = "台北市南京東路二段178號10樓";
-var textColor = "#081F58";
+var textColor = "#000000";
 // 卡片製作標籤裡面參數預設值
 function writeElementDefaultValues() {
 	document.getElementById("mainTitle_1").placeholder = mainTitle_1;
@@ -42,7 +42,7 @@ function createFlexJsonList() {
 	flexJsonList = flexJsonList.replace(/textContent_2_url/g, textContent_2_url);
 	flexJsonList = flexJsonList.replace(/textContent_2/g, textContent_2);
 	// flexJsonList = flexJsonList.replace(/textContent_3/g, '"' + textContent_3 + '"');
-	flexJsonList = flexJsonList.replace(/textColor/g, '"' + textColor + '"');
+	flexJsonList = flexJsonList.replace(/textColor/g,  textColor );
 	flexJsonList = flexJsonList.replace(/S{3,}/g, "https://liff.line.me/" + shareLIFFid + "/?userId=" + encodeURIComponent(userId));
 	document.getElementById('test').innerHTML = flexJsonList
 	return [JSON.parse(flexJsonList)]
