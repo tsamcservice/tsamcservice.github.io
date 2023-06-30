@@ -124,7 +124,7 @@
 				</div>
 				<div class="form-group" style="display: none;">
 					<label>名稱</label>
-					<input id="subTitle_1" style="width: 100%" type="text" placeholder="" />
+					<input id="memberId" style="width: 100%" type="text" placeholder="" />
 				</div>
 				<div class="form-group" style="display: none;">
 					<label>別名</label>
@@ -166,7 +166,7 @@
 				return JSON.stringify({
 					mainTitle_1: document.getElementById("mainTitle_1").value || "",
 					mainTitle_2: document.getElementById("mainTitle_2").value || "",
-					subTitle_1: document.getElementById("subTitle_1").value || "",
+					memberId: document.getElementById("memberId").value || "",
 					subTitle_2: document.getElementById("subTitle_2").value || "",
 					textContent_1: document.getElementById("textContent_1").value || "",
 					textContent_1_url: document.getElementById("upload_text").textContent || "",
@@ -182,7 +182,7 @@
 			function writeShowCardData(data_card) {
 				document.getElementById("mainTitle_1").value = data_card.mainTitle_1 || "";
 				document.getElementById("mainTitle_2").value = data_card.mainTitle_2 || "";
-				document.getElementById("subTitle_1").value = data_card.subTitle_1 || "";
+				document.getElementById("memberId").value = data_card.memberId || "";
 				document.getElementById("subTitle_2").value = data_card.subTitle_2 || "";
 				document.getElementById("textContent_1").value = data_card.textContent_1 || "";
 				document.getElementById("upload_text").textContent = data_card.textContent_1_url || "";
@@ -209,8 +209,8 @@
 				var mainTitle_2_Element = document.getElementById("mainTitle_2");
 				mainTitle_2 = mainTitle_2_Element.value || mainTitle_2_Element.placeholder;
 
-				var subTitle_1_Element = document.getElementById("subTitle_1");
-				subTitle_1 = subTitle_1_Element.value || subTitle_1_Element.placeholder;
+				var memberId_Element = document.getElementById("memberId");
+				memberId = memberId_Element.value || memberId_Element.placeholder;
 
 				var subTitle_2_Element = document.getElementById("subTitle_2");
 				subTitle_2 = subTitle_2_Element.value || subTitle_2_Element.placeholder;
@@ -260,13 +260,17 @@
 						else {
 							liff.getProfile()
 								.then(async function (profile) {
-									// 取得 google sheet 個人資料顯示在頁面 (若為首次登入則 google sheet 建立新資料)
+									// 取得 google sheet 個人資料顯示在頁面 (若為首次登入則 google sheet 建立新資料後重新讀取)
 									userId = profile.userId
 									var responseData = await sendRequest("get", userId)
-									if (responseData.status != "first") {
+									if (responseData.status == "first") {
+										memberId = responseData.memberId
+										await sendRequest("save", userId, readShowCardData());
+										responseData = await sendRequest("get", userId)
+									} else {
 										const dataCard = JSON.parse(responseData.card);
 										writeShowCardData(dataCard)
-									} else { sendRequest("save", userId, readShowCardData()); }
+									}
 
 									// 會員卡片 cardJson[0] 讀取並紀錄存下 (flexJsonStatic框已在data.js)
 									flexJsonStatic = responseData.cardJson[0]
@@ -282,7 +286,7 @@
 
 										// 把卡片元素 html 加寫入到 slider
 										document.getElementById("slider").innerHTML += tempHtml;
-										cardJson[i] = cardJson[i].replace(/S{3,}/g, "https://liff.line.me/" + shareLIFFid + "/?userId=" + encodeURIComponent(userId) + ";PromotionalCard=" + i);
+										cardJson[i] = cardJson[i].replace(/S{3,}/g, "https://liff.line.me/" + shareLIFFid + "/?userId=" + encodeURIComponent(userId) + "&PromotionalCard=" + i);
 										my_flexToHtml("flex2htmlPromotional" + i, [JSON.parse(cardJson[i])])
 									}
 									document.getElementById('loader').style.display = 'none';

@@ -57,7 +57,7 @@
 		function createFlex(data_card) {
 			mainTitle_1 = data_card.mainTitle_1 || mainTitle_1;
 			mainTitle_2 = data_card.mainTitle_2 || mainTitle_2;
-			subTitle_1 = data_card.subTitle_1 || subTitle_1;
+			memberId = data_card.memberId || memberId;
 			subTitle_2 = data_card.subTitle_2 || subTitle_2;
 			textContent_1 = data_card.textContent_1 || textContent_1;
 			textContent_1_url = data_card.textContent_1_url || textContent_1_url;
@@ -73,7 +73,7 @@
 		}
 
 		window.onload = function () {
-			// document.getElementById('loader').style.display = 'flex';
+			document.getElementById('loader').style.display = 'flex';
 			liff.init({ liffId: shareLIFFid }).then(() => {
 				// 獲取查詢字串
 				var queryString = window.location.search;
@@ -94,8 +94,6 @@
 				} else {
 					userId = parameters["userId"] || document.cookie.split("; ").find((row) => row.startsWith("userId=")).split("=")[1]
 					PromotionalCard = parameters["PromotionalCard"] || (document.cookie.split("; ").find((row) => row.startsWith("PromotionalCard="))?.split("=")[1] ?? 0);
-					alert(userId)
-					alert(PromotionalCard)
 					// 清除 cookie
 					document.cookie = "userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 					document.cookie = "PromotionalCard=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
@@ -104,14 +102,9 @@
 						if (responseData.status === "ok") {
 							// 會員卡片 cardJson[0] 讀取並紀錄存下 (flexJsonStatic框已在data.js)
 							flexJsonStatic = responseData.cardJson[PromotionalCard]
-							alert(PromotionalCard)
-							document.getElementById('test').innerHTML = flexJsonList
 							if (PromotionalCard) {
-								alert(222)
-								flexJsonStatic = flexJsonStatic.replace(/S{3,}/g, "https://liff.line.me/" + shareLIFFid + "/?userId=" + encodeURIComponent(userId) + ";PromotionalCard=" + i);
+								flexJsonStatic = flexJsonStatic.replace(/S{3,}/g, "https://liff.line.me/" + shareLIFFid + "/?userId=" + encodeURIComponent(userId) + "&PromotionalCard=" + i);
 							}
-							alert(1)
-							document.getElementById('test').innerHTML = flexJsonList
 							// 會員卡片 參數寫入
 							const data_card = JSON.parse(responseData.card);
 							createFlex(data_card);

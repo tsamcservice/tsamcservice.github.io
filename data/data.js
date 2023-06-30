@@ -8,7 +8,7 @@ var userId, flexJsonStatic, flexJsonList, flexJsonMessage, cardJsonPromotional
 // cardJson 裡面參數預設值
 var mainTitle_1 = "呈璽理財藝術共享空間";
 var mainTitle_2 = "我在呈璽，欣賞美好幸福 我在呈璽，喝茶喝咖啡很悠閒 我不在呈璽，就是在前往呈璽的路上";
-var subTitle_1 = "余浩瑋";
+var memberId = "000";
 var subTitle_2 = "青藝盟盟主";
 var textContent_1 = "05/06(六)09:50~12:00";
 var textContent_1_url = "https://raw.githubusercontent.com/tsamcservice/tsamcservice.github.io/main/data/images/TS.jpg";
@@ -20,7 +20,7 @@ var textColor = "#000000";
 function writeElementDefaultValues() {
 	document.getElementById("mainTitle_1").placeholder = mainTitle_1;
 	document.getElementById("mainTitle_2").placeholder = mainTitle_2;
-	// document.getElementById("subTitle_1").placeholder = subTitle_1;
+	document.getElementById("memberId").placeholder = memberId;
 	// document.getElementById("subTitle_2").placeholder = subTitle_2;
 	// document.getElementById("textContent_1").placeholder = textContent_1;
 	document.getElementById("upload_text").textContent = textContent_1_url; // 參數 textContent_1_url 對應 upload_text 元素
@@ -35,7 +35,7 @@ function createFlexJsonList() {
 	flexJsonList = flexJsonStatic
 	flexJsonList = flexJsonList.replace(/mainTitle_1/g, mainTitle_1);
 	flexJsonList = flexJsonList.replace(/mainTitle_2/g, mainTitle_2);
-	// flexJsonList = flexJsonList.replace(/subTitle_1/g, '"' + subTitle_1 + '"');
+	flexJsonList = flexJsonList.replace(/memberId/g,  memberId);
 	// flexJsonList = flexJsonList.replace(/subTitle_2/g, '"' + subTitle_2 + '"');
 	flexJsonList = flexJsonList.replace(/textContent_1_url/g, textContent_1_url);
 	// flexJsonList = flexJsonList.replace(/textContent_1/g, '"' + textContent_1 + '"');
