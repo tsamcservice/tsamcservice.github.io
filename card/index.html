@@ -261,7 +261,9 @@
 							liff.getProfile()
 								.then(async function (profile) {
 									// 取得 google sheet 個人資料顯示在頁面 (若為首次登入則 google sheet 建立新資料)
+									alert(1)
 									userId = profile.userId
+									alert(1)
 									var responseData = await sendRequest("get", userId)
 									if (responseData.status != "first") {
 										const dataCard = JSON.parse(responseData.card);
