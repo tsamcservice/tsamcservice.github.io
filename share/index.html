@@ -90,7 +90,7 @@
 					document.cookie = "PromotionalCard=" + parameters["PromotionalCard"] + "; path=/";
 					liff.login();
 				} else {
-					userId = parameters["userId"] || document.cookie.split("; ").find((row) => row.startsWith("userId=")).split("=")[1];
+					userId = parameters["userId"] || document.cookie.split("; ").find((row) => row.startsWith("userId=")).split("=")[1] || profile.userId;
 					alert(userId)
 					PromotionalCard = (parameters["PromotionalCard"] || document.cookie.split("; ").find((row) => row.startsWith("PromotionalCard=")).split("=")[1]) || 0;
 					alert(userId)
@@ -98,8 +98,8 @@
 					async function send() {
 						var responseData = await sendRequest("get", userId);
 						if (responseData.status === "ok") {
-							// 會員卡片 cardJson[0] 讀取並紀錄存下 (flexJsonList框已在data.js)
-							flexJsonList = responseData.cardJson[PromotionalCard]
+							// 會員卡片 cardJson[0] 讀取並紀錄存下 (flexJsonStatic框已在data.js)
+							flexJsonStatic = responseData.cardJson[PromotionalCard]
 							flexJsonList = flexJsonList.replace(/S{3,}/g, "https://liff.line.me/" + shareLIFFid + "/?PromotionalCard=" + PromotionalCard);
 							// 會員卡片 參數寫入
 							const data_card = JSON.parse(responseData.card);

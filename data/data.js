@@ -4,7 +4,7 @@ const shareLIFFid = "2000001236-Vzj8RRW9"
 // 這張會員卡片的 URL
 var card_img_url;
 // 需要跨 function 的參數
-var userId, flexJsonList, flexJsonMessage, cardJsonPromotional
+var userId, flexJsonStatic, flexJsonList, flexJsonMessage, cardJsonPromotional
 // cardJson 裡面參數預設值
 var mainTitle_1 = "呈璽理財藝術共享空間";
 var mainTitle_2 = "我在呈璽，欣賞美好幸福 我在呈璽，喝茶喝咖啡很悠閒 我不在呈璽，就是在前往呈璽的路上";
@@ -32,14 +32,15 @@ function writeElementDefaultValues() {
 
 // flexJson_main 的框 (list可再加入cardJsonPromotional)
 function createFlexJsonList() {
+	flexJsonList = flexJsonStatic
 	flexJsonList = flexJsonList.replace(/mainTitle_1/g, mainTitle_1);
-	flexJsonList = flexJsonList.replace(/mainTitle_2/g, '"' + mainTitle_2 + '"');
+	flexJsonList = flexJsonList.replace(/mainTitle_2/g, mainTitle_2);
 	// flexJsonList = flexJsonList.replace(/subTitle_1/g, '"' + subTitle_1 + '"');
 	// flexJsonList = flexJsonList.replace(/subTitle_2/g, '"' + subTitle_2 + '"');
-	flexJsonList = flexJsonList.replace(/textContent_1_url/g, '"' + textContent_1_url + '"');
+	flexJsonList = flexJsonList.replace(/textContent_1_url/g, textContent_1_url);
 	// flexJsonList = flexJsonList.replace(/textContent_1/g, '"' + textContent_1 + '"');
-	flexJsonList = flexJsonList.replace(/textContent_2_url/g, '"' + textContent_2_url + '"');
-	flexJsonList = flexJsonList.replace(/textContent_2/g, '"' + textContent_2 + '"');
+	flexJsonList = flexJsonList.replace(/textContent_2_url/g, textContent_2_url);
+	flexJsonList = flexJsonList.replace(/textContent_2/g, textContent_2);
 	// flexJsonList = flexJsonList.replace(/textContent_3/g, '"' + textContent_3 + '"');
 	flexJsonList = flexJsonList.replace(/textColor/g, '"' + textColor + '"');
 	flexJsonList = flexJsonList.replace(/S{3,}/g, "https://liff.line.me/" + shareLIFFid + "/?userId=" + encodeURIComponent(userId));

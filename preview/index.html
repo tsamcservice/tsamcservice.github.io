@@ -88,8 +88,8 @@
 				// 取得卡片資料
 				var responseData = await sendRequest("get", userId);
 				if (responseData.status === 'ok') {
-					// 會員卡片 cardJson[0] 讀取並紀錄存下 (flexJsonList框已在data.js)
-					flexJsonList = responseData.cardJson[0]
+					// 會員卡片 cardJson[0] 讀取並紀錄存下 (flexJsonStatic框已在data.js)
+					flexJsonStatic = responseData.cardJson[0]
 					// 會員卡片 參數寫入
 					const data_card = JSON.parse(responseData.card);
 					createFlex(data_card);
