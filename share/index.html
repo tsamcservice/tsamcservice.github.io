@@ -86,6 +86,7 @@
 				});
 
 				if (!liff.isLoggedIn()) {
+					// 存入 cookie 防止登入後無資料查詢資串
 					document.cookie = "userId=" + parameters["userId"] + "; path=/";
 					document.cookie = "PromotionalCard=" + parameters["PromotionalCard"] + "; path=/";
 					liff.login();
@@ -95,11 +96,14 @@
 					PromotionalCard = (parameters["PromotionalCard"] || document.cookie.split("; ").find((row) => row.startsWith("PromotionalCard=")).split("=")[1]) || 0;
 					alert(userId)
 					alert(PromotionalCard)
+					// 清除 cookie
+					document.cookie = "userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+					document.cookie = "PromotionalCard=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 					async function send() {
 						var responseData = await sendRequest("get", userId);
 						if (responseData.status === "ok") {
 							// 會員卡片 cardJson[0] 讀取並紀錄存下 (flexJsonStatic框已在data.js)
-							flexJsonStatic = responseData.cardJson[PromotionalCard]
+							flexJsonList = responseData.cardJson[PromotionalCard]
 							flexJsonList = flexJsonList.replace(/S{3,}/g, "https://liff.line.me/" + shareLIFFid + "/?PromotionalCard=" + PromotionalCard);
 							// 會員卡片 參數寫入
 							const data_card = JSON.parse(responseData.card);
