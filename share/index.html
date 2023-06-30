@@ -51,6 +51,7 @@
 			</div>
 		</div>
 	</div>
+	<div id="test"></div>
 
 	<script>
 		function createFlex(data_card) {
@@ -92,20 +93,22 @@
 					liff.login();
 				} else {
 					userId = parameters["userId"] || document.cookie.split("; ").find((row) => row.startsWith("userId=")).split("=")[1]
-					PromotionalCard = (parameters["PromotionalCard"] || (document.cookie.split("; ").find((row) => row.startsWith("PromotionalCard="))?.split("=")[1] ?? null)) || 0;
+					PromotionalCard = parameters["PromotionalCard"] || (document.cookie.split("; ").find((row) => row.startsWith("PromotionalCard="))?.split("=")[1] ?? 0);
 					alert(userId)
 					alert(PromotionalCard)
 					// 清除 cookie
 					document.cookie = "userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 					document.cookie = "PromotionalCard=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-					alert(1)
 					async function send() {
 						var responseData = await sendRequest("get", userId);
 						if (responseData.status === "ok") {
 							// 會員卡片 cardJson[0] 讀取並紀錄存下 (flexJsonStatic框已在data.js)
 							flexJsonList = responseData.cardJson[PromotionalCard]
+							alert(3)
 							if (!PromotionalCard) { flexJsonList = flexJsonList.replace(/S{3,}/g, "https://liff.line.me/" + shareLIFFid + "/?userId=" + encodeURIComponent(userId)) };
 							flexJsonList = flexJsonList.replace(/S{3,}/g, "https://liff.line.me/" + shareLIFFid + "/?userId=" + encodeURIComponent(userId) + ";PromotionalCard=" + i);
+							alert(1)
+							document.getElementById('test').innerHTML = flexJsonList
 							// 會員卡片 參數寫入
 							const data_card = JSON.parse(responseData.card);
 							createFlex(data_card);
