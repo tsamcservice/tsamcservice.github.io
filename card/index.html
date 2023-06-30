@@ -130,7 +130,7 @@
 					<label>別名</label>
 					<input id="subTitle_2" style="width: 100%" type="text" placeholder="" />
 				</div>
-				<div class="form-group" style="display: none;">
+				<div class="form-group">
 					<label>主標2</label>
 					<input id="mainTitle_2" style="width: 100%" type="text" placeholder="" />
 				</div>
@@ -166,7 +166,7 @@
 				return JSON.stringify({
 					mainTitle_1: document.getElementById("mainTitle_1").value || "",
 					mainTitle_2: document.getElementById("mainTitle_2").value || "",
-					memberId: document.getElementById("memberId").value || "",
+					memberId: memberId,
 					subTitle_2: document.getElementById("subTitle_2").value || "",
 					textContent_1: document.getElementById("textContent_1").value || "",
 					textContent_1_url: document.getElementById("upload_text").textContent || "",
@@ -267,6 +267,7 @@
 										await sendRequest("save", userId, readShowCardData());
 										responseData = await sendRequest("get", userId)
 										memberId = responseData.memberId
+										alert(responseData.memberId)
 									} else {
 										const dataCard = JSON.parse(responseData.card);
 										writeShowCardData(dataCard)
