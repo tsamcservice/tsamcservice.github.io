@@ -274,18 +274,18 @@
 									flexJsonStatic = responseData.cardJson[0]
 									// 宣傳卡片 cardJson[1:] 讀取並寫入顯示在頁面
 									cardJson = responseData.cardJson
-									for (var i = 1; i < cardJson.length; i++) {
+									for (var PromotionalCard = 1; PromotionalCard < cardJson.length; PromotionalCard++) {
 										var tempHtml = `
 											<div class="card promotionalCard" onclick="this.classList.toggle('selected')">
 												<div class="chatbox" style="pointer-events: none;">
-													<div id="flex2htmlPromotional${i}"></div>
+													<div id="flex2htmlPromotional${PromotionalCard}"></div>
 												</div>
 											</div>`;
 
 										// 把卡片元素 html 加寫入到 slider
 										document.getElementById("slider").innerHTML += tempHtml;
-										cardJson[i] = cardJson[i].replace(/S{3,}/g, "https://liff.line.me/" + shareLIFFid + "/?userId=" + encodeURIComponent(userId) + "&PromotionalCard=" + i);
-										my_flexToHtml("flex2htmlPromotional" + i, [JSON.parse(cardJson[i])])
+										cardJson[PromotionalCard] = cardJson[PromotionalCard].replace(/S{3,}/g, "https://liff.line.me/" + shareLIFFid + "/?userId=" + encodeURIComponent(userId) + "&PromotionalCard=" + PromotionalCard);
+										my_flexToHtml("flex2htmlPromotional" + PromotionalCard, [JSON.parse(cardJson[PromotionalCard])])
 									}
 									document.getElementById('loader').style.display = 'none';
 								})
