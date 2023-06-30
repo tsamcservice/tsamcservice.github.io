@@ -103,10 +103,7 @@
 							// 會員卡片 cardJson[0] 讀取並紀錄存下 (flexJsonStatic框已在data.js)
 							flexJsonStatic = responseData.cardJson[PromotionalCard]
 							if (PromotionalCard) {
-								alert(1)
-								document.getElementById('test').innerHTML = flexJsonStatic
-								flexJsonStatic = flexJsonStatic.replace(/S{3,}/g, "https://liff.line.me/" + shareLIFFid + "/?userId=" + encodeURIComponent(userId) + "&PromotionalCard=" + i);
-								alert(2)
+								flexJsonStatic = flexJsonStatic.replace(/S{3,}/g, "https://liff.line.me/" + shareLIFFid + "/?userId=" + encodeURIComponent(userId) + "&PromotionalCard=" + PromotionalCard);
 							}
 							// document.getElementById('test').innerHTML = flexJsonStatic
 
