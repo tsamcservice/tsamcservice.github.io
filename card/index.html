@@ -302,7 +302,7 @@
 				// 送出提醒框 (彈跳視窗)
 				Swal.fire({
 					text: "請勿封鎖彈跳視窗",
-					timer: 800,
+					timer: 1200,
 					showConfirmButton: false
 				});
 				liff
@@ -333,6 +333,12 @@
 
 			// 分享mail按钮的點擊事件
 			function shareButtonMail(element) {
+				// 送出提醒框 (彈跳視窗)
+				Swal.fire({
+					text: "請注意預設開啟信箱軟體",
+					timer: 1200,
+					showConfirmButton: false
+				});
 				element.href = "mailto:?subject=【卡片分享】&body=使用瀏覽器預覽照片連結：https://tsamcservice.github.io/preview%2F%3FuserId%3D" + userId;
 			}
 			// 分享twitter按钮的點擊事件
