@@ -120,35 +120,35 @@
 				</div>
 				<div class="form-group">
 					<label>主標1</label>
-					<input id="mainTitle_1" style="width: 100%" type="text" placeholder="" />
+					<textarea id="mainTitle_1" style="width: 100%; resize: none;" type="text" placeholder=""></textarea>
 				</div>
 				<div class="form-group" style="display: none;">
 					<label>名稱</label>
-					<input id="memberId" style="width: 100%" type="text" placeholder="" />
+					<textarea id="memberId" style="width: 100%; resize: none;" type="text" placeholder=""></textarea>
 				</div>
 				<div class="form-group" style="display: none;">
 					<label>別名</label>
-					<input id="subTitle_2" style="width: 100%" type="text" placeholder="" />
+					<textarea id="subTitle_2" style="width: 100%; resize: none;" type="text" placeholder=""></textarea>
 				</div>
 				<div class="form-group">
 					<label>主標2</label>
-					<input id="mainTitle_2" style="width: 100%" type="text" placeholder="" />
+					<textarea id="mainTitle_2" style="width: 100%; resize: none;" type="text" placeholder=""></textarea>
 				</div>
 				<div class="form-group" style="display: none;">
 					<label>時間</label>
-					<input id="textContent_1" style="width: 100%" type="text" placeholder="" />
+					<textarea id="textContent_1" style="width: 100%; resize: none;" type="text" placeholder=""></textarea>
 				</div>
 				<div class="form-group">
 					<label>按鈕1</label>
-					<input id="textContent_2" style="width: 100%" type="text" placeholder="" />
+					<textarea id="textContent_2" style="width: 100%; resize: none;" type="text" placeholder=""></textarea>
 				</div>
 				<div class="form-group">
 					<label>按鈕1 URL</label>
-					<input id="textContent_2_url" style="width: 100%" type="text" placeholder="" />
+					<textarea id="textContent_2_url" style="width: 100%; resize: none;" type="text" placeholder=""></textarea>
 				</div>
 				<div class="form-group" style="display: none;">
 					<label>地址</label>
-					<input id="textContent_3" style="width: 100%" type="text" placeholder="" />
+					<textarea id="displayName" style="width: 100%; resize: none;" type="text" placeholder=""></textarea>
 				</div>
 				<div class="form-group">
 					<label>文字顏色</label>
@@ -171,9 +171,9 @@
 					textContent_1_url: document.getElementById("upload_text").textContent || "",
 					textContent_2: document.getElementById("textContent_2").value || "",
 					textContent_2_url: document.getElementById("textContent_2_url").value || "",
-					textContent_3: document.getElementById("textContent_3").value || "",
 					textColor: document.getElementById("textColor").textContent || "",
 					memberId: document.getElementById("memberId").value || "",
+					displayName: document.getElementById("displayName").value || displayName || "",
 					card_img_url: card_img_url,
 				});
 			}
@@ -187,7 +187,7 @@
 				document.getElementById("upload_text").textContent = data_card.textContent_1_url || "";
 				document.getElementById("textContent_2").value = data_card.textContent_2 || "";
 				document.getElementById("textContent_2_url").value = data_card.textContent_2_url || "";
-				document.getElementById("textContent_3").value = data_card.textContent_3 || "";
+				document.getElementById("displayName").value = data_card.displayName || "";
 				document.getElementById("textColor").textContent = data_card.textColor || "";
 				document.getElementById("memberId").value = data_card.memberId || "";
 				// 設定colorPicker調色盤顏色
@@ -227,8 +227,8 @@
 				var textContent_2_url_Element = document.getElementById("textContent_2_url");
 				textContent_2_url = textContent_2_url_Element.value || textContent_2_url_Element.placeholder;
 
-				var textContent_3_Element = document.getElementById("textContent_3");
-				textContent_3 = textContent_3_Element.value || textContent_3_Element.placeholder;
+				var displayName_Element = document.getElementById("displayName");
+				displayName = displayName_Element.value || displayName_Element.placeholder;
 
 				var textColor_Element = document.getElementById("textColor");
 				textColor = textColor_Element.textContent;
@@ -262,6 +262,7 @@
 								.then(async function (profile) {
 									// 取得 google sheet 個人資料顯示在頁面 (若為首次登入則 google sheet 建立新資料後重新讀取)
 									userId = profile.userId
+									displayName = profile.displayName;
 									var responseData = await sendRequest("get", userId)
 									if (responseData.status == "first") {
 										await sendRequest("save", userId, readShowCardData());
