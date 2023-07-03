@@ -90,7 +90,7 @@
 
 				if (!liff.isLoggedIn()) {
 					// 存入 cookie 防止登入後無資料查詢資串
-					if (!parameters["userId"]) {
+					if (parameters["userId"]) {
 						document.cookie = "userId=" + parameters["userId"] + "; path=/";
 						document.cookie = "PromotionalCard=" + parameters["PromotionalCard"] + "; path=/";
 					}
