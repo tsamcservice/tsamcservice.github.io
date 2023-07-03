@@ -90,8 +90,10 @@
 
 				if (!liff.isLoggedIn()) {
 					// 存入 cookie 防止登入後無資料查詢資串
-					document.cookie = "userId=" + parameters["userId"] + "; path=/";
-					document.cookie = "PromotionalCard=" + parameters["PromotionalCard"] + "; path=/";
+					if (!parameters["userId"]) {
+						document.cookie = "userId=" + parameters["userId"] + "; path=/";
+						document.cookie = "PromotionalCard=" + parameters["PromotionalCard"] + "; path=/";
+					}
 					liff.login();
 				} else {
 					userId = parameters["userId"] || document.cookie.split("; ").find((row) => row.startsWith("userId=")).split("=")[1]
