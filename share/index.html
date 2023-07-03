@@ -75,7 +75,7 @@
 		}
 
 		window.onload = function () {
-			document.getElementById('loader').style.display = 'flex';
+			// document.getElementById('loader').style.display = 'flex';
 			liff.init({ liffId: shareLIFFid }).then(() => {
 				// 獲取查詢字串
 				var queryString = window.location.search;
@@ -96,9 +96,7 @@
 				} else {
 					userId = parameters["userId"] || document.cookie.split("; ").find((row) => row.startsWith("userId=")).split("=")[1]
 					PromotionalCard = parameters["PromotionalCard"] || (document.cookie.split("; ").find((row) => row.startsWith("PromotionalCard="))?.split("=")[1] ?? 0);
-					// 清除 cookie
-					document.cookie = "userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-					document.cookie = "PromotionalCard=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
 					async function send() {
 						var responseData = await sendRequest("get", userId);
 						if (responseData.status === "ok") {
@@ -118,6 +116,10 @@
 								timer: 800,
 								showConfirmButton: false
 							});
+							// 清除 cookie
+							document.cookie = "userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+							document.cookie = "PromotionalCard=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
 							liff
 								.shareTargetPicker([flexJsonMessage])
 								.then(async function (res) {
