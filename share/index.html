@@ -85,12 +85,14 @@
 					const [paramName, paramValue] = pair.split('=').map(decodeURIComponent);
 					parameters[paramName] = paramValue;
 				});
+				liff.logout();
 
 				if (!liff.isLoggedIn()) {
 					// 存入 cookie 防止登入後無資料查詢資串
 					document.cookie = "userId=" + parameters["userId"] + "; path=/";
 					document.cookie = "PromotionalCard=" + parameters["PromotionalCard"] + "; path=/";
 					liff.login();
+					liff.logout();
 				} else {
 					userId = parameters["userId"] || document.cookie.split("; ").find((row) => row.startsWith("userId=")).split("=")[1]
 					PromotionalCard = parameters["PromotionalCard"] || (document.cookie.split("; ").find((row) => row.startsWith("PromotionalCard="))?.split("=")[1] ?? 0);
