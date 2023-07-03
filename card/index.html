@@ -120,15 +120,15 @@
 				</div>
 				<div class="form-group">
 					<label>主標1</label>
-					<textarea id="mainTitle_1" style="width: 100%; resize: none;" type="text" placeholder=""></textarea>
+					<input id="mainTitle_1" style="width: 100%" type="text" placeholder="" />
 				</div>
 				<div class="form-group" style="display: none;">
 					<label>名稱</label>
-					<textarea id="memberId" style="width: 100%; resize: none;" type="text" placeholder=""></textarea>
+					<input id="memberId" style="width: 100%" type="text" placeholder="" />
 				</div>
 				<div class="form-group" style="display: none;">
 					<label>別名</label>
-					<textarea id="subTitle_2" style="width: 100%; resize: none;" type="text" placeholder=""></textarea>
+					<input id="subTitle_2" style="width: 100%" type="text" placeholder="" />
 				</div>
 				<div class="form-group">
 					<label>主標2</label>
@@ -136,19 +136,19 @@
 				</div>
 				<div class="form-group" style="display: none;">
 					<label>時間</label>
-					<textarea id="textContent_1" style="width: 100%; resize: none;" type="text" placeholder=""></textarea>
+					<input id="textContent_1" style="width: 100%" type="text" placeholder="" />
 				</div>
 				<div class="form-group">
 					<label>按鈕1</label>
-					<textarea id="textContent_2" style="width: 100%; resize: none;" type="text" placeholder=""></textarea>
+					<input id="textContent_2" style="width: 100%" type="text" placeholder="" />
 				</div>
 				<div class="form-group">
 					<label>按鈕1 URL</label>
-					<textarea id="textContent_2_url" style="width: 100%; resize: none;" type="text" placeholder=""></textarea>
+					<input id="textContent_2_url" style="width: 100%" type="text" placeholder="" />
 				</div>
 				<div class="form-group" style="display: none;">
 					<label>地址</label>
-					<textarea id="displayName" style="width: 100%; resize: none;" type="text" placeholder=""></textarea>
+					<input id="displayName" style="width: 100%" type="text" placeholder="" />
 				</div>
 				<div class="form-group">
 					<label>文字顏色</label>
@@ -541,6 +541,15 @@
 			colorPicker.on('hide', () => {
 				colorPicker.applyColor(); // 應用顏色到目標元素
 				sendRequest("save", userId, readShowCardData());
+			});
+
+			// 監聽在純input輸入字時，不能有換行行為
+			document.querySelectorAll('.form-group input[type="text"]').forEach(input => {
+				input.addEventListener("keydown", event => {
+					if (event.keyCode === 13) {
+						event.preventDefault();  // 阻止換行行為
+					}
+				});
 			});
 
 			// 拖曳滑動
