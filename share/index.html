@@ -93,11 +93,14 @@
 					if (parameters["userId"]) {
 						document.cookie = "userId=" + parameters["userId"] + ";";
 						document.cookie = "PromotionalCard=" + parameters["PromotionalCard"] + ";";
+						alert(1)
 					}
 					liff.login();
+					alert(2)
 				} else {
 					userId = parameters["userId"] || document.cookie.split("; ").find((row) => row.startsWith("userId=")).split("=")[1]
 					PromotionalCard = parameters["PromotionalCard"] || (document.cookie.split("; ").find((row) => row.startsWith("PromotionalCard="))?.split("=")[1] ?? 0);
+					alert(3)
 
 					async function send() {
 						var responseData = await sendRequest("get", userId);
@@ -121,6 +124,7 @@
 							// 清除 cookie
 							document.cookie = "userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
 							document.cookie = "PromotionalCard=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+							alert(4)
 
 							liff
 								.shareTargetPicker([flexJsonMessage])
