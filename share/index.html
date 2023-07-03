@@ -91,8 +91,8 @@
 				if (!liff.isLoggedIn()) {
 					// 存入 cookie 防止登入後無資料查詢資串
 					if (parameters["userId"]) {
-						document.cookie = "userId=" + parameters["userId"] + "; path=/";
-						document.cookie = "PromotionalCard=" + parameters["PromotionalCard"] + "; path=/";
+						document.cookie = "userId=" + parameters["userId"] + ";";
+						document.cookie = "PromotionalCard=" + parameters["PromotionalCard"] + ";";
 					}
 					liff.login();
 				} else {
@@ -119,8 +119,8 @@
 								showConfirmButton: false
 							});
 							// 清除 cookie
-							document.cookie = "userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-							document.cookie = "PromotionalCard=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+							document.cookie = "userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+							document.cookie = "PromotionalCard=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
 
 							liff
 								.shareTargetPicker([flexJsonMessage])
