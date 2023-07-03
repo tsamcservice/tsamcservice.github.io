@@ -87,13 +87,16 @@
 				});
 
 				if (!liff.isLoggedIn()) {
+					alert(1)
 					// 存入 cookie 防止登入後無資料查詢資串
 					if (parameters["userId"]) {
 						document.cookie = "userId=" + parameters["userId"] + "; path=/";
 						document.cookie = "PromotionalCard=" + parameters["PromotionalCard"] + "; path=/";
+						alert(2)
 					}
 					liff.login();
 				} else {
+					alert(3)
 					userId = parameters["userId"] || document.cookie.split("; ").find((row) => row.startsWith("userId=")).split("=")[1]
 					PromotionalCard = parameters["PromotionalCard"] || (document.cookie.split("; ").find((row) => row.startsWith("PromotionalCard="))?.split("=")[1] ?? 0);
 					// 清除 cookie
