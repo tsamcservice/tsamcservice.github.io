@@ -43,7 +43,7 @@ function createFlexJsonList() {
 	flexJsonList = flexJsonList.replace(/displayName/g, displayName);
 	flexJsonList = flexJsonList.replace(/textColor/g, textColor);
 	flexJsonList = flexJsonList.replace(/S{3,}/g, "https://liff.line.me/" + shareLIFFid + "/?userId=" + encodeURIComponent(userId));
-	// document.getElementById('test').innerHTML = flexJsonList
+	document.getElementById('test').innerHTML = flexJsonList
 	return [JSON.parse(flexJsonList)]
 }
 
