@@ -52,8 +52,6 @@
 		</div>
 	</div>
 	<div id="test"></div>
-	<button onclick="liff.logout()">登出</button>
-
 
 	<script>
 		function createFlex(data_card) {
@@ -75,7 +73,7 @@
 		}
 
 		window.onload = function () {
-			// document.getElementById('loader').style.display = 'flex';
+			document.getElementById('loader').style.display = 'flex';
 			liff.init({ liffId: shareLIFFid }).then(() => {
 				// 獲取查詢字串
 				var queryString = window.location.search;
@@ -91,17 +89,16 @@
 				if (!liff.isLoggedIn()) {
 					// 存入 cookie 防止登入後無資料查詢資串
 					if (parameters["userId"]) {
-						document.cookie = "userId=" + parameters["userId"] + ";";
-						document.cookie = "PromotionalCard=" + parameters["PromotionalCard"] + ";";
-						alert(1)
+						document.cookie = "userId=" + parameters["userId"] + "; path=/";
+						document.cookie = "PromotionalCard=" + parameters["PromotionalCard"] + "; path=/";
 					}
 					liff.login();
-					alert(2)
 				} else {
 					userId = parameters["userId"] || document.cookie.split("; ").find((row) => row.startsWith("userId=")).split("=")[1]
 					PromotionalCard = parameters["PromotionalCard"] || (document.cookie.split("; ").find((row) => row.startsWith("PromotionalCard="))?.split("=")[1] ?? 0);
-					alert(3)
-
+					// 清除 cookie
+					document.cookie = "userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+					document.cookie = "PromotionalCard=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 					async function send() {
 						var responseData = await sendRequest("get", userId);
 						if (responseData.status === "ok") {
@@ -121,11 +118,6 @@
 								timer: 800,
 								showConfirmButton: false
 							});
-							// 清除 cookie
-							document.cookie = "userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
-							document.cookie = "PromotionalCard=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
-							alert(4)
-
 							liff
 								.shareTargetPicker([flexJsonMessage])
 								.then(async function (res) {
