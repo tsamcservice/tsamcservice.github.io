@@ -544,7 +544,7 @@
 			});
 
 			// 監聽在純input輸入字時，不能有換行行為
-			document.querySelectorAll('.form-group input[type="text"]').forEach(input => {
+			document.querySelectorAll('.form-group input[type="text"], .form-group textarea').forEach(input => {
 				input.addEventListener("keydown", event => {
 					if (event.keyCode === 13) {
 						event.preventDefault();  // 阻止換行行為
