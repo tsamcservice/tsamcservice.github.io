@@ -511,7 +511,7 @@
 				// 檢查事件源是否為輸入框且已經loading完成
 				if (event.target.tagName.toLowerCase() === "input" && document.getElementById("loader").style.display == "none") {
 					// 檢查textContent_2_url的input格是否合法的url
-					if (event.target.id === "textContent_2_url" && event.target.value != "") {
+					if ((event.target.id === "textContent_2_url" || event.target.id === "subTitle_2" || event.target.id === "textContent_1") && event.target.value != "") {
 						try {
 							new URL(event.target.value);
 						} catch (error) {
