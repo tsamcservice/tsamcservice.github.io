@@ -1,5 +1,5 @@
-const googleAppsScriptUrl = "https://script.google.com/macros/s/AKfycbzqZerZLVoyUKv9EQaqqClzgWJK0CnMe_gBux0agtpBDRwU7mJ9LzqMZgaN6HM8QD8o/exec";
-const shareLIFFid = "2000001236-Vzj8RRW9"
+const googleAppsScriptUrl = "https://script.google.com/macros/s/AKfycbwyrjsNxklM8j9big3ETkOAn_vqh9w0ofO8DnMWJArKoRj0v2CJ_LK_3flYWkSAj8Af/exec";
+const shareLIFFid = "2007242593-WjRypm88"
 
 // 這張會員卡片的 URL
 var card_img_url;
@@ -10,8 +10,8 @@ var mainTitle_1 = "呈璽理財藝術共享空間";
 var mainTitle_2 = "我在呈璽，欣賞美好幸福 我在呈璽，喝茶喝咖啡很悠閒 我不在呈璽，就是在前往呈璽的路上";
 var memberId = "000";
 var subTitle_2 = "https://www.leishan.com.tw/";
-var textContent_1 = "https://raw.githubusercontent.com/tsamcservice/tsamcservice.github.io/main/data/images/8c2a0367cf3d71a0.png";
-var textContent_1_url = "https://raw.githubusercontent.com/tsamcservice/tsamcservice.github.io/main/data/images/TS.jpg";
+var textContent_1 = "https://raw.githubusercontent.com/tsamcservice/tsamcservice.github.io/main/data_new/images/8c2a0367cf3d71a0.png";
+var textContent_1_url = "https://raw.githubusercontent.com/tsamcservice/tsamcservice.github.io/main/data_new/images/TS.jpg";
 var textContent_2 = "呈璽LINE@";
 var textContent_2_url = "https://donate.ls-love.org/";
 var textColor = "#000000";
