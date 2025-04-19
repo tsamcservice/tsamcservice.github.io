@@ -31,7 +31,7 @@ async function sendRequest(status, userId, dataCard = "", isDebug = true) {
 function my_flexToHtml(flex2htmlElementName, flexJsonList) {
 	flexJsonMessage = {
 		type: "flex",
-		altText: "Flex Message",
+		altText: "呈璽精彩活動推薦!!",
 		contents: {
 			type: "carousel",
 			contents: [...flexJsonList]
