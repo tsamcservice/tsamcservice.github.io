@@ -31,7 +31,7 @@ async function sendRequest(status, userId, dataCard = "", isDebug = true) {
 function my_flexToHtml(flex2htmlElementName, flexJsonList) {
 	flexJsonMessage = {
 		type: "flex",
-		altText: "Flex Message_NEW",
+		altText: "呈璽精彩活動推薦!!",
 		contents: {
 			type: "carousel",
 			contents: [...flexJsonList]
@@ -49,7 +49,7 @@ function my_flexToHtml(flex2htmlElementName, flexJsonList) {
 	wrongLySliderElements.forEach(function (element) {
 		element.style.webkitOverflowScrolling = "auto";
 		// element.style.overflowX = "visible";
-		element.style.overflow = "visible";
+		element.style.overflow = "hidden";
 	});
 
 	// 將 chatbox 上方空白縮短
